@@ -7,6 +7,7 @@ import {
   Param,
   ParseUUIDPipe,
   Patch,
+  Put,
   Query,
   Request,
   UseGuards,
@@ -23,6 +24,7 @@ import {
   PaginationOptions,
   UpdateUserModel,
   UserModel,
+  CreateUserModel,
 } from '@jdesjardins/dist-lib';
 import { UserEntity } from '../../../entities';
 
@@ -38,6 +40,12 @@ export class UserController {
   @Get('me')
   getSelf(@Request() request): Promise<UserModel> {
     return this.userService.findOneById(request.user.id);
+  }
+
+  @ApiBody({ type: CreateUserModel })
+  @Put('register')
+  createUser(@Body() params: CreateUserModel): Promise<UserEntity> {
+    return this.userService.create(params);
   }
 
   @Roles(Role.ADMIN)

@@ -1,40 +1,21 @@
 import {
-  Body,
   ClassSerializerInterceptor,
   Controller,
   Post,
-  Put,
   Request,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiBody, ApiOkResponse } from '@nestjs/swagger';
-import { UserService } from '../../users/services/user.service';
+import { ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { LocalAuthGuard } from '../../../guards/local.auth.guard';
 import { AuthService } from '../services/auth.service';
-import {
-  CreateUserModel,
-  UserLoginModel,
-  AccessTokenModel,
-} from '@jdesjardins/dist-lib';
-import { UserEntity } from '../../../entities';
+import { UserLoginModel, AccessTokenModel } from '@jdesjardins/dist-lib';
 
 @Controller('')
+@ApiTags('Authorization')
 @UseInterceptors(ClassSerializerInterceptor)
 export class AuthController {
-  constructor(
-    private readonly userService: UserService,
-    private readonly authService: AuthService
-  ) {}
-
-  @ApiOkResponse({
-    type: UserEntity,
-  })
-  @ApiBody({ type: CreateUserModel })
-  @Put('register')
-  createUser(@Body() params: CreateUserModel): Promise<UserEntity> {
-    return this.userService.create(params);
-  }
+  constructor(private readonly authService: AuthService) {}
 
   @ApiOkResponse({
     type: AccessTokenModel,
