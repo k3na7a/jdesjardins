@@ -52,8 +52,7 @@ export class UserController {
   @Roles(Role.ADMIN)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Get(':id')
-  getUserById(@Param('id', ParseUUIDPipe) id: string) {
-    console.log(id);
+  getUserById(@Param('id', ParseUUIDPipe) id: string): Promise<UserEntity> {
     return this.userService.findOneById(id);
   }
 
