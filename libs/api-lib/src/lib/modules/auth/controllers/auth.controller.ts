@@ -6,10 +6,11 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { LocalAuthGuard } from '../../../guards/local.auth.guard';
 import { AuthService } from '../services/auth.service';
 import { UserLoginModel, AccessTokenModel } from '@jdesjardins/dist-lib';
+import { UserEntity } from '../../../entities';
 
 @Controller('')
 @ApiTags('Authorization')
@@ -17,13 +18,10 @@ import { UserLoginModel, AccessTokenModel } from '@jdesjardins/dist-lib';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @ApiOkResponse({
-    type: AccessTokenModel,
-  })
   @UseGuards(LocalAuthGuard)
   @ApiBody({ type: UserLoginModel })
   @Post('login')
-  login(@Request() req): Promise<AccessTokenModel> {
+  login(@Request() req: { user: UserEntity }): Promise<AccessTokenModel> {
     return this.authService.login(req.user);
   }
 }

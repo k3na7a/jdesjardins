@@ -35,11 +35,10 @@ import { UserEntity } from '../../../entities';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  /** Self Management */
-  @UseGuards(JwtAuthGuard)
-  @Get('me')
-  getSelf(@Request() request): Promise<UserModel> {
-    return this.userService.findById(request.user.id);
+  @ApiBody({ type: CreateUserModel })
+  @Put('')
+  createUser(@Body() params: CreateUserModel): Promise<UserEntity> {
+    return this.userService.create(params);
   }
 
   @Roles(Role.ADMIN)
@@ -51,10 +50,10 @@ export class UserController {
     return this.userService.paginate(pageOptions);
   }
 
-  @ApiBody({ type: CreateUserModel })
-  @Put('')
-  createUser(@Body() params: CreateUserModel): Promise<UserEntity> {
-    return this.userService.create(params);
+  @UseGuards(JwtAuthGuard)
+  @Get('me')
+  getSelf(@Request() request): Promise<UserModel> {
+    return this.userService.findById(request.user.id);
   }
 
   @Roles(Role.ADMIN)
