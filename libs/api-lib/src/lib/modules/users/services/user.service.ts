@@ -16,7 +16,7 @@ export class UserService {
     @InjectRepository(UserEntity) private userRepository: Repository<UserEntity>
   ) {}
 
-  async findAll(
+  async paginate(
     pageOptions: PaginationOptions
   ): Promise<Pagination<UserEntity>> {
     const [data, total] = await this.userRepository.findAndCount({

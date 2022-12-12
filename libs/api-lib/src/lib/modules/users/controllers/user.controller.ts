@@ -42,19 +42,19 @@ export class UserController {
     return this.userService.findOneById(request.user.id);
   }
 
-  @ApiBody({ type: CreateUserModel })
-  @Put('register')
-  createUser(@Body() params: CreateUserModel): Promise<UserEntity> {
-    return this.userService.create(params);
-  }
-
   @Roles(Role.ADMIN)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Get('')
-  getAllUsers(
+  getUsers(
     @Query() pageOptions: PaginationOptions
   ): Promise<Pagination<UserEntity>> {
-    return this.userService.findAll(pageOptions);
+    return this.userService.paginate(pageOptions);
+  }
+
+  @ApiBody({ type: CreateUserModel })
+  @Put('')
+  createUser(@Body() params: CreateUserModel): Promise<UserEntity> {
+    return this.userService.create(params);
   }
 
   @Roles(Role.ADMIN)
