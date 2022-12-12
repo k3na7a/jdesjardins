@@ -7,7 +7,6 @@ import {
   PaginationMeta,
   PaginationOptions,
   UpdateUserModel,
-  UserModel,
 } from '@jdesjardins/dist-lib';
 import { UserEntity } from '../../../entities';
 
@@ -19,17 +18,14 @@ export class UserService {
 
   async findAll(
     pageOptions: PaginationOptions
-  ): Promise<Pagination<UserModel>> {
-    const [data, itemCount] = await this.userRepository.findAndCount({
+  ): Promise<Pagination<UserEntity>> {
+    const [data, total] = await this.userRepository.findAndCount({
       order: { created: 'ASC' },
       skip: pageOptions.skip,
       take: pageOptions.take,
     });
-
-    const pageMetaDto = new PaginationMeta({ pageOptions, itemCount });
-    const normalizedUsers = data.map((e) => new UserModel(e));
-
-    return new Pagination<UserModel>(normalizedUsers, pageMetaDto);
+    const pageMetaDto = new PaginationMeta({ pageOptions, itemCount: total });
+    return new Pagination<UserEntity>(data, pageMetaDto);
   }
 
   async findOneById(id: string): Promise<UserEntity> {
@@ -46,8 +42,8 @@ export class UserService {
     return user;
   }
 
-  async create(dto: CreateUserModel): Promise<UserEntity> {
-    const newUser = this.userRepository.create(dto);
+  async create(user: CreateUserModel): Promise<UserEntity> {
+    const newUser = this.userRepository.create(user);
     return await this.userRepository.save(newUser);
   }
 

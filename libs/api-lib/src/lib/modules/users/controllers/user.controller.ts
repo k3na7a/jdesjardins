@@ -24,7 +24,6 @@ import { RolesGuard } from '../../../guards/roles.guard';
 import {
   Role,
   Pagination,
-  UserModel,
   PaginationOptions,
   UpdateUserModel,
 } from '@jdesjardins/dist-lib';
@@ -52,7 +51,7 @@ export class UserController {
   @Get('')
   getAllUsers(
     @Query() pageOptions: PaginationOptions
-  ): Promise<Pagination<UserModel>> {
+  ): Promise<Pagination<UserEntity>> {
     return this.userService.findAll(pageOptions);
   }
 
