@@ -5,18 +5,14 @@ import {
   Delete,
   Get,
   Param,
+  ParseUUIDPipe,
   Patch,
   Query,
   Request,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import {
-  ApiBearerAuth,
-  ApiBody,
-  ApiOkResponse,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 import { UserService } from '../services/user.service';
 import { JwtAuthGuard } from '../../../guards/jwt-auth.guard';
 import { Roles } from '../../../decorators/roles.decorator';
@@ -26,6 +22,7 @@ import {
   Pagination,
   PaginationOptions,
   UpdateUserModel,
+  UserModel,
 } from '@jdesjardins/dist-lib';
 import { UserEntity } from '../../../entities';
 
@@ -38,11 +35,8 @@ export class UserController {
 
   /** Self Management */
   @UseGuards(JwtAuthGuard)
-  @ApiOkResponse({
-    type: UserEntity,
-  })
   @Get('me')
-  getSelf(@Request() request): Promise<UserEntity> {
+  getSelf(@Request() request): Promise<UserModel> {
     return this.userService.findOneById(request.user.id);
   }
 
@@ -57,23 +51,18 @@ export class UserController {
 
   @Roles(Role.ADMIN)
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @ApiOkResponse({
-    type: UserEntity,
-  })
   @Get(':id')
-  getUserById(@Param('id') id: string) {
+  getUserById(@Param('id', ParseUUIDPipe) id: string) {
+    console.log(id);
     return this.userService.findOneById(id);
   }
 
   @Roles(Role.ADMIN)
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @ApiOkResponse({
-    type: UserEntity,
-  })
   @ApiBody({ type: UpdateUserModel })
   @Patch(':id')
   updateUserById(
-    @Param('id') id: string,
+    @Param('id', ParseUUIDPipe) id: string,
     @Body() updatedUser: UpdateUserModel
   ): Promise<UserEntity> {
     return this.userService.update(id, updatedUser);
@@ -81,11 +70,8 @@ export class UserController {
 
   @Roles(Role.ADMIN)
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @ApiOkResponse({
-    type: UserEntity,
-  })
   @Delete(':id')
-  deleteUserById(@Param('id') id: string): Promise<UserEntity> {
+  deleteUserById(@Param('id', ParseUUIDPipe) id: string): Promise<UserEntity> {
     return this.userService.delete(id);
   }
 }

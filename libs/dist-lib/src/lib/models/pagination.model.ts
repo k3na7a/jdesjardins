@@ -6,19 +6,14 @@ import { Order } from '../enums';
 export class PaginationMeta {
   @ApiProperty()
   readonly page: number;
-
   @ApiProperty()
   readonly take: number;
-
   @ApiProperty()
   readonly itemCount: number;
-
   @ApiProperty()
   readonly pageCount: number;
-
   @ApiProperty()
   readonly hasPreviousPage: boolean;
-
   @ApiProperty()
   readonly hasNextPage: boolean;
 
@@ -36,7 +31,6 @@ export class Pagination<PaginationEntity> {
   @ApiProperty({ isArray: true })
   @IsArray()
   readonly results: PaginationEntity[];
-
   @ApiProperty({ type: () => PaginationMeta })
   readonly meta: PaginationMeta;
 
@@ -51,7 +45,6 @@ export class PaginationOptions {
   @IsEnum(Order)
   @IsOptional()
   readonly order?: Order = Order.ASC;
-
   @ApiPropertyOptional({
     minimum: 1,
     default: 1,
@@ -61,7 +54,6 @@ export class PaginationOptions {
   @Min(1)
   @IsOptional()
   readonly page?: number = 1;
-
   @ApiPropertyOptional({
     minimum: 1,
     maximum: 50,

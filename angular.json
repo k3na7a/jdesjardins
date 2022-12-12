@@ -4,6 +4,10 @@
   "projects": {
     "api": "apps/api",
     "api-lib": "libs/api-lib",
-    "dist-lib": "libs/dist-lib"
+    "dist-lib": "libs/dist-lib",
+    "ui-lib": "libs/ui-lib",
+    "web": "apps/web",
+    "web-e2e": "apps/web-e2e",
+    "web-lib": "libs/web-lib"
   }
 }
