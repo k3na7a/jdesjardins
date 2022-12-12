@@ -9,7 +9,7 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody } from '@nestjs/swagger';
 import { LocalAuthGuard } from '../../../guards/local.auth.guard';
 import { AuthService } from '../services/auth.service';
 import {
@@ -22,7 +22,6 @@ import { UserService } from '../../users/services/user.service';
 import { JwtAuthGuard } from '../../../guards/jwt-auth.guard';
 
 @Controller('')
-@ApiTags('Authorization')
 @UseInterceptors(ClassSerializerInterceptor)
 export class AuthController {
   constructor(
