@@ -7,9 +7,7 @@ import {
   Param,
   ParseUUIDPipe,
   Patch,
-  Put,
   Query,
-  Request,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -23,8 +21,6 @@ import {
   Pagination,
   PaginationOptions,
   UpdateUserModel,
-  UserModel,
-  CreateUserModel,
 } from '@jdesjardins/dist-lib';
 import { UserEntity } from '../../../entities';
 
@@ -35,12 +31,6 @@ import { UserEntity } from '../../../entities';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @ApiBody({ type: CreateUserModel })
-  @Put('')
-  createUser(@Body() params: CreateUserModel): Promise<UserEntity> {
-    return this.userService.create(params);
-  }
-
   @Roles(Role.ADMIN)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Get('')
@@ -48,12 +38,6 @@ export class UserController {
     @Query() pageOptions: PaginationOptions
   ): Promise<Pagination<UserEntity>> {
     return this.userService.paginate(pageOptions);
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Get('me')
-  getSelf(@Request() request): Promise<UserModel> {
-    return this.userService.findById(request.user.id);
   }
 
   @Roles(Role.ADMIN)
