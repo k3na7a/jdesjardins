@@ -28,7 +28,7 @@ export class UserService {
     return new Pagination<UserEntity>(data, pageMetaDto);
   }
 
-  async findOneById(id: string): Promise<UserEntity> {
+  async findById(id: string): Promise<UserEntity> {
     const user = await this.userRepository.findOne({
       where: { id },
     });
@@ -48,13 +48,13 @@ export class UserService {
   }
 
   async update(id: string, dto: UpdateUserModel): Promise<UserEntity> {
-    const user = await this.findOneById(id);
+    const user = await this.findById(id);
     const updatedUser = Object.assign(user, dto);
     return this.userRepository.save(updatedUser);
   }
 
   async delete(id: string): Promise<UserEntity> {
-    const user = await this.findOneById(id);
+    const user = await this.findById(id);
     return this.userRepository.remove(user);
   }
 }

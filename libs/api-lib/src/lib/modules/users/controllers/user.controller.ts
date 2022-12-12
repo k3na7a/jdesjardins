@@ -39,7 +39,7 @@ export class UserController {
   @UseGuards(JwtAuthGuard)
   @Get('me')
   getSelf(@Request() request): Promise<UserModel> {
-    return this.userService.findOneById(request.user.id);
+    return this.userService.findById(request.user.id);
   }
 
   @Roles(Role.ADMIN)
@@ -61,7 +61,7 @@ export class UserController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Get(':id')
   getUserById(@Param('id', ParseUUIDPipe) id: string): Promise<UserEntity> {
-    return this.userService.findOneById(id);
+    return this.userService.findById(id);
   }
 
   @Roles(Role.ADMIN)

@@ -1,5 +1,5 @@
 import { MysqlConnectionOptions } from 'typeorm/driver/mysql/MysqlConnectionOptions';
-import { Entities } from './index';
+import { Entities } from './entities/index';
 
 export const typeOrmConfig: MysqlConnectionOptions = {
   type: 'mysql',
