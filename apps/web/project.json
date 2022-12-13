@@ -1,85 +1,50 @@
 {
-  "projectType": "application",
+  "name": "web",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/web/src",
-  "prefix": "jdesjardins",
+  "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:browser",
+      "executor": "@nrwl/vite:build",
       "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
       "options": {
-        "outputPath": "dist/apps/web",
-        "index": "apps/web/src/index.html",
-        "main": "apps/web/src/main.ts",
-        "polyfills": "apps/web/src/polyfills.ts",
-        "tsConfig": "apps/web/tsconfig.app.json",
-        "inlineStyleLanguage": "scss",
-        "assets": ["apps/web/src/favicon.ico", "apps/web/src/assets"],
-        "styles": ["apps/web/src/styles.scss"],
-        "scripts": []
+        "outputPath": "dist/apps/web"
       },
       "configurations": {
-        "production": {
-          "budgets": [
-            {
-              "type": "initial",
-              "maximumWarning": "500kb",
-              "maximumError": "1mb"
-            },
-            {
-              "type": "anyComponentStyle",
-              "maximumWarning": "2kb",
-              "maximumError": "4kb"
-            }
-          ],
-          "fileReplacements": [
-            {
-              "replace": "apps/web/src/environments/environment.ts",
-              "with": "apps/web/src/environments/environment.prod.ts"
-            }
-          ],
-          "outputHashing": "all"
-        },
-        "development": {
-          "buildOptimizer": false,
-          "optimization": false,
-          "vendorChunk": true,
-          "extractLicenses": false,
-          "sourceMap": true,
-          "namedChunks": true
-        }
-      },
-      "defaultConfiguration": "production"
+        "development": {},
+        "production": {}
+      }
     },
     "serve": {
-      "executor": "@angular-devkit/build-angular:dev-server",
-      "configurations": {
-        "production": {
-          "browserTarget": "web:build:production"
-        },
-        "development": {
-          "browserTarget": "web:build:development"
-        }
-      },
-      "defaultConfiguration": "development"
-    },
-    "extract-i18n": {
-      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "executor": "@nrwl/vite:dev-server",
+      "defaultConfiguration": "development",
       "options": {
-        "browserTarget": "web:build"
+        "buildTarget": "web:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "web:build:development",
+          "hmr": true
+        },
+        "production": {
+          "buildTarget": "web:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "test": {
+      "executor": "@nrwl/vite:test",
+      "outputs": ["{projectRoot}/coverage"],
+      "options": {
+        "passWithNoTests": true
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/web/**/*.ts", "apps/web/**/*.html"]
-      }
-    },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/web"],
-      "options": {
-        "jestConfig": "apps/web/jest.config.ts",
-        "passWithNoTests": true
+        "lintFilePatterns": ["apps/web/**/*.{ts,tsx,js,jsx}"]
       }
     }
   },

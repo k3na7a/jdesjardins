@@ -25,6 +25,9 @@
   "targetDefaults": {
     "build": {
       "dependsOn": ["^build"]
+    },
+    "test": {
+      "inputs": ["default", "^default"]
     }
   },
   "generators": {
@@ -40,6 +43,22 @@
     },
     "@nrwl/angular:component": {
       "style": "scss"
+    },
+    "@nrwl/react": {
+      "application": {
+        "style": "css",
+        "linter": "eslint",
+        "bundler": "vite",
+        "babel": true
+      },
+      "component": {
+        "style": "css"
+      },
+      "library": {
+        "style": "css",
+        "linter": "eslint",
+        "unitTestRunner": "vitest"
+      }
     }
   },
   "defaultProject": "web"
