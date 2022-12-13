@@ -1,5 +1,8 @@
+import { UserLoginModel } from '@jdesjardins/dist-lib';
 import { NxWelcome } from '@jdesjardins/ui-lib';
 import { useEffect, useMemo, useState } from 'react';
+
+import apiClient from './api/http-common';
 
 import './styles/app.styles.css';
 
@@ -15,8 +18,10 @@ export function App({ test_prop }: Props) {
     console.log(test$);
   }, [test$]);
 
-  function updateTestState() {
+  async function updateTestState() {
     setTest((currentValue) => 'new_state');
+
+    apiClient.get('/me').then((res) => console.log(res));
   }
 
   return (
