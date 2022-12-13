@@ -1,7 +1,7 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { NxWelcome } from '@jdesjardins/ui-lib';
-
 import { Route, Routes, Link } from 'react-router-dom';
+
+import './styles/app.css';
 
 interface Props {
   test_prop: string;
