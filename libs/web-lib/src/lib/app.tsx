@@ -1,13 +1,20 @@
 import { NxWelcome } from '@jdesjardins/ui-lib';
+import { useEffect, useState } from 'react';
 import { Route, Routes, Link } from 'react-router-dom';
 
-import './styles/app.css';
+import './styles/app.styles.css';
 
 interface Props {
   test_prop: string;
 }
 
-export function App(props: Props) {
+export function App({ test_prop }: Props) {
+  // const [test, _setTest] = useState({ test: '' });
+
+  // useEffect(() => {
+  //   console.log(test.test);
+  // });
+
   return (
     <>
       <NxWelcome title="web" />
