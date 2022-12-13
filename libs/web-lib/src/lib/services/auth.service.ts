@@ -1,13 +1,15 @@
 import apiClient from '../api/http-common';
-import type { UserModel } from '@jdesjardins/dist-lib';
+import { User } from '@jdesjardins/dist-lib';
 
 export const getMe = async () => {
-  return await apiClient.get('/me').then((res) => {
-    const user: UserModel = {
-      id: res.data.id,
-      username: res.data.username,
-      email: res.data.email,
-    };
-    return user;
-  });
+  return await apiClient
+    .get('/me', {
+      headers: {
+        Authorization:
+          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRlc2pqb2hAZ21haWwuY29tIiwic3ViIjoiMjVlMmM3ODktZmZmMC00NmU4LThjYjktNTVlZDY2NjZhNThjIiwiaWF0IjoxNjcwOTU4NDY0LCJleHAiOjE2NzEwNDQ4NjR9.AlpGPdjRk355uKW9LEcmt65HOs3J7mGMEbiGRYOUUqU',
+      },
+    })
+    .then((res) => {
+      return new User(res.data);
+    });
 };

@@ -12,14 +12,14 @@ import {
 import { ApiBearerAuth, ApiBody } from '@nestjs/swagger';
 import { LocalAuthGuard } from '../../../guards/local.auth.guard';
 import { AuthService } from '../services/auth.service';
-import {
-  UserLoginModel,
-  AccessTokenModel,
-  CreateUserModel,
-} from '@jdesjardins/dist-lib';
 import { UserEntity } from '../../../entities';
 import { UserService } from '../../users/services/user.service';
 import { JwtAuthGuard } from '../../../guards/jwt-auth.guard';
+import {
+  AccessTokenModel,
+  CreateUserModel,
+  UserLoginModel,
+} from '../../../models';
 
 @Controller('')
 @UseInterceptors(ClassSerializerInterceptor)

@@ -1,14 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import {
-  CreateUserModel,
-  Pagination,
-  PaginationMeta,
-  PaginationOptions,
-  UpdateUserModel,
-} from '@jdesjardins/dist-lib';
 import { UserEntity } from '../../../entities';
+import { CreateUserModel, Pagination, PaginationMeta, PaginationOptions, UpdateUserModel } from '../../../models';
 
 @Injectable()
 export class UserService {

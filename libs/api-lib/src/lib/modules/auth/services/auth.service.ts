@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { UserEntity } from '../../../entities';
+import { AccessTokenModel } from '../../../models';
 import { UserService } from '../../users/services/user.service';
-import { AccessTokenModel } from '@jdesjardins/dist-lib';
 
 @Injectable()
 export class AuthService {

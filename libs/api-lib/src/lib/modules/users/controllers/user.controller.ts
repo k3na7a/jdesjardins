@@ -16,13 +16,13 @@ import { UserService } from '../services/user.service';
 import { JwtAuthGuard } from '../../../guards/jwt-auth.guard';
 import { Roles } from '../../../decorators/roles.decorator';
 import { RolesGuard } from '../../../guards/roles.guard';
+import { Role } from '@jdesjardins/dist-lib';
+import { UserEntity } from '../../../entities';
 import {
-  Role,
   Pagination,
   PaginationOptions,
   UpdateUserModel,
-} from '@jdesjardins/dist-lib';
-import { UserEntity } from '../../../entities';
+} from '../../../models';
 
 @ApiBearerAuth('access-token')
 @ApiTags('User Management')
