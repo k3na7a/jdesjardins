@@ -8,7 +8,7 @@ interface Props {
   test_prop: string;
 }
 
-export default function App(props: Props) {
+export function App(props: Props) {
   return (
     <>
       <NxWelcome title="web" />
