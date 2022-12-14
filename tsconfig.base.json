@@ -17,7 +17,6 @@
     "paths": {
       "@jdesjardins/api-lib": ["libs/api-lib/src/index.ts"],
       "@jdesjardins/dist-lib": ["libs/dist-lib/src/index.ts"],
-      "@jdesjardins/ui-lib": ["libs/ui-lib/src/index.ts"],
       "@jdesjardins/web-lib": ["libs/web-lib/src/index.ts"]
     }
   },

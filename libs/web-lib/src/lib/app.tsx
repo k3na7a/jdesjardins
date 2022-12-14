@@ -1,6 +1,8 @@
-import { NxWelcome } from '@jdesjardins/ui-lib';
 import { useEffect, useMemo, useState } from 'react';
+import { NxWelcome } from './components';
 import { getMe } from './services/auth.service';
+
+import { useTranslation } from 'react-i18next';
 
 import './styles/app.styles.css';
 
@@ -11,6 +13,8 @@ interface Props {
 export function App({ test_prop }: Props) {
   const [test, setTest] = useState('state');
   const test$ = useMemo(() => test, [test]);
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     console.log(test$);
@@ -30,7 +34,7 @@ export function App({ test_prop }: Props) {
         className="btn btn-primary"
         onClick={updateTestState}
       >
-        Click Me for New State
+        {t('title')}
       </button>
       <NxWelcome title="web" />
     </>
