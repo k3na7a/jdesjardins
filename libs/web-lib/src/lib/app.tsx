@@ -4,8 +4,6 @@ import { getMe } from './services/auth.service';
 
 import { useTranslation } from 'react-i18next';
 
-import './styles/app.styles.css';
-
 interface Props {
   test_prop: string;
 }
@@ -14,7 +12,7 @@ export function App({ test_prop }: Props) {
   const [test, setTest] = useState('state');
   const test$ = useMemo(() => test, [test]);
 
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     console.log(test$);
@@ -34,7 +32,7 @@ export function App({ test_prop }: Props) {
         className="btn btn-primary"
         onClick={updateTestState}
       >
-        {t('title')}
+        {t('title', i18n)}
       </button>
       <NxWelcome title="web" />
     </>

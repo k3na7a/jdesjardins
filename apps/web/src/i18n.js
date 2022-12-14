@@ -9,6 +9,8 @@ i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
+    ns: ['common', 'glossary', 'validation'],
+    defaultNS: 'common',
     fallbackLng: 'en',
     debug: true,
 
