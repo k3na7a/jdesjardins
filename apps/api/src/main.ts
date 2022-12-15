@@ -11,6 +11,7 @@ async function bootstrap() {
 
   app.setGlobalPrefix(globalPrefix);
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
+
   const config = new DocumentBuilder()
     .setTitle('Nest Api')
     .setDescription('A simple Nest Api created by John Desjardins')

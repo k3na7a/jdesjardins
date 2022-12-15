@@ -1,20 +1,17 @@
 import apiClient from '../api/http-common';
-import { IUser, User } from '@jdesjardins/dist-lib';
-import { AxiosError } from 'axios';
+import { User } from '@jdesjardins/dist-lib';
+import { AxiosResponse } from 'axios';
 
 export const getMe = async () => {
   return await apiClient
-    .get('/me', {
+    .get<User>('/me', {
       headers: {
         Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRlc2pqb2hAZ21haWwuY29tIiwic3ViIjoiMjVlMmM3ODktZmZmMC00NmU4LThjYjktNTVlZDY2NjZhNThjIiwiaWF0IjoxNjcxMDQ1MjQxLCJleHAiOjE2NzExMzE2NDF9.Na-hZGeWr4GePKpc-KhJoHGNuQ9Ej9dsbIa9gBzX80s',
+          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRlc2pqb2hAZ21haWwuY29tIiwic3ViIjoiMjVlMmM3ODktZmZmMC00NmU4LThjYjktNTVlZDY2NjZhNThjIiwiaWF0IjoxNjcxMTM2NzMyLCJleHAiOjE2NzEyMjMxMzJ9.EwCy96B7WyFC-jFn2Yx7vlOO-cTYBhhXcNznmqjjwNE',
       },
     })
-    .then((res) => {
-      console.log(res.data as IUser);
-      return new User(res.data as IUser);
-    })
-    .catch((error: AxiosError) => {
-      console.log(error);
+    .then((response: AxiosResponse<User>) => {
+      const { data } = response;
+      return new User(data);
     });
 };

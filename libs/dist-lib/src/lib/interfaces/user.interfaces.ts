@@ -8,6 +8,11 @@ export class User implements IUser {
   public readonly id!: string;
   public username!: string;
   public email!: string;
+
+  getUsername = () => {
+    return this.username;
+  };
+
   constructor(params: IUser) {
     const user: IUser = {
       id: params.id,

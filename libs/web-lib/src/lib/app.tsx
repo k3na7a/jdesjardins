@@ -23,8 +23,7 @@ export function App({ test_prop }: Props) {
 
     const user = await getMe();
     if (!user) return;
-
-    console.log(user);
+    console.log(user.getUsername());
   }
 
   return (
