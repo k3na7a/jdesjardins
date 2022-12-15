@@ -11,8 +11,8 @@ export class UserLoginModel {
   @IsString()
   @IsNotEmpty()
   username: string;
+  @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  @ApiProperty()
   password: string;
 }

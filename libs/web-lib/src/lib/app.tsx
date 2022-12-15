@@ -12,7 +12,7 @@ export function App({ test_prop }: Props) {
   const [test, setTest] = useState('state');
   const test$ = useMemo(() => test, [test]);
 
-  const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation('common', { keyPrefix: '' });
 
   useEffect(() => {
     console.log(test$);
@@ -22,6 +22,8 @@ export function App({ test_prop }: Props) {
     setTest((currentValue) => 'new_state');
 
     const user = await getMe();
+    if (!user) return;
+
     console.log(user);
   }
 

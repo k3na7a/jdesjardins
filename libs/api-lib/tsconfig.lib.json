@@ -6,6 +6,6 @@
     "types": [],
     "target": "es6"
   },
-  "include": ["**/*.ts"],
+  "include": ["**/*.ts", "../dist-lib/src/lib/constants/class-serializer.constants.ts", "../dist-lib/src/lib/interfaces/class-serializer.interfaces.ts"],
   "exclude": ["jest.config.ts", "**/*.spec.ts", "**/*.test.ts"]
 }

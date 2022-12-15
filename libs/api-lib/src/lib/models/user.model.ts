@@ -1,3 +1,4 @@
+import { IUser } from '@jdesjardins/dist-lib';
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEmail,
@@ -8,13 +9,18 @@ import {
   MinLength,
 } from 'class-validator';
 
-export class UserModel {
+export class UserModel implements IUser {
   @ApiProperty()
   public readonly id: string;
   @ApiProperty()
   public username: string;
   @ApiProperty()
   public email: string;
+  constructor(params?: IUser) {
+    this.id = params.id;
+    this.username = params.username;
+    this.email = params.email;
+  }
 }
 
 export class UpdateUserModel {
