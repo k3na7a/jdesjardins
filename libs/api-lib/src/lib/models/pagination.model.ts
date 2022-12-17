@@ -1,7 +1,7 @@
+import { Order } from '@jdesjardins/dist-lib';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsArray, IsEnum, IsInt, IsOptional, Max, Min } from 'class-validator';
-import { Order } from '../../../../dist-lib/src/lib/enums';
 
 export class PaginationMeta {
   @ApiProperty()

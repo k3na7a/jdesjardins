@@ -8,19 +8,13 @@ import {
   Matches,
   MinLength,
 } from 'class-validator';
+import { BaseModel } from './base.model';
 
-export class UserModel implements IUser {
-  @ApiProperty()
-  public readonly id: string;
+export class UserModel extends BaseModel implements IUser {
   @ApiProperty()
   public username: string;
   @ApiProperty()
   public email: string;
-  constructor(params?: IUser) {
-    this.id = params.id;
-    this.username = params.username;
-    this.email = params.email;
-  }
 }
 
 export class UpdateUserModel {

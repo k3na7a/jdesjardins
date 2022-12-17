@@ -1,41 +1,25 @@
-import { useEffect, useMemo, useState } from 'react';
 import { NxWelcome } from './components';
-import AuthService from './services/auth.service';
 
-import { useTranslation } from 'react-i18next';
+// import { useTranslation } from 'react-i18next';
+import { useAxios } from './hooks';
+import { IUser } from '@jdesjardins/dist-lib';
 
 interface Props {
   test_prop: string;
 }
 
 export function App({ test_prop }: Props) {
-  const [test, setTest] = useState<string>('state');
-  const test$ = useMemo(() => test, [test]);
+  // const [t, i18n] = useTranslation('common', { keyPrefix: '' });
+  const [user, loading] = useAxios<IUser>({
+    method: 'GET',
+    url: '/me',
+    headers: {
+      Authorization:
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRlc2pqb2hAZ21haWwuY29tIiwic3ViIjoiMjVlMmM3ODktZmZmMC00NmU4LThjYjktNTVlZDY2NjZhNThjIiwiaWF0IjoxNjcxMjQ2NTY3LCJleHAiOjE2NzEzMzI5Njd9.N5ezg0aoi7ybaOWGfv04LU-RaRaV5HghCySmvD1UDhY',
+    },
+  });
 
-  const { t, i18n } = useTranslation('common', { keyPrefix: '' });
+  if (loading) return <>loading</>;
 
-  useEffect(() => {
-    console.log(test$);
-  }, [test$]);
-
-  const updateTestState = async () => {
-    setTest((prev) => 'new_state');
-
-    const user = await AuthService.getMe();
-    if (!user) return;
-    console.log(user);
-  };
-
-  return (
-    <>
-      <button
-        type="button"
-        className="btn btn-primary"
-        onClick={updateTestState}
-      >
-        {t('title', i18n)}
-      </button>
-      <NxWelcome title="web" />
-    </>
-  );
+  return <NxWelcome title={user?.username || 'guest'} />;
 }

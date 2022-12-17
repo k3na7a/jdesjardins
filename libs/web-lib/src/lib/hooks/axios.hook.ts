@@ -1,11 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
+import apiInstance from '../api/http-common';
 
 export const useAxios = <T>(
   config: AxiosRequestConfig,
   loadOnStart = true
-): [boolean, T | undefined, string, () => void] => {
+): [T | undefined, boolean, string, () => void] => {
   const [data, setData] = useState<T>();
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
@@ -21,18 +22,21 @@ export const useAxios = <T>(
 
   const sendRequest = () => {
     setLoading(true);
-    axios(config)
-      .then((response: AxiosResponse) => {
-        setError('');
-        setData(response.data);
-      })
-      .catch((error: AxiosError) => {
-        setError(error.message);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    setTimeout(() => {
+      apiInstance(config)
+        .then((response: AxiosResponse) => {
+          setError('');
+          setData(response.data);
+        })
+        .catch((error: AxiosError) => {
+          setError(error.message);
+          setData(undefined);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }, 1500);
   };
 
-  return [loading, data, error, request];
+  return [data, loading, error, request];
 };
