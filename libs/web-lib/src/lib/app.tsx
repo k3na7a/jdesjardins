@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { NxWelcome } from './components';
-import { getMe } from './services/auth.service';
+import AuthService from './services/auth.service';
 
 import { useTranslation } from 'react-i18next';
 
@@ -9,7 +9,7 @@ interface Props {
 }
 
 export function App({ test_prop }: Props) {
-  const [test, setTest] = useState('state');
+  const [test, setTest] = useState<string>('state');
   const test$ = useMemo(() => test, [test]);
 
   const { t, i18n } = useTranslation('common', { keyPrefix: '' });
@@ -18,13 +18,13 @@ export function App({ test_prop }: Props) {
     console.log(test$);
   }, [test$]);
 
-  async function updateTestState() {
-    setTest((currentValue) => 'new_state');
+  const updateTestState = async () => {
+    setTest((prev) => 'new_state');
 
-    const user = await getMe();
+    const user = await AuthService.getMe();
     if (!user) return;
-    console.log(user.getUsername());
-  }
+    console.log(user);
+  };
 
   return (
     <>

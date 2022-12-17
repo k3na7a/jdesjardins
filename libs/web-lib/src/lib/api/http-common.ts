@@ -1,11 +1,10 @@
 import axios from 'axios';
 
-const url = 'http://localhost:3333/api';
+const BASE_URL = 'http://localhost:3333/api';
 
 const apiInstance = axios.create({
-  baseURL: url,
+  baseURL: BASE_URL,
   headers: {
-    'Access-Control-Allow-Origin': '*',
     'Content-type': 'application/json',
   },
 });
