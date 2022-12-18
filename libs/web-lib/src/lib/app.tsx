@@ -3,6 +3,7 @@ import { NxWelcome } from './components';
 // import { useTranslation } from 'react-i18next';
 import { useAxios } from './hooks';
 import { IUser } from '@jdesjardins/dist-lib';
+import localHost from './apis/localhost.axios';
 
 interface Props {
   test_prop: string;
@@ -10,7 +11,7 @@ interface Props {
 
 export function App({ test_prop }: Props) {
   // const [t, i18n] = useTranslation('common', { keyPrefix: '' });
-  const [user, loading] = useAxios<IUser>({
+  const [user, loading] = useAxios<IUser>(localHost, {
     method: 'GET',
     url: '/me',
     headers: {
