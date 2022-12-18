@@ -15,7 +15,7 @@ export function App({ test_prop }: Props) {
     url: '/me',
     headers: {
       Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRlc2pqb2hAZ21haWwuY29tIiwic3ViIjoiMjVlMmM3ODktZmZmMC00NmU4LThjYjktNTVlZDY2NjZhNThjIiwiaWF0IjoxNjcxMjQ2NTY3LCJleHAiOjE2NzEzMzI5Njd9.N5ezg0aoi7ybaOWGfv04LU-RaRaV5HghCySmvD1UDhY',
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRlc2pqb2hAZ21haWwuY29tIiwic3ViIjoiMjVlMmM3ODktZmZmMC00NmU4LThjYjktNTVlZDY2NjZhNThjIiwiaWF0IjoxNjcxMzMzNjA5LCJleHAiOjE2NzE0MjAwMDl9.OvJpfejio5NZYaTyn1_dohaYqKtoSMSAMKoMuiq7B-A',
     },
   });
 
