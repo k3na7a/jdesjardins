@@ -20,7 +20,7 @@ export const useAxios = <T>(
   useEffect(() => {
     const controller: AbortController = new AbortController();
 
-    if (loadOnStart) sendRequest();
+    if (loadOnStart) sendRequest(controller);
     else setLoading(false);
 
     return () => {
@@ -32,20 +32,22 @@ export const useAxios = <T>(
     sendRequest();
   };
 
-  const sendRequest = () => {
+  const sendRequest = (controller?: AbortController) => {
     setLoading(true);
-    instance(config)
-      .then((response: AxiosResponse) => {
-        setError(undefined);
-        setData(response.data);
-      })
-      .catch((error: AxiosError) => {
-        setError(error.message);
-        setData(undefined);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    setTimeout(() => {
+      instance({ ...config, signal: controller?.signal })
+        .then((response: AxiosResponse) => {
+          setError(undefined);
+          setData(response.data);
+        })
+        .catch((error: AxiosError) => {
+          setError(error.message);
+          setData(undefined);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }, 1000);
   };
 
   return [data, loading, error, request];

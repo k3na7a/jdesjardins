@@ -3,8 +3,10 @@ import { NxWelcome } from './components';
 // import { useTranslation } from 'react-i18next';
 import { useAxios } from './hooks';
 import { IUser } from '@jdesjardins/dist-lib';
-import localHost from './apis/localhost.axios';
-import { useEffect, useState } from 'react';
+import { localhost } from './apis';
+import { useEffect, useReducer, useState } from 'react';
+import { ActionType, counterReducer } from './reducers/demo.reducer';
+import { Action } from 'rxjs/internal/scheduler/Action';
 
 interface Props {
   test_prop: string;
@@ -12,8 +14,10 @@ interface Props {
 
 export function App({ test_prop }: Props) {
   // const [t, i18n] = useTranslation('common', { keyPrefix: '' });
+  const [state, dispatch] = useReducer(counterReducer, { value: 0 });
+
   const [user, setUser] = useState<IUser>();
-  const [data, loading] = useAxios<IUser>(localHost, {
+  const [data, loading] = useAxios<IUser>(localhost, {
     method: 'GET',
     url: '/me',
     headers: {
@@ -28,5 +32,14 @@ export function App({ test_prop }: Props) {
 
   if (loading) return <>loading</>;
 
-  return <NxWelcome title={user?.username || 'guest'} />;
+  return (
+    <main className="App">
+      <button
+        onClick={() => dispatch({ type: ActionType.Increase, payload: 1 })}
+      >
+        {state.value}
+      </button>
+      <NxWelcome title={user?.username || 'guest'} />
+    </main>
+  );
 }
