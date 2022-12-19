@@ -11,21 +11,26 @@ import {
 } from './reducers/demo.reducer';
 import { DemoContextProvider } from './context/demo.context';
 
+const TOKEN =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRlc2pqb2hAZ21haWwuY29tIiwic3ViIjoiMjVlMmM3ODktZmZmMC00NmU4LThjYjktNTVlZDY2NjZhNThjIiwiaWF0IjoxNjcxNDc2NDYzLCJleHAiOjE2NzE1NjI4NjN9.lsxJmZIw6ja0BVSpxhGX0gHKZQSucM2PLBJCZ6hfVjU';
+
 export function App() {
   const [t, i18n] = useTranslation('common', { keyPrefix: '' });
   const [state, dispatch] = useReducer(counterReducer, { value: 0 });
-  const [data, loading] = useAxios<IUser>({
+  const [data, loading, error] = useAxios<IUser>({
     instance: localhost,
     config: {
       method: 'GET',
       url: '/me',
+      headers: {
+        Authorization: `Bearer ${TOKEN}`,
+      },
     },
   });
   const user$ = useMemo<IUser | undefined>(() => data, [data]);
 
   if (loading) return <p>loading</p>;
-
-  // if (error) return <p>{error.message}</p>;
+  if (error) return <p>{error.message}</p>;
 
   return (
     <DemoContextProvider>
