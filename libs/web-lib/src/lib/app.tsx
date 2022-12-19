@@ -1,10 +1,10 @@
 import { NxWelcome } from './components';
 
 import { useTranslation } from 'react-i18next';
-// import { useAxios } from './hooks';
-// import { IUser } from '@jdesjardins/dist-lib';
-// import { localhost } from './apis';
-import { useReducer } from 'react';
+import { useAxios } from './hooks';
+import { IUser } from '@jdesjardins/dist-lib';
+import { localhost } from './apis';
+import { useReducer, useRef } from 'react';
 import {
   CounterReducerActionTypes,
   counterReducer,
@@ -16,13 +16,14 @@ export function App() {
   const [state, dispatch] = useReducer(counterReducer, { value: 0 });
 
   // const [user, setUser] = useState<IUser>()
-  // const [data, loading, error] = useAxios<IUser>({
-  //   instance: localhost,
-  //   config: {
-  //     method: 'GET',
-  //     url: '/me',
-  //   },
-  // });
+  const [data, loading, error] = useAxios<IUser>({
+    instance: localhost,
+    config: {
+      method: 'GET',
+      url: '/me',
+    },
+  });
+  const user$ = useRef(data)
 
   // function useEffect(() => {
   //   setUser(data)
