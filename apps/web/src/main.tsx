@@ -13,7 +13,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <StrictMode>
     <BrowserRouter>
-      <App test_prop={''} />
+      <App />
     </BrowserRouter>
   </StrictMode>
 );

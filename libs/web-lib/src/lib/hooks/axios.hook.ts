@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-
 import {
   AxiosError,
   AxiosInstance,
@@ -8,14 +7,25 @@ import {
 } from 'axios';
 import { useEffect, useState } from 'react';
 
-export const useAxios = <T>(
-  instance: AxiosInstance,
-  config: AxiosRequestConfig,
-  loadOnStart = true
-): [T | undefined, boolean, string | undefined, () => void] => {
+interface AxiosHookInterface {
+  instance: AxiosInstance;
+  config: AxiosRequestConfig;
+  loadOnStart?: boolean;
+}
+
+export const useAxios = <T>({
+  instance,
+  config,
+  loadOnStart = true,
+}: AxiosHookInterface): [
+  T | undefined,
+  boolean,
+  AxiosError | undefined,
+  () => void
+] => {
   const [data, setData] = useState<T>();
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string>();
+  const [error, setError] = useState<AxiosError>();
 
   useEffect(() => {
     const controller: AbortController = new AbortController();
@@ -41,7 +51,7 @@ export const useAxios = <T>(
           setData(response.data);
         })
         .catch((error: AxiosError) => {
-          setError(error.message);
+          setError(error);
           setData(undefined);
         })
         .finally(() => {

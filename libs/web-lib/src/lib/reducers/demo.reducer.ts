@@ -1,30 +1,34 @@
-export enum ActionType {
+export enum CounterReducerActionTypes {
   Increase = 'INCREASE',
   Decrease = 'DECREASE',
 }
 
-interface Action {
-  type: ActionType;
-  payload: number;
-}
-
-interface State {
+interface CounterReducerState {
   value: number;
 }
 
-export function counterReducer(state: State, action: Action): State {
+interface CounterReducerAction {
+  type: CounterReducerActionTypes;
+  payload: number;
+}
+
+export function counterReducer(
+  state: CounterReducerState,
+  action: CounterReducerAction
+): CounterReducerState {
+  const { value } = state;
   const { type, payload } = action;
 
   switch (type) {
-    case ActionType.Increase:
+    case CounterReducerActionTypes.Increase:
       return {
         ...state,
-        value: state.value + payload,
+        value: value + payload,
       };
-    case ActionType.Decrease:
+    case CounterReducerActionTypes.Decrease:
       return {
         ...state,
-        value: state.value - payload,
+        value: value - payload,
       };
     default:
       return state;
