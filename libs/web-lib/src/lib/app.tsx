@@ -15,6 +15,7 @@ export function App() {
   const [t, i18n] = useTranslation('common', { keyPrefix: '' });
   const [state, dispatch] = useReducer(counterReducer, { value: 0 });
 
+  // const [user, setUser] = useState<IUser>()
   // const [data, loading, error] = useAxios<IUser>({
   //   instance: localhost,
   //   config: {
@@ -22,6 +23,10 @@ export function App() {
   //     url: '/me',
   //   },
   // });
+
+  // function useEffect(() => {
+  //   setUser(data)
+  // }, [data])
 
   // if (loading) return <p>loading</p>;
 
