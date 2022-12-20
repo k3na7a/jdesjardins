@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
   AxiosError,
@@ -11,12 +12,16 @@ interface AxiosHookInterface {
   instance: AxiosInstance;
   config: AxiosRequestConfig;
   loadOnStart?: boolean;
+  onSuccess?: (value?: any) => void;
+  onError?: (value?: any) => void;
 }
 
 export const useAxios = <T>({
   instance,
   config,
   loadOnStart = true,
+  onSuccess,
+  onError,
 }: AxiosHookInterface): [
   T | undefined,
   boolean,
@@ -53,9 +58,11 @@ export const useAxios = <T>({
         .catch((error: AxiosError) => {
           setError(error);
           setData(undefined);
+          if (onError) onError();
         })
         .finally(() => {
           setLoading(false);
+          if (onSuccess) onSuccess();
         });
     }, 1000);
   };

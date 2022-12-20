@@ -17,7 +17,7 @@ export const DemoContext = createContext<DemoContextInterface>({
 });
 
 export const DemoContextProvider = ({ children }: Props) => {
-  const [user, setUser] = useState<IUser>();
+  const [user, setUser] = useState<IUser | undefined>(undefined);
 
   return (
     <DemoContext.Provider value={{ user, setUser }}>

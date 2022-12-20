@@ -1,4 +1,6 @@
 export function NxWelcome({ title }: { title: string }) {
+  // const { user, setUser } = useContext(DemoContext);
+
   return (
     <>
       <style
