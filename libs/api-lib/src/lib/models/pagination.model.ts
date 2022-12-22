@@ -27,14 +27,14 @@ export class PaginationMeta {
   }
 }
 
-export class Pagination<PaginationEntity> {
+export class Pagination<T> {
   @ApiProperty({ isArray: true })
   @IsArray()
-  readonly results: PaginationEntity[];
+  readonly results: T[];
   @ApiProperty({ type: () => PaginationMeta })
   readonly meta: PaginationMeta;
 
-  constructor(results: PaginationEntity[], meta: PaginationMeta) {
+  constructor(results: T[], meta: PaginationMeta) {
     this.results = results;
     this.meta = meta;
   }
@@ -72,6 +72,6 @@ export class PaginationOptions {
 }
 
 export interface PaginationMetaParameters {
-  pageOptions: PaginationOptions;
-  itemCount: number;
+  readonly pageOptions: PaginationOptions;
+  readonly itemCount: number;
 }
