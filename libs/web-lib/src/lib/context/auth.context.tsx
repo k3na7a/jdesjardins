@@ -4,6 +4,7 @@ import { AxiosError } from 'axios';
 import React, { createContext, useEffect, useState } from 'react';
 import { localhost } from '../apis';
 import { useAxios } from '../hooks';
+import { usePrivateAxiosInstance } from '../hooks/usePrivateAxiosInstance.hook';
 
 interface AuthContextInterface {
   isAuthenticated: boolean;
@@ -23,27 +24,21 @@ export const AuthContext = createContext<AuthContextInterface>({
   },
 });
 
-const TOKEN =
-  'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRlc2pqb2hAZ21haWwuY29tIiwic3ViIjoiMjVlMmM3ODktZmZmMC00NmU4LThjYjktNTVlZDY2NjZhNThjIiwiaWF0IjoxNjcxNjc5ODA2LCJleHAiOjE2NzE3NjYyMDZ9.AtncjSQ2vFcjWHHXhjT4ieblBPAddh2xqIW3kFPwZsI';
-
-interface Props {
+interface Children {
   children: React.ReactNode;
 }
 
-export const AuthContextProvider = ({ children }: Props) => {
+export const AuthContextProvider = ({ children }: Children) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [user, loading, error, request] = useAxios<IUser>({
-    instance: localhost,
+    instance: usePrivateAxiosInstance(localhost),
     config: {
       method: 'GET',
       url: '/me',
-      headers: {
-        Authorization: TOKEN,
-      },
     },
     loadOnStart: false,
     onSuccess: (res: IUser) => {
-      console.log('Authentication Successful', res.username);
+      console.log('Authentication success', res.username);
       setIsAuthenticated(true);
     },
     onError: (err: AxiosError) => {
@@ -53,10 +48,11 @@ export const AuthContextProvider = ({ children }: Props) => {
   });
 
   useEffect(() => {
-    request();
+    authenticate();
   }, []);
 
   const authenticate = () => {
+    console.log('Authenticating...');
     request();
   };
 

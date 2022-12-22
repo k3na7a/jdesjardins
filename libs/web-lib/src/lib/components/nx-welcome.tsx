@@ -1,14 +1,10 @@
-import { useContext } from 'react';
-import { AuthContext } from '../context/auth.context';
+// import { useContext } from 'react';
+// import { AuthContext } from '../context/auth.context';
 
 export function NxWelcome({ title }: { title: string }) {
-  const { isAuthenticated, user, loading } = useContext(AuthContext);
-
+  // const { isAuthenticated, user, loading } = useContext(AuthContext);
   return (
     <>
-      {loading && <p>LOADING</p>}
-      {isAuthenticated ? 'AUTHENTICATED' : 'RESTRICTED'}
-      {user?.username}
       <style
         dangerouslySetInnerHTML={{
           __html: `

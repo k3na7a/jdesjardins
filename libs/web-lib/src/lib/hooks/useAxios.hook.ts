@@ -5,7 +5,7 @@ import {
   AxiosRequestConfig,
   AxiosResponse,
 } from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface AxiosHookInterface<T> {
   instance: AxiosInstance;
@@ -25,47 +25,44 @@ export const useAxios = <T>({
   T | undefined,
   boolean,
   AxiosError | undefined,
+  () => void,
   () => void
 ] => {
   const [data, setData] = useState<T>();
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<AxiosError>();
+  const controllerRef = useRef(new AbortController());
 
-  useEffect(() => {
-    const controller: AbortController = new AbortController();
-
-    if (loadOnStart) sendRequest(controller);
-    else setLoading(false);
-
-    return () => {
-      controller.abort();
-    };
-  }, []);
+  const cancel = () => {
+    controllerRef.current.abort();
+  };
 
   const request = () => {
     sendRequest();
   };
 
-  const sendRequest = (controller?: AbortController) => {
-    console.log('Authenticating...');
+  useEffect(() => {
+    if (loadOnStart) request();
+    else setLoading(false);
+  }, []);
+
+  const sendRequest = () => {
     setLoading(true);
-    setTimeout(() => {
-      instance({ ...config, signal: controller?.signal })
-        .then((response: AxiosResponse) => {
-          setError(undefined);
-          setData(response.data);
-          if (onSuccess) onSuccess(response.data);
-        })
-        .catch((error: AxiosError) => {
-          setError(error);
-          setData(undefined);
-          if (onError) onError(error);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    }, 1000);
+    instance({ ...config, signal: controllerRef.current.signal })
+      .then((response: AxiosResponse) => {
+        setError(undefined);
+        setData(response.data);
+        if (onSuccess) onSuccess(response.data);
+      })
+      .catch((error: AxiosError) => {
+        setError(error);
+        setData(undefined);
+        if (onError) onError(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
-  return [data, loading, error, request];
+  return [data, loading, error, request, cancel];
 };
