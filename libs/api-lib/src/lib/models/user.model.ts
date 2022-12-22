@@ -1,4 +1,4 @@
-import { IUser } from '@jdesjardins/dist-lib';
+import { IUser, PASSWORD_VALIDATION_REGEX } from '@jdesjardins/dist-lib';
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEmail,
@@ -43,7 +43,7 @@ export class CreateUserModel {
   @IsString()
   @IsNotEmpty()
   @MinLength(8)
-  @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
+  @Matches(PASSWORD_VALIDATION_REGEX, {
     message:
       'Password too weak. Must contain both Uppercase and Lowercase, at least 1 Digit, and be 8 or more characters long.',
   })

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
   AxiosError,
@@ -8,12 +7,12 @@ import {
 } from 'axios';
 import { useEffect, useState } from 'react';
 
-interface AxiosHookInterface {
+interface AxiosHookInterface<T> {
   instance: AxiosInstance;
   config: AxiosRequestConfig;
   loadOnStart?: boolean;
-  onSuccess?: (value?: any) => void;
-  onError?: (value?: any) => void;
+  onSuccess?: (res: T) => void;
+  onError?: (err: AxiosError) => void;
 }
 
 export const useAxios = <T>({
@@ -22,7 +21,7 @@ export const useAxios = <T>({
   loadOnStart = true,
   onSuccess,
   onError,
-}: AxiosHookInterface): [
+}: AxiosHookInterface<T>): [
   T | undefined,
   boolean,
   AxiosError | undefined,
@@ -48,21 +47,22 @@ export const useAxios = <T>({
   };
 
   const sendRequest = (controller?: AbortController) => {
+    console.log('Authenticating...');
     setLoading(true);
     setTimeout(() => {
       instance({ ...config, signal: controller?.signal })
         .then((response: AxiosResponse) => {
           setError(undefined);
           setData(response.data);
+          if (onSuccess) onSuccess(response.data);
         })
         .catch((error: AxiosError) => {
           setError(error);
           setData(undefined);
-          if (onError) onError();
+          if (onError) onError(error);
         })
         .finally(() => {
           setLoading(false);
-          if (onSuccess) onSuccess();
         });
     }, 1000);
   };
