@@ -35,6 +35,7 @@ export const useAxios = <T>({
 
   const cancel = () => {
     controllerRef.current.abort();
+    controllerRef.current = new AbortController();
   };
 
   const request = () => {
@@ -44,6 +45,10 @@ export const useAxios = <T>({
   useEffect(() => {
     if (loadOnStart) request();
     else setLoading(false);
+
+    return () => {
+      cancel();
+    };
   }, []);
 
   const sendRequest = () => {
