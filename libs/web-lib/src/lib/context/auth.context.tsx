@@ -1,25 +1,35 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { IUser } from '@jdesjardins/dist-lib';
+import { AccessToken, IUser, IUserLogin } from '@jdesjardins/dist-lib';
 import { AxiosError } from 'axios';
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useState } from 'react';
 import { localhost } from '../apis';
 import { useAxios } from '../hooks';
 import { usePrivateAxiosInstance } from '../hooks/usePrivateAxiosInstance.hook';
 
 interface AuthContextInterface {
   isAuthenticated: boolean;
-  user: IUser | undefined;
-  loading: boolean;
-  error: AxiosError | undefined;
+  authenticatedUser: IUser | undefined;
+  authenticationIsLoading: boolean;
+  authenticationHasError: AxiosError | undefined;
   authenticate: () => void;
+
+  loginIsLoading: boolean;
+  loginHasError: AxiosError | undefined;
+  login: (data: IUserLogin) => void;
 }
 
 export const AuthContext = createContext<AuthContextInterface>({
   isAuthenticated: false,
-  user: undefined,
-  loading: false,
-  error: undefined,
+  authenticatedUser: undefined,
+  authenticationIsLoading: false,
+  authenticationHasError: undefined,
   authenticate: () => {
+    return;
+  },
+
+  loginIsLoading: false,
+  loginHasError: undefined,
+  login: (_data: IUserLogin) => {
     return;
   },
 });
@@ -30,35 +40,53 @@ interface Children {
 
 export const AuthContextProvider = ({ children }: Children) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [user, loading, error, request] = useAxios<IUser>({
+  const [
+    authenticatedUser,
+    authenticationIsLoading,
+    authenticationHasError,
+    authenticate,
+  ] = useAxios<IUser>({
     instance: usePrivateAxiosInstance(localhost),
-    config: {
+    baseConfig: {
       method: 'GET',
       url: '/me',
     },
-    loadOnStart: false,
-    onSuccess: (res: IUser) => {
-      console.log('Authentication success', res.username);
+    onSuccess: () => {
       setIsAuthenticated(true);
     },
-    onError: (err: AxiosError) => {
-      console.log('Authentication failure', err.message);
+    onError: () => {
       setIsAuthenticated(false);
     },
   });
+  const [, loginIsLoading, loginHasError, axiosLogin] = useAxios<AccessToken>({
+    instance: localhost,
+    baseConfig: {
+      method: 'POST',
+      url: '/login',
+    },
+    loadOnStart: false,
+    onSuccess: (response: AccessToken) => {
+      localStorage.setItem('AccessToken', response.access_token);
+      authenticate();
+    },
+  });
 
-  useEffect(() => {
-    authenticate();
-  }, []);
-
-  const authenticate = () => {
-    console.log('Authenticating...');
-    request();
+  const login = (data: IUserLogin) => {
+    axiosLogin({ data });
   };
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, user, loading, error, authenticate }}
+      value={{
+        isAuthenticated,
+        authenticatedUser,
+        authenticationIsLoading,
+        authenticationHasError,
+        authenticate,
+        loginIsLoading,
+        loginHasError,
+        login,
+      }}
     >
       {children}
     </AuthContext.Provider>

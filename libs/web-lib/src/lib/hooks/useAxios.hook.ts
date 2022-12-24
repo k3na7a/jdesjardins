@@ -9,7 +9,7 @@ import { useEffect, useRef, useState } from 'react';
 
 interface AxiosHookInterface<T> {
   instance: AxiosInstance;
-  config: AxiosRequestConfig;
+  baseConfig: AxiosRequestConfig;
   loadOnStart?: boolean;
   onSuccess?: (res: T) => void;
   onError?: (err: AxiosError) => void;
@@ -17,7 +17,7 @@ interface AxiosHookInterface<T> {
 
 export const useAxios = <T>({
   instance,
-  config,
+  baseConfig,
   loadOnStart = true,
   onSuccess,
   onError,
@@ -25,7 +25,7 @@ export const useAxios = <T>({
   T | undefined,
   boolean,
   AxiosError | undefined,
-  () => void,
+  (config?: AxiosRequestConfig) => void,
   () => void
 ] => {
   const [data, setData] = useState<T>();
@@ -38,8 +38,8 @@ export const useAxios = <T>({
     controllerRef.current = new AbortController();
   };
 
-  const request = () => {
-    sendRequest();
+  const request = (requestConfig?: AxiosRequestConfig) => {
+    sendRequest(requestConfig);
   };
 
   useEffect(() => {
@@ -51,9 +51,13 @@ export const useAxios = <T>({
     };
   }, []);
 
-  const sendRequest = () => {
+  const sendRequest = (requestConfig?: AxiosRequestConfig) => {
     setLoading(true);
-    instance({ ...config, signal: controllerRef.current.signal })
+    instance({
+      ...baseConfig,
+      ...requestConfig,
+      signal: controllerRef.current.signal,
+    })
       .then((response: AxiosResponse) => {
         setError(undefined);
         setData(response.data);

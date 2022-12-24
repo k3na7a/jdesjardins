@@ -1,12 +1,15 @@
+import { useContext } from 'react';
+import { AuthContext } from '.';
 import { NxWelcome } from './components';
-import { AuthContextProvider } from './context/auth.context';
 
 export function App() {
+  const ctx = useContext(AuthContext);
+
+  if (ctx.authenticationIsLoading) return <>loading...</>;
+  
   return (
-    <AuthContextProvider>
-      <main className="App">
-        <NxWelcome title="" />
-      </main>
-    </AuthContextProvider>
+    <main className="App">
+      <NxWelcome title={''} />
+    </main>
   );
 }

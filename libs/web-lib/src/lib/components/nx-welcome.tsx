@@ -1,8 +1,4 @@
-// import { useContext } from 'react';
-// import { AuthContext } from '../context/auth.context';
-
 export function NxWelcome({ title }: { title: string }) {
-  // const { isAuthenticated, user, loading } = useContext(AuthContext);
   return (
     <>
       <style
