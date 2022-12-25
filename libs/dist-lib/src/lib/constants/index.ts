@@ -1,1 +1,1 @@
-export * from './validation.constants';
+export * from './validationRegex.constants';

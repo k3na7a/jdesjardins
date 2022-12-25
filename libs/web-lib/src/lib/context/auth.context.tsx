@@ -1,13 +1,11 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { AccessToken, IUser, IUserLogin } from '@jdesjardins/dist-lib';
 import { AxiosError } from 'axios';
-import React, { createContext, useState } from 'react';
+import React, { createContext } from 'react';
 import { localhost } from '../apis';
 import { useAxios } from '../hooks';
 import { usePrivateAxiosInstance } from '../hooks/usePrivateAxiosInstance.hook';
 
 interface AuthContextInterface {
-  isAuthenticated: boolean;
   authenticatedUser: IUser | undefined;
   authenticationIsLoading: boolean;
   authenticationHasError: AxiosError | undefined;
@@ -19,7 +17,6 @@ interface AuthContextInterface {
 }
 
 export const AuthContext = createContext<AuthContextInterface>({
-  isAuthenticated: false,
   authenticatedUser: undefined,
   authenticationIsLoading: false,
   authenticationHasError: undefined,
@@ -39,7 +36,6 @@ interface Children {
 }
 
 export const AuthContextProvider = ({ children }: Children) => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [
     authenticatedUser,
     authenticationIsLoading,
@@ -51,12 +47,6 @@ export const AuthContextProvider = ({ children }: Children) => {
       method: 'GET',
       url: '/me',
     },
-    onSuccess: () => {
-      setIsAuthenticated(true);
-    },
-    onError: () => {
-      setIsAuthenticated(false);
-    },
   });
   const [, loginIsLoading, loginHasError, axiosLogin] = useAxios<AccessToken>({
     instance: localhost,
@@ -66,6 +56,7 @@ export const AuthContextProvider = ({ children }: Children) => {
     },
     loadOnStart: false,
     onSuccess: (response: AccessToken) => {
+      // todo : Find better way to store JSX Token ( Implement cleaner login logic )
       localStorage.setItem('AccessToken', response.access_token);
       authenticate();
     },
@@ -78,7 +69,6 @@ export const AuthContextProvider = ({ children }: Children) => {
   return (
     <AuthContext.Provider
       value={{
-        isAuthenticated,
         authenticatedUser,
         authenticationIsLoading,
         authenticationHasError,

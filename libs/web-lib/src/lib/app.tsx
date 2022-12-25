@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { AuthContext } from '.';
 import { NxWelcome } from './components';
 
@@ -7,12 +7,12 @@ export function App() {
 
   if (ctx.authenticationIsLoading) return <>loading...</>;
 
-  if (ctx.isAuthenticated && ctx.authenticatedUser)
+  if (ctx.authenticatedUser)
     return (
       <main className="App">
         <NxWelcome title={ctx.authenticatedUser.username} />
       </main>
     );
 
-  return <></>;
+  return <>Not Authorized to be here!</>;
 }
