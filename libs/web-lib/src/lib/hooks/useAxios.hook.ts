@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
   AxiosError,
@@ -15,6 +16,10 @@ interface AxiosHookInterface<T> {
   onError?: (err: AxiosError) => void;
 }
 
+interface IRequestData {
+  data: Record<string, any>;
+}
+
 export const useAxios = <T>({
   instance,
   baseConfig,
@@ -25,7 +30,7 @@ export const useAxios = <T>({
   T | undefined,
   boolean,
   AxiosError | undefined,
-  (config?: AxiosRequestConfig) => void,
+  (reqData?: IRequestData) => void,
   () => void
 ] => {
   const [data, setData] = useState<T>();
@@ -38,8 +43,8 @@ export const useAxios = <T>({
     controllerRef.current = new AbortController();
   };
 
-  const request = (requestConfig?: AxiosRequestConfig) => {
-    sendRequest(requestConfig);
+  const request = (data?: IRequestData) => {
+    setTimeout(sendRequest, 1000, data);
   };
 
   useEffect(() => {
@@ -51,11 +56,11 @@ export const useAxios = <T>({
     };
   }, []);
 
-  const sendRequest = (requestConfig?: AxiosRequestConfig) => {
+  const sendRequest = (reqData?: IRequestData) => {
     setLoading(true);
     instance({
       ...baseConfig,
-      ...requestConfig,
+      ...reqData,
       signal: controllerRef.current.signal,
     })
       .then((response: AxiosResponse) => {
