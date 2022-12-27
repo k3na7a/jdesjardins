@@ -1,8 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable react-hooks/exhaustive-deps */
 import { AccessToken, IUser, IUserLogin } from '@jdesjardins/dist-lib';
 import { AxiosError } from 'axios';
-import React, { createContext, useEffect } from 'react';
+import React, { createContext, useCallback, useEffect } from 'react';
 import { localhost, localhost_authenticate } from '../apis';
 import { useAxios } from '../hooks';
 import { usePrivateAxiosInstance } from '../hooks/usePrivateAxiosInstance.hook';
@@ -55,13 +53,16 @@ export const AuthContextProvider = ({ children }: Children) => {
       },
     });
 
-  const login = (data: IUserLogin) => {
-    axiosLogin({ method: 'GET', url: '/login', data });
-  };
+  const login = useCallback(
+    (data: IUserLogin) => {
+      axiosLogin({ method: 'GET', url: '/login', data });
+    },
+    [axiosLogin]
+  );
 
   useEffect(() => {
     authenticate();
-  }, []);
+  }, [authenticate]);
 
   return (
     <AuthContext.Provider

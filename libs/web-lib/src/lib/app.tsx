@@ -1,35 +1,50 @@
-import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useCallback, useContext, useEffect } from 'react';
 import { pokeapi_pokemon } from './apis/pokeapi.axios';
-import { NxWelcome } from './components';
+import { NxWelcome } from '@jdesjardins/ui';
+import { AuthContext } from './context';
 import { useAxios } from './hooks';
 
 interface Pokemon {
   id: number;
   name: string;
-  sprite: {
+  sprites: {
     front_default: string;
   };
 }
 
 export function App() {
-  const [data, _loading, _error, request] = useAxios<Pokemon>({
+  // Demo Playground
+  const _authCtx = useContext(AuthContext);
+
+  const [pokemon, loading, , getPokemon, cancel] = useAxios<Pokemon>({
     instance: pokeapi_pokemon,
-    onSuccess(res) {
-      console.log(res);
-    },
   });
-  const requestRef = useRef(request);
-  const pokemon = useMemo(() => data, [data]);
+
+  const getBublasaur = useCallback(
+    (pokemon: string) => getPokemon({ url: pokemon }),
+    [getPokemon]
+  );
 
   useEffect(() => {
-    requestRef.current({ url: 'pikachu' });
-  }, [requestRef]);
-
-  const getBublasaur = useCallback(() => console.log('hello'), []);
+    getPokemon({ url: 'pikachu' });
+    return () => {
+      cancel();
+    };
+  }, [getPokemon, cancel]);
 
   return (
     <main className="App">
-      <button onClick={getBublasaur}>PRESS ME</button>
+      <button
+        type="button"
+        className="btn btn-primary"
+        disabled={loading}
+        onClick={() => getBublasaur('bulbasaur')}
+      >
+        PRESS ME
+      </button>
+      {pokemon && (
+        <img src={pokemon.sprites.front_default} alt={pokemon.name} />
+      )}
       <NxWelcome title={pokemon?.name || '...'} />
     </main>
   );

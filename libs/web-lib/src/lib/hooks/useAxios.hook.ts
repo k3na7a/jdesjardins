@@ -29,9 +29,9 @@ export const useAxios = <T>({
 
   const controllerRef = useRef(new AbortController());
 
-  const cancel = () => {
+  const cancel = useCallback(() => {
     controllerRef.current.abort();
-  };
+  }, []);
 
   const sendRequest = useCallback(
     (config?: AxiosRequestConfig) => {
@@ -59,7 +59,7 @@ export const useAxios = <T>({
 
   const request = useCallback(
     (config?: AxiosRequestConfig) => {
-      setTimeout(sendRequest, 1000, config);
+      sendRequest(config);
     },
     [sendRequest]
   );
