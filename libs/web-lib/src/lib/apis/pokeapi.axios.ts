@@ -1,17 +1,17 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:3333/api';
+const BASE_URL = 'https://pokeapi.co/api/v2';
 
-export const localhost = axios.create({
+export const pokeapi = axios.create({
   baseURL: BASE_URL,
   headers: {
     'Content-type': 'application/json',
   },
 });
 
-export const localhost_authenticate = axios.create({
-  baseURL: `${BASE_URL}/me`,
+export const pokeapi_pokemon = axios.create({
   method: 'GET',
+  baseURL: `${BASE_URL}/pokemon/`,
   headers: {
     'Content-type': 'application/json',
   },

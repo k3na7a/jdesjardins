@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 import { AccessToken, IUser, IUserLogin } from '@jdesjardins/dist-lib';
 import { AxiosError } from 'axios';
-import React, { createContext } from 'react';
-import { localhost } from '../apis';
+import React, { createContext, useEffect } from 'react';
+import { localhost, localhost_authenticate } from '../apis';
 import { useAxios } from '../hooks';
 import { usePrivateAxiosInstance } from '../hooks/usePrivateAxiosInstance.hook';
 
@@ -42,29 +44,24 @@ export const AuthContextProvider = ({ children }: Children) => {
     authenticationHasError,
     authenticate,
   ] = useAxios<IUser>({
-    instance: usePrivateAxiosInstance(localhost),
-    baseConfig: {
-      method: 'GET',
-      url: '/me',
-    },
+    instance: usePrivateAxiosInstance(localhost_authenticate),
   });
-  const [, loginIsLoading, loginHasError, axiosLogin] = useAxios<AccessToken>({
-    instance: localhost,
-    baseConfig: {
-      method: 'POST',
-      url: '/login',
-    },
-    loadOnStart: false,
-    onSuccess: (response: AccessToken) => {
-      // todo : Find better way to store JSX Token ( Implement cleaner login logic )
-      localStorage.setItem('AccessToken', response.access_token);
-      authenticate();
-    },
-  });
+  const [_accessToken, loginIsLoading, loginHasError, axiosLogin] =
+    useAxios<AccessToken>({
+      instance: localhost,
+      onSuccess: (response: AccessToken) => {
+        localStorage.setItem('AccessToken', response.access_token);
+        authenticate();
+      },
+    });
 
   const login = (data: IUserLogin) => {
-    axiosLogin({ data });
+    axiosLogin({ method: 'GET', url: '/login', data });
   };
+
+  useEffect(() => {
+    authenticate();
+  }, []);
 
   return (
     <AuthContext.Provider

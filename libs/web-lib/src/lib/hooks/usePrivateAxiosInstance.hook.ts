@@ -15,7 +15,6 @@ export const usePrivateAxiosInstance = (instance: AxiosInstance) => {
         return Promise.reject(err);
       }
     );
-
     return () => {
       instance.interceptors.response.eject(responseRef);
     };
