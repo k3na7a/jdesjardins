@@ -36,6 +36,7 @@ export const useAxios = <T>({
   const [data, setData] = useState<T>();
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<AxiosError>();
+
   const controllerRef = useRef(new AbortController());
 
   const cancel = () => {
