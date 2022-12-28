@@ -5,6 +5,7 @@ import {
   Get,
   Post,
   Put,
+  Req,
   Request,
   UseGuards,
   UseInterceptors,
@@ -20,6 +21,7 @@ import {
   CreateUserModel,
   UserLoginModel,
 } from '../../../models';
+import { RefreshTokenGuard } from '../../../guards/refreshToken.guard';
 
 @Controller('')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -47,5 +49,13 @@ export class AuthController {
   @Get('me')
   getSelf(@Request() req: { user: UserEntity }): Promise<UserEntity> {
     return this.userService.findById(req.user.id);
+  }
+
+  @ApiBearerAuth('access-token')
+  @UseGuards(AccessTokenGuard, RefreshTokenGuard)
+  @UseGuards()
+  @Get('refresh')
+  refreshTokens(@Req() req: { user: UserEntity }) {
+    console.log(req.user);
   }
 }

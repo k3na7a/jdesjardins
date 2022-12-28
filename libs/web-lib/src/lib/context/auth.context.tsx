@@ -2,7 +2,7 @@ import { IUser } from '@jdesjardins/dist-lib';
 import React, { createContext } from 'react';
 import { localAuthenticate } from '../apis';
 import { useAxios } from '../hooks';
-import { usePrivateAxiosInstance } from '../hooks/usePrivateAxiosInstance.hook';
+import { usePrivateAxiosInstance } from '../hooks';
 
 interface AuthContextInterface {
   authenticatedUser: IUser | undefined;
