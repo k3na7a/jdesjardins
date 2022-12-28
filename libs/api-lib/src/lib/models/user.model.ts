@@ -1,6 +1,7 @@
 import {
   IUser,
   PASSWORD_VALIDATION_REGEX,
+  Role,
   USERNAME_VALIDATION_REGEX,
 } from '@jdesjardins/dist-lib';
 import { ApiProperty } from '@nestjs/swagger';
@@ -19,6 +20,8 @@ export class UserModel extends BaseModel implements IUser {
   public username: string;
   @ApiProperty()
   public email: string;
+  @ApiProperty()
+  public role: Role;
 }
 
 export class UpdateUserModel {

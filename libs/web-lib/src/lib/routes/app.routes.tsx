@@ -1,3 +1,4 @@
+import { Role } from '@jdesjardins/dist-lib';
 import { NxWelcome } from '@jdesjardins/ui-lib';
 import { Navigate, RouteObject } from 'react-router-dom';
 import { RequireAuth } from '../guards';
@@ -8,7 +9,7 @@ export const routes: RouteObject[] = [
     element: <>HELLO WORLD!</>,
   },
   {
-    element: <RequireAuth />,
+    element: <RequireAuth allowedRoles={[Role.ADMIN]} />,
     children: [
       {
         path: 'test',
