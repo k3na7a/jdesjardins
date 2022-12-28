@@ -33,8 +33,8 @@ export class AuthController {
 
   @ApiBody({ type: CreateUserModel })
   @Put('register')
-  createUser(@Body() params: CreateUserModel): Promise<UserEntity> {
-    return this.userService.create(params);
+  createUser(@Body() params: CreateUserModel): Promise<AccessTokenModel> {
+    return this.authService.register(params);
   }
 
   @UseGuards(LocalAuthGuard)

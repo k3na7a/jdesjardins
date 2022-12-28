@@ -45,7 +45,6 @@ export class UserService {
   async create(user: CreateUserModel): Promise<UserEntity> {
     const newUser = this.userRepository.create({
       ...user,
-      refreshToken: 'test',
     });
     return await this.userRepository.save(newUser);
   }

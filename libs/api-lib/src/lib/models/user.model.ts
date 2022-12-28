@@ -32,13 +32,20 @@ export class UpdateUserModel {
   @IsEmail()
   @IsNotEmpty()
   public email?: string;
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  public refreshToken?: string;
 }
 
 export class CreateUserModel {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  @Matches(USERNAME_VALIDATION_REGEX, {})
+  @Matches(USERNAME_VALIDATION_REGEX, {
+    message:
+      'Username must contain one lowercase letter, one uppercase letter, no space, no digits, no special characters, and it must be 4-16 chaaracters long.',
+  })
   public username: string;
   @ApiProperty()
   @IsEmail()

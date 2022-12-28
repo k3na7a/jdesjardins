@@ -27,8 +27,8 @@ export class UserEntity extends BaseEntity implements IUser {
   })
   role: Role;
 
-  @Column()
-  refreshToken: string;
+  @Column({ nullable: true })
+  refreshToken!: string;
 
   @BeforeInsert()
   @BeforeUpdate()
