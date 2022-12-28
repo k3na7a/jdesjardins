@@ -3,8 +3,7 @@ import { Reflector } from '@nestjs/core';
 import { Role } from '@jdesjardins/dist-lib';
 
 const validate = (requiredRoles: Role[], role: Role) => {
-  console.log(requiredRoles, role);
-  return requiredRoles.includes(role);
+  return requiredRoles.includes(role) || role === Role.ADMIN;
 };
 
 @Injectable()
