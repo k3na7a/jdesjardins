@@ -27,6 +27,9 @@ export class UserEntity extends BaseEntity implements IUser {
   })
   role: Role;
 
+  @Column()
+  refreshToken: string;
+
   @BeforeInsert()
   async insertUser() {
     const salt = await bcrypt.genSalt();

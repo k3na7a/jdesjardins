@@ -14,7 +14,7 @@ import { LocalAuthGuard } from '../../../guards/local.auth.guard';
 import { AuthService } from '../services/auth.service';
 import { UserEntity } from '../../../entities';
 import { UserService } from '../../users/services/user.service';
-import { JwtAuthGuard } from '../../../guards/jwt-auth.guard';
+import { AccessTokenGuard } from '../../../guards/accessToken.guard';
 import {
   AccessTokenModel,
   CreateUserModel,
@@ -43,7 +43,7 @@ export class AuthController {
   }
 
   @ApiBearerAuth('access-token')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(AccessTokenGuard)
   @Get('me')
   getSelf(@Request() req: { user: UserEntity }): Promise<UserEntity> {
     return this.userService.findById(req.user.id);

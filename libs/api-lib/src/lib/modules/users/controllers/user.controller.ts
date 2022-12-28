@@ -13,7 +13,7 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 import { UserService } from '../services/user.service';
-import { JwtAuthGuard } from '../../../guards/jwt-auth.guard';
+import { AccessTokenGuard } from '../../../guards/accessToken.guard';
 import { Roles } from '../../../decorators/roles.decorator';
 import { RolesGuard } from '../../../guards/roles.guard';
 import { Role } from '@jdesjardins/dist-lib';
@@ -32,7 +32,7 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Roles(Role.ADMIN)
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  @UseGuards(AccessTokenGuard, RolesGuard)
   @Get('')
   getUsers(
     @Query() pageOptions: PaginationOptions
@@ -41,14 +41,14 @@ export class UserController {
   }
 
   @Roles(Role.ADMIN)
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  @UseGuards(AccessTokenGuard, RolesGuard)
   @Get(':id')
   getUserById(@Param('id', ParseUUIDPipe) id: string): Promise<UserEntity> {
     return this.userService.findById(id);
   }
 
   @Roles(Role.ADMIN)
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  @UseGuards(AccessTokenGuard, RolesGuard)
   @ApiBody({ type: UpdateUserModel })
   @Patch(':id')
   updateUserById(
@@ -59,7 +59,7 @@ export class UserController {
   }
 
   @Roles(Role.ADMIN)
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  @UseGuards(AccessTokenGuard, RolesGuard)
   @Delete(':id')
   deleteUserById(@Param('id', ParseUUIDPipe) id: string): Promise<UserEntity> {
     return this.userService.delete(id);

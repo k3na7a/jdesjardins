@@ -1,3 +1,0 @@
-const PrivateRoute = ({ component: RouteComponent }) => {
-
-}
