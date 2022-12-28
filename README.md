@@ -27,7 +27,11 @@ Completed : Implemented Refresh Token on Back-End
 
 Completed : Create Permission and Authorization Guards for routes
 
+Completed : Refactor Back-End Guards to accept Array of Accepted Roles
+
 Current Goal : Implement Persistent Login State using useContext global state
+
+TODO : Refactor User Roles so user can have multiple roles
 
 TODO : Create Layout Components using Router Outlet to have global overlay for Navigation / Login
 
