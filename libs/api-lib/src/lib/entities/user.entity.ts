@@ -1,4 +1,4 @@
-import { BeforeInsert, Column, Entity } from 'typeorm';
+import { BeforeInsert, BeforeUpdate, Column, Entity } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import * as bcrypt from 'bcrypt';
 import { IUser, Role } from '@jdesjardins/dist-lib';
@@ -31,9 +31,17 @@ export class UserEntity extends BaseEntity implements IUser {
   refreshToken: string;
 
   @BeforeInsert()
+  @BeforeUpdate()
   async insertUser() {
-    const salt = await bcrypt.genSalt();
-    const hash = await bcrypt.hash(this.password, salt);
-    this.password = hash;
+    if (this.password) {
+      const salt = await bcrypt.genSalt();
+      const hash = await bcrypt.hash(this.password, salt);
+      this.password = hash;
+    }
+    if (this.refreshToken) {
+      const salt = await bcrypt.genSalt();
+      const hash = await bcrypt.hash(this.refreshToken, salt);
+      this.refreshToken = hash;
+    }
   }
 }

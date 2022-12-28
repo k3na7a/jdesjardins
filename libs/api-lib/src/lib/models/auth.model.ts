@@ -4,6 +4,8 @@ import { IsNotEmpty, IsString } from 'class-validator';
 export class AccessTokenModel {
   @ApiProperty()
   access_token: string;
+  @ApiProperty()
+  refresh_token: string;
 }
 
 export class UserLoginModel {

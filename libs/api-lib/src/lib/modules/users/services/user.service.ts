@@ -2,7 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserEntity } from '../../../entities';
-import { CreateUserModel, Pagination, PaginationMeta, PaginationOptions, UpdateUserModel } from '../../../models';
+import {
+  CreateUserModel,
+  Pagination,
+  PaginationMeta,
+  PaginationOptions,
+  UpdateUserModel,
+} from '../../../models';
 
 @Injectable()
 export class UserService {
@@ -37,7 +43,10 @@ export class UserService {
   }
 
   async create(user: CreateUserModel): Promise<UserEntity> {
-    const newUser = this.userRepository.create(user);
+    const newUser = this.userRepository.create({
+      ...user,
+      refreshToken: 'test',
+    });
     return await this.userRepository.save(newUser);
   }
 
