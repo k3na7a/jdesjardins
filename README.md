@@ -23,7 +23,7 @@ Completed : Created React Context for Authorization using JWT Tokens and NestJS 
 
 Completed : Setup Basic Routing using React Router v6 and useRoutes React Hook.
 
-Current Goal : Implement Persistent Login State using useContext global state
+Current Goal : Implement Persistent Login State using useContext global state [ Add Refresh Token to User Entity ]
 
 TODO : Create Layout Components using Router Outlet to have global overlay for Navigation / Login
 
