@@ -1,7 +1,7 @@
 import { AccessToken, IUser, IUserLogin } from '@jdesjardins/dist-lib';
 import { AxiosError } from 'axios';
 import React, { createContext, useCallback, useEffect } from 'react';
-import { localhost, localhost_authenticate } from '../apis';
+import { localLogin, localAuthenticate } from '../apis';
 import { useAxios } from '../hooks';
 import { usePrivateAxiosInstance } from '../hooks/usePrivateAxiosInstance.hook';
 
@@ -42,11 +42,11 @@ export const AuthContextProvider = ({ children }: Children) => {
     authenticationHasError,
     authenticate,
   ] = useAxios<IUser>({
-    instance: usePrivateAxiosInstance(localhost_authenticate),
+    instance: usePrivateAxiosInstance(localAuthenticate),
   });
   const [_accessToken, loginIsLoading, loginHasError, axiosLogin] =
     useAxios<AccessToken>({
-      instance: localhost,
+      instance: localLogin,
       onSuccess: (response: AccessToken) => {
         localStorage.setItem('AccessToken', response.access_token);
         authenticate();
@@ -54,8 +54,8 @@ export const AuthContextProvider = ({ children }: Children) => {
     });
 
   const login = useCallback(
-    (data: IUserLogin) => {
-      axiosLogin({ method: 'GET', url: '/login', data });
+    (login: IUserLogin) => {
+      axiosLogin({ data: login });
     },
     [axiosLogin]
   );
