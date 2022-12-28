@@ -10,12 +10,14 @@ interface AxiosHookInterface<T> {
   instance: AxiosInstance;
   onSuccess?: (res: T) => void;
   onError?: (err: AxiosError) => void;
+  onResolve?: () => void;
 }
 
 export const useAxios = <T>({
   instance,
   onSuccess,
   onError,
+  onResolve,
 }: AxiosHookInterface<T>): [
   T | undefined,
   boolean,
@@ -53,9 +55,10 @@ export const useAxios = <T>({
         })
         .finally(() => {
           setLoading(false);
+          if (onResolve) onResolve();
         });
     },
-    [instance, onError, onSuccess]
+    [instance, onError, onSuccess, onResolve]
   );
 
   const request = useCallback(

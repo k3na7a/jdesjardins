@@ -1,32 +1,21 @@
-import { AccessToken, IUser, IUserLogin } from '@jdesjardins/dist-lib';
-import { AxiosError } from 'axios';
-import React, { createContext, useCallback, useEffect } from 'react';
-import { localLogin, localAuthenticate } from '../apis';
+import { IUser } from '@jdesjardins/dist-lib';
+import React, { createContext } from 'react';
+import { localAuthenticate } from '../apis';
 import { useAxios } from '../hooks';
 import { usePrivateAxiosInstance } from '../hooks/usePrivateAxiosInstance.hook';
 
 interface AuthContextInterface {
   authenticatedUser: IUser | undefined;
-  authenticationIsLoading: boolean;
-  authenticationHasError: AxiosError | undefined;
   authenticate: () => void;
-
-  loginIsLoading: boolean;
-  loginHasError: AxiosError | undefined;
-  login: (data: IUserLogin) => void;
+  cancel: () => void;
 }
 
 export const AuthContext = createContext<AuthContextInterface>({
   authenticatedUser: undefined,
-  authenticationIsLoading: false,
-  authenticationHasError: undefined,
   authenticate: () => {
     return;
   },
-
-  loginIsLoading: false,
-  loginHasError: undefined,
-  login: (_data: IUserLogin) => {
+  cancel: () => {
     return;
   },
 });
@@ -36,48 +25,24 @@ interface Children {
 }
 
 export const AuthContextProvider = ({ children }: Children) => {
-  const [
-    authenticatedUser,
-    authenticationIsLoading,
-    authenticationHasError,
-    authenticate,
-    cancel,
-  ] = useAxios<IUser>({
-    instance: usePrivateAxiosInstance(localAuthenticate),
-  });
-  const [_accessToken, loginIsLoading, loginHasError, axiosLogin] =
-    useAxios<AccessToken>({
-      instance: localLogin,
-      onSuccess: (response: AccessToken) => {
-        localStorage.setItem('AccessToken', response.access_token);
-        authenticate();
-      },
+  const [authenticatedUser, _loading, _error, authenticate, cancel] =
+    useAxios<IUser>({
+      instance: usePrivateAxiosInstance(localAuthenticate),
     });
 
-  const login = useCallback(
-    (login: IUserLogin) => {
-      axiosLogin({ data: login });
-    },
-    [axiosLogin]
-  );
-
-  useEffect(() => {
-    authenticate();
-    return () => {
-      cancel();
-    };
-  }, [authenticate, cancel]);
+  // useEffect(() => {
+  //   authenticate();
+  //   return () => {
+  //     cancel();
+  //   };
+  // }, [authenticate, cancel]);
 
   return (
     <AuthContext.Provider
       value={{
         authenticatedUser,
-        authenticationIsLoading,
-        authenticationHasError,
         authenticate,
-        loginIsLoading,
-        loginHasError,
-        login,
+        cancel,
       }}
     >
       {children}
