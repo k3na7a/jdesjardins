@@ -1,7 +1,7 @@
 import { NxWelcome } from '@jdesjardins/ui-lib';
-import { Navigate } from 'react-router-dom';
+import { Navigate, RouteObject } from 'react-router-dom';
 
-export const routes = [
+export const routes: RouteObject[] = [
   {
     path: '/',
     element: <NxWelcome title="" />,
