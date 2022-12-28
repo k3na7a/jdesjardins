@@ -31,6 +31,7 @@ export const useAxios = <T>({
 
   const cancel = useCallback(() => {
     controllerRef.current.abort();
+    controllerRef.current = new AbortController();
   }, []);
 
   const sendRequest = useCallback(

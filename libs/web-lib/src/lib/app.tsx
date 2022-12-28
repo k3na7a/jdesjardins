@@ -1,9 +1,14 @@
 import { AuthContextProvider } from './context';
+import { Route, Routes } from 'react-router-dom';
+
+import { NxWelcome } from '@jdesjardins/ui-lib';
 
 export function App() {
   return (
     <AuthContextProvider>
-      <main className="App" />
+      <Routes>
+        <Route path="/" element={<NxWelcome title={'router tutorial'} />} />
+      </Routes>
     </AuthContextProvider>
   );
 }

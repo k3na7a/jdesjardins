@@ -41,6 +41,7 @@ export const AuthContextProvider = ({ children }: Children) => {
     authenticationIsLoading,
     authenticationHasError,
     authenticate,
+    cancel,
   ] = useAxios<IUser>({
     instance: usePrivateAxiosInstance(localAuthenticate),
   });
@@ -62,7 +63,10 @@ export const AuthContextProvider = ({ children }: Children) => {
 
   useEffect(() => {
     authenticate();
-  }, [authenticate]);
+    return () => {
+      cancel();
+    };
+  }, [authenticate, cancel]);
 
   return (
     <AuthContext.Provider
