@@ -25,10 +25,10 @@ Completed : Setup Basic Routing using React Router v6 and useRoutes React Hook.
 
 Completed : Implemented Refresh Token on Back-End
 
+Completed : Create Permission and Authorization Guards for routes
+
 Current Goal : Implement Persistent Login State using useContext global state
 
 TODO : Create Layout Components using Router Outlet to have global overlay for Navigation / Login
-
-TODO : Create Permission and Authorization Guards for routes
 
 TODO : MUCH MUCH MORE!
