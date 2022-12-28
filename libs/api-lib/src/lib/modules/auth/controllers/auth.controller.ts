@@ -52,10 +52,17 @@ export class AuthController {
   }
 
   @ApiBearerAuth('access-token')
-  @UseGuards(AccessTokenGuard, RefreshTokenGuard)
+  @UseGuards(AccessTokenGuard)
+  @Get('logout')
+  logout(@Req() req: { user: UserEntity }): Promise<UserEntity> {
+    return this.authService.logout(req.user.id);
+  }
+
+  @ApiBearerAuth('access-token')
+  @UseGuards(RefreshTokenGuard)
   @UseGuards()
   @Get('refresh')
-  refreshTokens(@Req() req: { user: UserEntity }) {
-    console.log(req.user);
+  refreshTokens(@Req() req: { user: UserEntity }): Promise<AccessTokenModel> {
+    return this.authService.RefreshTokens(req.user.id, req.user.refreshToken);
   }
 }

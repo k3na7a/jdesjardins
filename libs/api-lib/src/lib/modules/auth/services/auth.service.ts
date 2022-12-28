@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { UserEntity } from '../../../entities';
@@ -46,14 +46,38 @@ export class AuthService {
     return { access_token, refresh_token };
   }
 
+  async logout(userId: string) {
+    return this.usersService.update(userId, { refreshToken: null });
+  }
+
   async updateRefreshToken(id: string, refreshToken: string): Promise<void> {
     await this.usersService.update(id, {
       refreshToken,
     });
   }
 
+  async RefreshTokens(
+    userId: string,
+    refreshToken: string
+  ): Promise<AccessTokenModel> {
+    const user = await this.usersService.findById(userId);
+    if (!user || !user.refreshToken) throw new ForbiddenException();
+    const isMatch: boolean = user
+      ? await bcrypt.compare(refreshToken, user.refreshToken)
+      : null;
+    if (!isMatch) throw new ForbiddenException();
+
+    const payload = { sub: user.id, email: user.email };
+    const tokens = await this.getTokens(payload);
+    await this.updateRefreshToken(user.id, tokens.refresh_token);
+    return tokens;
+  }
+
   async login(user: UserEntity): Promise<AccessTokenModel> {
     const payload = { email: user.email, sub: user.id };
+
+    const tokens = await this.getTokens(payload);
+    await this.updateRefreshToken(user.id, tokens.refresh_token);
     return this.getTokens(payload);
   }
 }
