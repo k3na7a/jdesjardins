@@ -31,7 +31,7 @@ import {
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Roles(Role.ADMIN)
+  @Roles([Role.ADMIN])
   @UseGuards(AccessTokenGuard, RolesGuard)
   @Get('')
   getUsers(
@@ -40,14 +40,14 @@ export class UserController {
     return this.userService.paginate(pageOptions);
   }
 
-  @Roles(Role.ADMIN)
+  @Roles([Role.ADMIN])
   @UseGuards(AccessTokenGuard, RolesGuard)
   @Get(':id')
   getUserById(@Param('id', ParseUUIDPipe) id: string): Promise<UserEntity> {
     return this.userService.findById(id);
   }
 
-  @Roles(Role.ADMIN)
+  @Roles([Role.ADMIN])
   @UseGuards(AccessTokenGuard, RolesGuard)
   @ApiBody({ type: UpdateUserModel })
   @Patch(':id')
@@ -58,7 +58,7 @@ export class UserController {
     return this.userService.update(id, updatedUser);
   }
 
-  @Roles(Role.ADMIN)
+  @Roles([Role.ADMIN])
   @UseGuards(AccessTokenGuard, RolesGuard)
   @Delete(':id')
   deleteUserById(@Param('id', ParseUUIDPipe) id: string): Promise<UserEntity> {

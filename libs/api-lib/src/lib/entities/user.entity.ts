@@ -1,6 +1,5 @@
-import { BeforeInsert, BeforeUpdate, Column, Entity } from 'typeorm';
+import { Column, Entity } from 'typeorm';
 import { Exclude } from 'class-transformer';
-import * as bcrypt from 'bcrypt';
 import { IUser, Role } from '@jdesjardins/dist-lib';
 import BaseEntity from './base.entity';
 import { ApiProperty } from '@nestjs/swagger';
@@ -29,19 +28,4 @@ export class UserEntity extends BaseEntity implements IUser {
 
   @Column({ nullable: true })
   refreshToken!: string;
-
-  @BeforeInsert()
-  @BeforeUpdate()
-  async insertUser() {
-    if (this.password) {
-      const salt = await bcrypt.genSalt();
-      const hash = await bcrypt.hash(this.password, salt);
-      this.password = hash;
-    }
-    if (this.refreshToken) {
-      const salt = await bcrypt.genSalt();
-      const hash = await bcrypt.hash(this.refreshToken, salt);
-      this.refreshToken = hash;
-    }
-  }
 }
