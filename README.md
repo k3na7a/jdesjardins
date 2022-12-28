@@ -1,5 +1,4 @@
-# jdesjardins
- MonoRepo Application
+# jdesjardins MonoRepo Demo Application
 
 Completed : Create NX Mono-Repo with 2 Projects [ NestJS Back-End / React Front-End ]
 
