@@ -19,7 +19,7 @@ export class AuthService {
 
     const tokens = await this.getTokens(payload);
     await this.updateRefreshToken(user.id, tokens.refresh_token);
-    return { access_token: tokens.access_token, user };
+    return tokens;
   }
 
   async validateUser(username: string, password: string): Promise<UserEntity> {
@@ -72,7 +72,7 @@ export class AuthService {
     const payload = { sub: user.id, email: user.email };
     const tokens = await this.getTokens(payload);
     await this.updateRefreshToken(user.id, tokens.refresh_token);
-    return { access_token: tokens.access_token, user };
+    return { access_token: tokens.refresh_token };
   }
 
   async login(user: UserEntity): Promise<AccessTokenModel> {
@@ -80,6 +80,6 @@ export class AuthService {
 
     const tokens = await this.getTokens(payload);
     await this.updateRefreshToken(user.id, tokens.refresh_token);
-    return { access_token: tokens.access_token, user };
+    return { access_token: tokens.refresh_token };
   }
 }

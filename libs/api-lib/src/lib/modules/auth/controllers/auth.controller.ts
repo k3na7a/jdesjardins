@@ -10,11 +10,11 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiBody } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 import { LocalAuthGuard } from '../../../guards/local.auth.guard';
 import { AuthService } from '../services/auth.service';
 import { UserEntity } from '../../../entities';
-import { AccessTokenGuard } from '../../../guards/accessToken.guard';
+import { UserService } from '../../users/services/user.service';
 import {
   AccessTokenModel,
   CreateUserModel,
@@ -22,10 +22,14 @@ import {
 } from '../../../models';
 import { RefreshTokenGuard } from '../../../guards/refreshToken.guard';
 
+@ApiTags('Authorization')
 @Controller('')
 @UseInterceptors(ClassSerializerInterceptor)
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly userService: UserService
+  ) {}
 
   @ApiBody({ type: CreateUserModel })
   @Put('register')
@@ -41,7 +45,14 @@ export class AuthController {
   }
 
   @ApiBearerAuth('access-token')
-  @UseGuards(AccessTokenGuard)
+  @UseGuards(RefreshTokenGuard)
+  @Get('authenticate')
+  getSelf(@Request() req: { user: UserEntity }): Promise<UserEntity> {
+    return this.userService.findById(req.user.id);
+  }
+
+  @ApiBearerAuth('access-token')
+  @UseGuards(RefreshTokenGuard)
   @Get('logout')
   logout(@Req() req: { user: UserEntity }): Promise<UserEntity> {
     return this.authService.logout(req.user.id);
