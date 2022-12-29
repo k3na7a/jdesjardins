@@ -34,4 +34,6 @@ TODO : Refactor User Roles so user can have multiple roles
 
 TODO : Create Layout Components using Router Outlet to have global overlay for Navigation / Login
 
+TODO : Refactor API to have more verbose Error Checking and Swagger Documentation
+
 TODO : MUCH MUCH MORE!
