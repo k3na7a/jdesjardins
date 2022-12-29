@@ -6,14 +6,18 @@ import { RequireAuth } from '../guards';
 export const routes: RouteObject[] = [
   {
     path: '/',
-    element: <>HELLO WORLD!</>,
+    element: <NxWelcome title="" />,
+  },
+  {
+    path: 'login',
+    element: <>LOGIN!</>,
   },
   {
     element: <RequireAuth allowedRoles={[Role.ADMIN]} />,
     children: [
       {
         path: 'test',
-        element: <NxWelcome title="" />,
+        element: <>YOU MADE IT ADMIN!</>,
       },
     ],
   },

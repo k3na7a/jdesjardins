@@ -14,12 +14,12 @@ export class AuthService {
   ) {}
 
   async register(dto: CreateUserModel): Promise<AccessTokenModel> {
-    const newUser = await this.usersService.create(dto);
-    const payload = { sub: newUser.id, email: newUser.email };
+    const user = await this.usersService.create(dto);
+    const payload = { sub: user.id, email: user.email };
 
     const tokens = await this.getTokens(payload);
-    await this.updateRefreshToken(newUser.id, tokens.refresh_token);
-    return tokens;
+    await this.updateRefreshToken(user.id, tokens.refresh_token);
+    return { access_token: tokens.access_token, user };
   }
 
   async validateUser(username: string, password: string): Promise<UserEntity> {
@@ -32,7 +32,7 @@ export class AuthService {
   async getTokens(payload: {
     sub: string;
     email: string;
-  }): Promise<AccessTokenModel> {
+  }): Promise<{ access_token: string; refresh_token: string }> {
     const [access_token, refresh_token] = await Promise.all([
       this.jwtService.signAsync(payload, {
         secret: environment.JwtSecretKey,
@@ -72,7 +72,7 @@ export class AuthService {
     const payload = { sub: user.id, email: user.email };
     const tokens = await this.getTokens(payload);
     await this.updateRefreshToken(user.id, tokens.refresh_token);
-    return tokens;
+    return { access_token: tokens.access_token, user };
   }
 
   async login(user: UserEntity): Promise<AccessTokenModel> {
@@ -80,6 +80,6 @@ export class AuthService {
 
     const tokens = await this.getTokens(payload);
     await this.updateRefreshToken(user.id, tokens.refresh_token);
-    return this.getTokens(payload);
+    return { access_token: tokens.access_token, user };
   }
 }

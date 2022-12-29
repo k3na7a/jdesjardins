@@ -1,21 +1,14 @@
-import { IUser } from '@jdesjardins/dist-lib';
-import React, { createContext } from 'react';
-import { localAuthenticate } from '../apis';
-import { useAxios } from '../hooks';
-import { usePrivateAxiosInstance } from '../hooks';
+import { IAccessToken } from '@jdesjardins/dist-lib';
+import React, { createContext, useState } from 'react';
 
 interface AuthContextInterface {
-  authenticatedUser: IUser | undefined;
-  authenticate: () => void;
-  cancel: () => void;
+  auth: IAccessToken | undefined;
+  setAuth: React.Dispatch<React.SetStateAction<IAccessToken | undefined>>;
 }
 
 export const AuthContext = createContext<AuthContextInterface>({
-  authenticatedUser: undefined,
-  authenticate: () => {
-    return;
-  },
-  cancel: () => {
+  auth: undefined,
+  setAuth: () => {
     return;
   },
 });
@@ -25,24 +18,13 @@ interface Children {
 }
 
 export const AuthContextProvider = ({ children }: Children) => {
-  const [authenticatedUser, _loading, _error, authenticate, cancel] =
-    useAxios<IUser>({
-      instance: usePrivateAxiosInstance(localAuthenticate),
-    });
-
-  // useEffect(() => {
-  //   authenticate();
-  //   return () => {
-  //     cancel();
-  //   };
-  // }, [authenticate, cancel]);
+  const [auth, setAuth] = useState<IAccessToken>();
 
   return (
     <AuthContext.Provider
       value={{
-        authenticatedUser,
-        authenticate,
-        cancel,
+        auth,
+        setAuth,
       }}
     >
       {children}

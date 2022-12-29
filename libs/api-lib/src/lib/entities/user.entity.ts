@@ -26,7 +26,7 @@ export class UserEntity extends BaseEntity implements IUser {
   })
   role: Role;
 
-  @ApiProperty()
+  @Exclude()
   @Column({ nullable: true })
   refreshToken!: string;
 }

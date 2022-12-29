@@ -7,17 +7,10 @@ interface Props {
 }
 
 export const RequireAuth = ({ allowedRoles }: Props) => {
-  const context = useAuth();
+  const { auth } = useAuth();
   const location = useLocation();
 
-  console.log(allowedRoles);
-
-  console.log(
-    context.authenticatedUser?.role &&
-      allowedRoles?.includes(context.authenticatedUser.role)
-  );
-
-  return context.authenticatedUser ? (
+  return auth ? (
     <Outlet />
   ) : (
     <Navigate to="/" state={{ from: location }} replace />
