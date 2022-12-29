@@ -48,8 +48,6 @@ export const Navbar = () => {
             </li>
           </ul>
           <div className="d-flex align-items-center">
-            <div className="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
-            <hr className="d-lg-none text-white-50"></hr>
             <a
               className="px-1"
               href="https://github.com/mdbootstrap/mdb-ui-kit"
@@ -57,14 +55,15 @@ export const Navbar = () => {
             >
               <Linkedin color="white" />
             </a>
+
+            <a
+              className="px-1"
+              href="https://github.com/mdbootstrap/mdb-ui-kit"
+              role="button"
+            >
+              <Github color="white" />
+            </a>
           </div>
-          <a
-            className="px-1"
-            href="https://github.com/mdbootstrap/mdb-ui-kit"
-            role="button"
-          >
-            <Github color="white" />
-          </a>
         </div>
       </div>
     </nav>
