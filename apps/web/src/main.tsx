@@ -1,5 +1,7 @@
 import * as ReactDOM from 'react-dom/client';
 
+import './styles/app.styles.css';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './i18n';
 
