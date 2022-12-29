@@ -1,8 +1,10 @@
 import * as ReactDOM from 'react-dom/client';
 
-import './styles/app.styles.css';
+import './styles.css';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
+
 import './i18n';
 
 import { BrowserRouter } from 'react-router-dom';

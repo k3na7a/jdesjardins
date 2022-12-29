@@ -1,0 +1,15 @@
+.navbar-brand {
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.navbar-brand > p {
+  font-weight: 800;
+  margin-bottom: 0;
+}
+
+.navbar-brand > span {
+  font-size: 12px;
+  font-weight: 300;
+  display: block;
+}
