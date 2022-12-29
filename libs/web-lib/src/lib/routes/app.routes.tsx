@@ -6,8 +6,8 @@ import { RequireAuth } from '../guards';
 export const routes: RouteObject[] = [
   {
     path: '/',
-    // element: <NxWelcome title="" />,
-    element: <>HOME</>,
+    element: <NxWelcome title="" />,
+    // element: <>HOME</>,
   },
   {
     path: 'login',
