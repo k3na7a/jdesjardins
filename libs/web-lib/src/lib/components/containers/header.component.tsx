@@ -39,6 +39,10 @@ export const Navbar = () => {
       label: 'About',
       stub: 'about',
     },
+    {
+      label: 'Admin',
+      stub: 'admin',
+    },
   ];
 
   const socials: Social[] = [
@@ -113,7 +117,7 @@ export const Navbar = () => {
           <ul className="navbar-nav me-auto mb-2 mb-md-0">{nav}</ul>
           <div className="d-flex align-items-center justify-content-end">
             {socialLinks}
-            {auth.authenticatedUser ? (
+            {auth?.authenticatedUser ? (
               <div className="dropdown text-end ms-3">
                 <button
                   className="d-block dropdown-toggle btn btn-link"
@@ -158,6 +162,12 @@ export const Navbar = () => {
               <button
                 className="btn btn-dark ms-2 btn-sm btn-login"
                 type="submit"
+                onClick={() =>
+                  auth.login({
+                    username: 'Jdesjardins',
+                    password: 'Password123!',
+                  })
+                }
               >
                 {t('button.login', i18n)}
               </button>

@@ -32,3 +32,11 @@ export const localLogin = axios.create({
     'Content-type': 'application/json',
   },
 });
+
+export const localLogout = axios.create({
+  baseURL: `${BASE_URL}/logout`,
+  method: 'GET',
+  headers: {
+    'Content-type': 'application/json',
+  },
+});

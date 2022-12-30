@@ -19,11 +19,11 @@ export const useAxios = <T>({
   onError,
   onResolve,
 }: AxiosHookInterface<T>): [
+  (request?: AxiosRequestConfig) => void,
+  () => void,
   T | undefined,
   boolean,
-  AxiosError | undefined,
-  (request?: AxiosRequestConfig) => void,
-  () => void
+  AxiosError | undefined
 ] => {
   const [data, setData] = useState<T>();
   const [loading, setLoading] = useState<boolean>(true);
@@ -68,5 +68,5 @@ export const useAxios = <T>({
     [sendRequest]
   );
 
-  return [data, loading, error, request, cancel];
+  return [request, cancel, data, loading, error];
 };
