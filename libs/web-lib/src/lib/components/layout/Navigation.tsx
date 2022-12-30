@@ -15,7 +15,7 @@ export function NavigationLayout() {
           login={auth.login}
         />
       </header>
-      <Outlet />
+      {auth.loading ? <>LOADING!</> : <Outlet />}
     </>
   );
 }
