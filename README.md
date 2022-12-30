@@ -1,4 +1,5 @@
-# MonoRepo Demo Application
+# MonoRepo Demo Application (Work in Progress)
+# Code a little bit every day
 
 Completed : Create NX Mono-Repo with 2 Projects [ NestJS Back-End / React Front-End ]
 
