@@ -22,7 +22,11 @@ a.btn {
   content: none;
 }
 
-.dropdown > a > img:hover {
+.dropdown > button {
+  padding: 0;
+}
+
+.dropdown > button > img:hover {
   -webkit-box-shadow: 0px 0px 6px 0px rgba(238, 238, 238, 0.9);
   -moz-box-shadow: 0px 0px 6px 0px rgba(238, 238, 238, 0.9);
   box-shadow: 0px 0px 6px 0px rgba(238, 238, 238, 0.9);
@@ -35,4 +39,8 @@ a.btn {
   -moz-user-select: none; /* Old versions of Firefox */
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
+.btn-login {
+  text-decoration: underline;
 }

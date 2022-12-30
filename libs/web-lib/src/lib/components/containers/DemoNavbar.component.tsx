@@ -14,6 +14,7 @@ interface NavItem {
 interface Social {
   label: string;
   link: string;
+  stub: string;
   icon: React.ReactNode;
 }
 
@@ -39,16 +40,19 @@ export const Navbar = () => {
   const socials: Social[] = [
     {
       label: 'Twitter',
+      stub: 'twitter',
       link: 'https://twitter.com/K38Tweets',
       icon: <Twitter color="white" />,
     },
     {
       label: 'Linkedin',
+      stub: 'linkedin',
       link: 'https://www.linkedin.com/in/john-desjardins-96593914b/',
       icon: <Linkedin color="white" />,
     },
     {
       label: 'Github',
+      stub: 'github',
       link: 'https://github.com/k3na7a/jdesjardins',
       icon: <Github color="white" />,
     },
@@ -56,7 +60,7 @@ export const Navbar = () => {
 
   const nav = navItems.map((navitem: NavItem) => {
     return (
-      <li className="nav-item">
+      <li key={navitem.stub} className="nav-item">
         <Link
           to={`/${navitem.stub}`}
           className={`nav-link ${location === navitem.stub ? 'active' : ''}`}
@@ -69,7 +73,7 @@ export const Navbar = () => {
 
   const socialLinks = socials.map((social: Social) => {
     return (
-      <a className="px-1" href={social.link} role="button">
+      <a key={social.stub} className="px-1" href={social.link} role="button">
         {social.icon}
       </a>
     );
@@ -101,53 +105,55 @@ export const Navbar = () => {
             <ul className="navbar-nav me-auto mb-2 mb-md-0">{nav}</ul>
             <div className="d-flex align-items-center justify-content-end">
               {socialLinks}
-              <button
-                className="btn btn-outline-light ms-3 position-relative"
-                type="submit"
-              >
-                Login
-              </button>
-              {/* <div className="dropdown text-end ms-3">
-                <a
-                  href="#"
-                  className="d-block dropdown-toggle"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
+              {!auth.authenticatedUser ? (
+                <div className="dropdown text-end ms-3">
+                  <button
+                    className="d-block dropdown-toggle btn btn-link"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <img
+                      src="https://github.com/mdo.png"
+                      alt="mdo"
+                      width="32"
+                      height="32"
+                      className="rounded-circle"
+                    />
+                  </button>
+                  <ul className="dropdown-menu dropdown-menu-end text-small">
+                    <li>
+                      <a className="dropdown-item" href="#">
+                        New project...
+                      </a>
+                    </li>
+                    <li>
+                      <a className="dropdown-item" href="#">
+                        Settings
+                      </a>
+                    </li>
+                    <li>
+                      <a className="dropdown-item" href="#">
+                        Profile
+                      </a>
+                    </li>
+                    <li>
+                      <hr className="dropdown-divider" />
+                    </li>
+                    <li>
+                      <a className="dropdown-item" href="#">
+                        Sign out
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              ) : (
+                <button
+                  className="btn btn-dark ms-3 btn-sm btn-login"
+                  type="submit"
                 >
-                  <img
-                    src="https://github.com/mdo.png"
-                    alt="mdo"
-                    width="32"
-                    height="32"
-                    className="rounded-circle"
-                  />
-                </a>
-                <ul className="dropdown-menu dropdown-menu-end text-small">
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      New project...
-                    </a>
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Settings
-                    </a>
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Profile
-                    </a>
-                  </li>
-                  <li>
-                    <hr className="dropdown-divider" />
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Sign out
-                    </a>
-                  </li>
-                </ul>
-              </div> */}
+                  Login
+                </button>
+              )}
             </div>
           </div>
         </div>
