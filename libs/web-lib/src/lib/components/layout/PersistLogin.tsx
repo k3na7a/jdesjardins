@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useAuth } from '../hooks';
+import { useAuth } from '../../hooks';
 
 const PersistLogin = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
