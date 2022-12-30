@@ -30,7 +30,7 @@ Completed : Refactor Back-End Guards to accept Array of Accepted Roles
 
 Completed : Create Layout Components using Router Outlet to have global overlay for Navigation / Login
 
-Current Goal : Implement Persistent Login State using useContext global state
+Completed : Implement Persistent Login State using useContext global state & add Global Loading State for Authentication
 
 TODO : Refactor User Roles so user can have multiple roles
 
