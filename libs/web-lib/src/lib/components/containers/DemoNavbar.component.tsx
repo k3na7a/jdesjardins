@@ -46,19 +46,19 @@ export const Navbar = () => {
       label: 'Twitter',
       stub: 'twitter',
       link: 'https://twitter.com/K38Tweets',
-      icon: <Twitter color="white" />,
+      icon: <Twitter />,
     },
     {
       label: 'Linkedin',
       stub: 'linkedin',
       link: 'https://www.linkedin.com/in/john-desjardins-96593914b/',
-      icon: <Linkedin color="white" />,
+      icon: <Linkedin />,
     },
     {
       label: 'Github',
       stub: 'github',
       link: 'https://github.com/k3na7a/jdesjardins',
-      icon: <Github color="white" />,
+      icon: <Github />,
     },
   ];
 
@@ -77,14 +77,19 @@ export const Navbar = () => {
 
   const socialLinks = socials.map((social: Social) => {
     return (
-      <a key={social.stub} className="social" href={social.link} role="button">
+      <a
+        key={social.stub}
+        className="social link-light"
+        href={social.link}
+        role="button"
+      >
         {social.icon}
       </a>
     );
   });
 
   return (
-    <header className="sticky-top bg-dark">
+    <header className="sticky-top">
       <nav className="navbar navbar-dark bg-dark navbar-expand-md">
         <div className="container-fluid">
           <Link to={`/home`} className="navbar-brand noselect">
@@ -124,7 +129,7 @@ export const Navbar = () => {
                       className="rounded-circle"
                     />
                   </button>
-                  <ul className="dropdown-menu dropdown-menu-end text-small">
+                  <ul className="dropdown-menu dropdown-menu-end dropdown-menu-dark text-small">
                     <li>
                       <a className="dropdown-item" href="#">
                         New project...
@@ -152,7 +157,7 @@ export const Navbar = () => {
                 </div>
               ) : (
                 <button
-                  className="btn btn-dark ms-3 btn-sm btn-login"
+                  className="btn btn-dark ms-2 btn-sm btn-login"
                   type="submit"
                 >
                   {t('button.login', i18n)}

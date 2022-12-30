@@ -4,7 +4,9 @@ import { Navbar } from '../containers/DemoNavbar.component';
 export function NavigationLayout() {
   return (
     <>
-      <Navbar />
+      <header className="sticky-top">
+        <Navbar />
+      </header>
       <Outlet />
     </>
   );
