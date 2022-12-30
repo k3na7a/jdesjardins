@@ -1,8 +1,6 @@
 import './header.component.css';
 
-import { Github } from 'react-bootstrap-icons';
-import { Linkedin } from 'react-bootstrap-icons';
-import { Twitter } from 'react-bootstrap-icons';
+import { Github, Linkedin, Twitter, PersonCircle } from 'react-bootstrap-icons';
 import { Link, useLocation } from 'react-router-dom';
 
 import { useTranslation } from 'react-i18next';
@@ -93,7 +91,7 @@ export const Navbar = ({
     return (
       <a
         key={social.stub}
-        className="social link-light"
+        className="social link-light opacity"
         href={social.link}
         role="button"
       >
@@ -138,17 +136,11 @@ export const Navbar = ({
             ) : authenticatedUser ? (
               <div className="dropdown text-end ms-3">
                 <button
-                  className="d-block dropdown-toggle btn btn-link"
+                  className="d-block dropdown-toggle btn btn-link text-light opacity"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  <img
-                    src="https://github.com/mdo.png"
-                    alt="mdo"
-                    width="36"
-                    height="36"
-                    className="rounded-circle"
-                  />
+                  <PersonCircle size="32" />
                 </button>
                 <ul className="dropdown-menu dropdown-menu-end dropdown-menu-dark text-small">
                   <li>
@@ -171,7 +163,7 @@ export const Navbar = ({
                   </li>
                   <li>
                     <button
-                      className="dropdown-item"
+                      className="dropdown-item btn-dark"
                       type="button"
                       onClick={logout}
                     >

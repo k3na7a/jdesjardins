@@ -46,13 +46,6 @@ export class AuthController {
 
   @ApiBearerAuth('access-token')
   @UseGuards(RefreshTokenGuard)
-  @Get('authenticate')
-  getSelf(@Request() req: { user: UserEntity }): Promise<UserEntity> {
-    return this.userService.findById(req.user.id);
-  }
-
-  @ApiBearerAuth('access-token')
-  @UseGuards(RefreshTokenGuard)
   @Get('logout')
   logout(@Req() req: { user: UserEntity }): Promise<UserEntity> {
     return this.authService.logout(req.user.id);

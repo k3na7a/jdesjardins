@@ -1,4 +1,5 @@
 import { Role } from '@jdesjardins/dist-lib';
+import { NxWelcome } from '@jdesjardins/ui-lib';
 import { Navigate, RouteObject } from 'react-router-dom';
 import { NavigationLayout } from '../components/layout/Navigation';
 import { RequireAuth } from '../components/layout/RequireAuth';
@@ -9,7 +10,7 @@ export const routes: RouteObject[] = [
     children: [
       {
         path: '/home',
-        element: <>HOME</>,
+        element: <NxWelcome title="" />,
       },
       {
         path: 'projects',

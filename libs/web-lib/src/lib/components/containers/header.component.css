@@ -48,3 +48,11 @@ a.btn {
 a.social {
   padding: 0px 4px;
 }
+
+.opacity {
+  opacity: 75%;
+}
+
+.opacity:hover {
+  opacity: 100%;
+}
