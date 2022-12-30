@@ -12,7 +12,7 @@ export const Navbar = () => {
     <header className="sticky-top bg-dark">
       <nav className="navbar navbar-dark bg-dark navbar-expand-md">
         <div className="container-fluid">
-          <Link to={`/home`} className="navbar-brand">
+          <Link to={`/home`} className="navbar-brand noselect">
             <p>Dunder Mifflin™</p>
             <span>Paper Company</span>
           </Link>
