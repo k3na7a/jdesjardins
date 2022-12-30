@@ -13,6 +13,8 @@ interface AxiosHookInterface<T> {
   onResolve?: () => void;
 }
 
+const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
+
 export const useAxios = <T>({
   instance,
   onSuccess,
@@ -37,8 +39,9 @@ export const useAxios = <T>({
   }, []);
 
   const sendRequest = useCallback(
-    (config?: AxiosRequestConfig) => {
+    async (config?: AxiosRequestConfig) => {
       setLoading(true);
+      await delay(1000);
       instance({
         ...config,
         signal: controllerRef.current.signal,

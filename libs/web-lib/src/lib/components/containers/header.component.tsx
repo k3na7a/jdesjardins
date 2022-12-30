@@ -4,9 +4,9 @@ import { Github } from 'react-bootstrap-icons';
 import { Linkedin } from 'react-bootstrap-icons';
 import { Twitter } from 'react-bootstrap-icons';
 import { Link, useLocation } from 'react-router-dom';
-import { useAuth } from '../../hooks';
 
 import { useTranslation } from 'react-i18next';
+import { IAccessToken } from '@jdesjardins/dist-lib';
 
 interface NavItem {
   label: string;
@@ -20,10 +20,20 @@ interface Social {
   icon: React.ReactNode;
 }
 
-export const Navbar = () => {
-  const location = useLocation().pathname.split('/')[1];
-  const auth = useAuth();
+interface Props {
+  loading: boolean;
+  authenticatedUser: IAccessToken | undefined;
+  logout: () => void;
+  login: (data: { username: string; password: string }) => void;
+}
 
+export const Navbar = ({
+  loading,
+  authenticatedUser,
+  logout,
+  login,
+}: Props) => {
+  const location = useLocation().pathname.split('/')[1];
   const { t, i18n } = useTranslation('common');
 
   const navItems: NavItem[] = [
@@ -117,7 +127,15 @@ export const Navbar = () => {
           <ul className="navbar-nav me-auto mb-2 mb-md-0">{nav}</ul>
           <div className="d-flex align-items-center justify-content-end">
             {socialLinks}
-            {auth?.authenticatedUser ? (
+            {loading ? (
+              <button
+                className="btn btn-dark ms-2 btn-sm btn-login"
+                type="submit"
+                disabled
+              >
+                Loading
+              </button>
+            ) : authenticatedUser ? (
               <div className="dropdown text-end ms-3">
                 <button
                   className="d-block dropdown-toggle btn btn-link"
@@ -152,9 +170,13 @@ export const Navbar = () => {
                     <hr className="dropdown-divider" />
                   </li>
                   <li>
-                    <a className="dropdown-item" href="index.js">
-                      Sign out
-                    </a>
+                    <button
+                      className="dropdown-item"
+                      type="button"
+                      onClick={logout}
+                    >
+                      Sign Out
+                    </button>
                   </li>
                 </ul>
               </div>
@@ -163,7 +185,7 @@ export const Navbar = () => {
                 className="btn btn-dark ms-2 btn-sm btn-login"
                 type="submit"
                 onClick={() =>
-                  auth.login({
+                  login({
                     username: 'Jdesjardins',
                     password: 'Password123!',
                   })

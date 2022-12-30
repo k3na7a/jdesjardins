@@ -1,15 +1,21 @@
-import { IAccessToken, IUser } from '@jdesjardins/dist-lib';
+import { IAccessToken } from '@jdesjardins/dist-lib';
 import React, { createContext, useCallback, useEffect, useState } from 'react';
 import { localLogin, localLogout, localRefresh } from '../apis';
 import { useAxios } from '../hooks';
 import { usePrivateAxiosInstance } from '../hooks';
 
 interface AuthContextInterface {
-  authenticatedUser: IUser | undefined;
+  authenticatedUser: IAccessToken | undefined;
+  loading: boolean;
+
   authenticate: () => void;
   cancel: () => void;
+
   login: (data: { username: string; password: string }) => void;
   cancelLogin: () => void;
+
+  logout: () => void;
+  cancelLogout: () => void;
 }
 
 interface Props {
@@ -18,6 +24,7 @@ interface Props {
 
 const defaultState = {
   authenticatedUser: undefined,
+  loading: true,
   authenticate: () => {
     return;
   },
@@ -30,6 +37,12 @@ const defaultState = {
   cancelLogin: () => {
     return;
   },
+  logout: () => {
+    return;
+  },
+  cancelLogout: () => {
+    return;
+  },
 };
 
 export const AuthContext = createContext<AuthContextInterface>(defaultState);
@@ -39,10 +52,15 @@ export const AuthContextProvider = ({ children }: Props) => {
   const [loading, setLoading] = useState<boolean>(true);
 
   const onSuccess = useCallback((res: IAccessToken) => {
+    localStorage.setItem('AccessToken', res.refresh_token);
     setAuthenticatedUser(res);
   }, []);
   const onResolve = useCallback(() => {
     setLoading(false);
+  }, []);
+  const onLogout = useCallback(() => {
+    localStorage.removeItem('AccessToken');
+    setAuthenticatedUser(undefined);
   }, []);
 
   const [login, cancel_login] = useAxios<IAccessToken>({
@@ -52,6 +70,7 @@ export const AuthContextProvider = ({ children }: Props) => {
   });
   const [logout, cancel_logout] = useAxios<IAccessToken>({
     instance: usePrivateAxiosInstance(localLogout),
+    onSuccess: onLogout,
     onResolve,
   });
   const [authenticate, cancel_auth] = useAxios<IAccessToken>({
@@ -85,10 +104,16 @@ export const AuthContextProvider = ({ children }: Props) => {
     <AuthContext.Provider
       value={{
         authenticatedUser,
+        loading,
+
         authenticate,
         cancel: cancel_auth,
+
         login: Login,
         cancelLogin: cancel_login,
+
+        logout: Logout,
+        cancelLogout: cancel_logout,
       }}
     >
       {children}
