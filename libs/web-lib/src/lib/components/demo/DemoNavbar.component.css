@@ -17,3 +17,13 @@
 a.btn {
   padding: 0px 0px;
 }
+
+.dropdown-toggle::after {
+  content: none;
+}
+
+.dropdown > a > img:hover {
+  -webkit-box-shadow: 0px 0px 6px 0px rgba(238, 238, 238, 0.9);
+  -moz-box-shadow: 0px 0px 6px 0px rgba(238, 238, 238, 0.9);
+  box-shadow: 0px 0px 6px 0px rgba(238, 238, 238, 0.9);
+}

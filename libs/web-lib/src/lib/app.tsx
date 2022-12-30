@@ -9,7 +9,7 @@ export function App() {
 
   return (
     <AuthContextProvider>
-      <Navbar />
+      {/* <Navbar /> */}
       {element}
     </AuthContextProvider>
   );
