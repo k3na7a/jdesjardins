@@ -2,9 +2,9 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class BaseModel {
   @ApiProperty()
-  public readonly id: string;
+  public id: string;
   @ApiProperty()
-  public readonly created: Date;
+  public created: Date;
   @ApiProperty()
-  public readonly updated: Date;
+  public updated: Date;
 }

@@ -1,4 +1,5 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
+import { ModuleTokenFactory } from '@nestjs/core/injector/module-token-factory';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { UserEntity } from '../../../entities';
@@ -19,7 +20,7 @@ export class AuthService {
 
     const tokens = await this.getTokens(payload);
     await this.updateRefreshToken(user.id, tokens.refresh_token);
-    return tokens;
+    return new AccessTokenModel({ tokens, user });
   }
 
   async validateUser(username: string, password: string): Promise<UserEntity> {
@@ -72,7 +73,7 @@ export class AuthService {
     const payload = { sub: user.id, email: user.email };
     const tokens = await this.getTokens(payload);
     await this.updateRefreshToken(user.id, tokens.refresh_token);
-    return { access_token: tokens.refresh_token };
+    return new AccessTokenModel({ tokens, user });
   }
 
   async login(user: UserEntity): Promise<AccessTokenModel> {
@@ -80,6 +81,6 @@ export class AuthService {
 
     const tokens = await this.getTokens(payload);
     await this.updateRefreshToken(user.id, tokens.refresh_token);
-    return { access_token: tokens.refresh_token };
+    return new AccessTokenModel({ tokens, user });
   }
 }

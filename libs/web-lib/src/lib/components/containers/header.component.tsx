@@ -130,17 +130,17 @@ export const Navbar = () => {
                 </button>
                 <ul className="dropdown-menu dropdown-menu-end dropdown-menu-dark text-small">
                   <li>
-                    <a className="dropdown-item" href="#">
+                    <a className="dropdown-item" href="index.js">
                       New project...
                     </a>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#">
+                    <a className="dropdown-item" href="index.js">
                       Settings
                     </a>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#">
+                    <a className="dropdown-item" href="index.js">
                       Profile
                     </a>
                   </li>
@@ -148,7 +148,7 @@ export const Navbar = () => {
                     <hr className="dropdown-divider" />
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#">
+                    <a className="dropdown-item" href="index.js">
                       Sign out
                     </a>
                   </li>

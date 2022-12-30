@@ -10,7 +10,9 @@ export const RequireAuth = ({ allowedRoles }: Props) => {
   const { authenticatedUser } = useAuth();
   const location = useLocation();
 
-  return authenticatedUser && allowedRoles?.includes(authenticatedUser.role) ? (
+  return authenticatedUser &&
+    (authenticatedUser.role === Role.ADMIN ||
+      allowedRoles?.includes(authenticatedUser.role)) ? (
     <Outlet />
   ) : authenticatedUser ? (
     <Navigate to="/unauthorized" state={{ from: location }} replace />
