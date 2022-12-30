@@ -11,11 +11,14 @@ export const routes: RouteObject[] = [
       {
         path: '/home',
         element: <NxWelcome title="" />,
-        // element: <>HOME</>,
       },
       {
-        path: 'login',
-        element: <>LOGIN!</>,
+        path: 'projects',
+        element: <>Projects!</>,
+      },
+      {
+        path: 'about',
+        element: <>About!</>,
       },
       {
         element: <RequireAuth allowedRoles={[Role.ADMIN]} />,

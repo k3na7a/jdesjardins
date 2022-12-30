@@ -4,9 +4,76 @@ import { Github } from 'react-bootstrap-icons';
 import { Linkedin } from 'react-bootstrap-icons';
 import { Twitter } from 'react-bootstrap-icons';
 import { Link, useLocation } from 'react-router-dom';
+import { useAuth } from '../../hooks';
+
+interface NavItem {
+  label: string;
+  stub: string;
+}
+
+interface Social {
+  label: string;
+  link: string;
+  icon: React.ReactNode;
+}
 
 export const Navbar = () => {
   const location = useLocation().pathname.split('/')[1];
+  const auth = useAuth();
+
+  const navItems: NavItem[] = [
+    {
+      label: 'Home',
+      stub: 'home',
+    },
+    {
+      label: 'Projects',
+      stub: 'projects',
+    },
+    {
+      label: 'About',
+      stub: 'about',
+    },
+  ];
+
+  const socials: Social[] = [
+    {
+      label: 'Twitter',
+      link: 'https://twitter.com/K38Tweets',
+      icon: <Twitter color="white" />,
+    },
+    {
+      label: 'Linkedin',
+      link: 'https://www.linkedin.com/in/john-desjardins-96593914b/',
+      icon: <Linkedin color="white" />,
+    },
+    {
+      label: 'Github',
+      link: 'https://github.com/k3na7a/jdesjardins',
+      icon: <Github color="white" />,
+    },
+  ];
+
+  const nav = navItems.map((navitem: NavItem) => {
+    return (
+      <li className="nav-item">
+        <Link
+          to={`/${navitem.stub}`}
+          className={`nav-link ${location === navitem.stub ? 'active' : ''}`}
+        >
+          {navitem.label}
+        </Link>
+      </li>
+    );
+  });
+
+  const socialLinks = socials.map((social: Social) => {
+    return (
+      <a className="px-1" href={social.link} role="button">
+        {social.icon}
+      </a>
+    );
+  });
 
   return (
     <header className="sticky-top bg-dark">
@@ -31,51 +98,9 @@ export const Navbar = () => {
             className="collapse navbar-collapse me-auto mb-2 mb-md-0"
             id="navbarNav"
           >
-            <ul className="navbar-nav me-auto mb-2 mb-md-0">
-              <li className="nav-item">
-                <Link
-                  to={`/login`}
-                  className={`nav-link ${location === 'home' ? 'active' : ''}`}
-                >
-                  Home
-                </Link>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#">
-                  Features
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#">
-                  Pricing
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link disabled">Disabled</a>
-              </li>
-            </ul>
+            <ul className="navbar-nav me-auto mb-2 mb-md-0">{nav}</ul>
             <div className="d-flex align-items-center justify-content-end">
-              <a
-                className="px-1"
-                href="https://www.linkedin.com/in/john-desjardins-96593914b/"
-                role="button"
-              >
-                <Twitter color="white" />
-              </a>
-              <a
-                className="px-1"
-                href="https://www.linkedin.com/in/john-desjardins-96593914b/"
-                role="button"
-              >
-                <Linkedin color="white" />
-              </a>
-              <a
-                className="px-1"
-                href="https://github.com/k3na7a/jdesjardins"
-                role="button"
-              >
-                <Github color="white" />
-              </a>
+              {socialLinks}
               <button
                 className="btn btn-outline-light ms-3 position-relative"
                 type="submit"
