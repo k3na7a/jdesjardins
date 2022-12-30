@@ -6,6 +6,8 @@ import { Twitter } from 'react-bootstrap-icons';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../hooks';
 
+import { useTranslation } from 'react-i18next';
+
 interface NavItem {
   label: string;
   stub: string;
@@ -21,6 +23,8 @@ interface Social {
 export const Navbar = () => {
   const location = useLocation().pathname.split('/')[1];
   const auth = useAuth();
+
+  const { t, i18n } = useTranslation('common');
 
   const navItems: NavItem[] = [
     {
@@ -73,7 +77,7 @@ export const Navbar = () => {
 
   const socialLinks = socials.map((social: Social) => {
     return (
-      <a key={social.stub} className="px-1" href={social.link} role="button">
+      <a key={social.stub} className="social" href={social.link} role="button">
         {social.icon}
       </a>
     );
@@ -84,8 +88,8 @@ export const Navbar = () => {
       <nav className="navbar navbar-dark bg-dark navbar-expand-md">
         <div className="container-fluid">
           <Link to={`/home`} className="navbar-brand noselect">
-            <p>Dunder Mifflin™</p>
-            <span>Paper Company</span>
+            <p>{t('title', i18n)}</p>
+            <span>{t('subtitle', i18n)}</span>
           </Link>
           <button
             className="navbar-toggler"
@@ -105,7 +109,7 @@ export const Navbar = () => {
             <ul className="navbar-nav me-auto mb-2 mb-md-0">{nav}</ul>
             <div className="d-flex align-items-center justify-content-end">
               {socialLinks}
-              {!auth.authenticatedUser ? (
+              {auth.authenticatedUser ? (
                 <div className="dropdown text-end ms-3">
                   <button
                     className="d-block dropdown-toggle btn btn-link"
@@ -115,8 +119,8 @@ export const Navbar = () => {
                     <img
                       src="https://github.com/mdo.png"
                       alt="mdo"
-                      width="32"
-                      height="32"
+                      width="36"
+                      height="36"
                       className="rounded-circle"
                     />
                   </button>
@@ -151,7 +155,7 @@ export const Navbar = () => {
                   className="btn btn-dark ms-3 btn-sm btn-login"
                   type="submit"
                 >
-                  Login
+                  {t('button.login', i18n)}
                 </button>
               )}
             </div>

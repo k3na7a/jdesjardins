@@ -44,3 +44,13 @@ a.btn {
 .btn-login {
   text-decoration: underline;
 }
+
+a.social {
+  padding: 0px 4px;
+}
+
+a.social > :hover {
+  -webkit-box-shadow: 0px 0px 6px 0px rgba(238, 238, 238, 0.9);
+  -moz-box-shadow: 0px 0px 6px 0px rgba(238, 238, 238, 0.9);
+  box-shadow: 0px 0px 6px 0px rgba(238, 238, 238, 0.9);
+}
