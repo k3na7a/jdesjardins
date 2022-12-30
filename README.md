@@ -1,4 +1,4 @@
-# MonoRepo Demo Application
+# MonoRepo Demo Application (Work in Progress)
 
 Completed : Create NX Mono-Repo with 2 Projects [ NestJS Back-End / React Front-End ]
 
@@ -28,11 +28,11 @@ Completed : Create Permission and Authorization Guards for routes
 
 Completed : Refactor Back-End Guards to accept Array of Accepted Roles
 
+Completed : Create Layout Components using Router Outlet to have global overlay for Navigation / Login
+
 Current Goal : Implement Persistent Login State using useContext global state
 
 TODO : Refactor User Roles so user can have multiple roles
-
-TODO : Create Layout Components using Router Outlet to have global overlay for Navigation / Login
 
 TODO : Refactor API to have more verbose Error Checking and Swagger Documentation
 
