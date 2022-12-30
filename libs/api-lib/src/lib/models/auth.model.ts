@@ -1,7 +1,7 @@
-import { IAccessToken, IUser, Role } from '@jdesjardins/dist-lib';
+import { IAccessToken, IUser } from '@jdesjardins/dist-lib';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString } from 'class-validator';
-import { BaseModel } from './base.model';
+import { UserModel } from './user.model';
 
 interface AccessTokenModelParameters {
   tokens: {
@@ -11,17 +11,11 @@ interface AccessTokenModelParameters {
   user: IUser;
 }
 
-export class AccessTokenModel extends BaseModel implements IAccessToken {
+export class AccessTokenModel extends UserModel implements IAccessToken {
   @ApiProperty()
   access_token: string;
   @ApiProperty()
   refresh_token: string;
-  @ApiProperty()
-  public username: string;
-  @ApiProperty()
-  public email: string;
-  @ApiProperty()
-  public role: Role;
 
   constructor({ tokens, user }: AccessTokenModelParameters) {
     super();
