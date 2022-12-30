@@ -29,6 +29,10 @@ export const routes: RouteObject[] = [
         ],
       },
       {
+        path: 'unauthorized',
+        element: <>Unauthorized!</>,
+      },
+      {
         path: '/*',
         element: <Navigate to="/home" replace />,
       },
