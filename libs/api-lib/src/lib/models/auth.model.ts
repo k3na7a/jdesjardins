@@ -2,7 +2,6 @@ import { IAccessToken, IUser, Role } from '@jdesjardins/dist-lib';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString } from 'class-validator';
 import { BaseModel } from './base.model';
-import { UserModel } from './user.model';
 
 interface AccessTokenModelParameters {
   tokens: {
