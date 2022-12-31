@@ -6,7 +6,7 @@ export function NavigationLayout() {
   const auth = useAuth();
 
   return (
-    <div className="cover-container d-flex flex-column">
+    <>
       <header className="sticky-top">
         <Navbar
           loading={auth.loading}
@@ -15,9 +15,7 @@ export function NavigationLayout() {
           login={auth.login}
         />
       </header>
-      <main className="content w-100 m-auto">
-        {auth.loading ? <>LOADING!</> : <Outlet />}
-      </main>
-    </div>
+      {auth.loading ? <>LOADING!</> : <Outlet />}
+    </>
   );
 }
