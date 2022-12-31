@@ -1,7 +1,9 @@
+import { Role } from '@jdesjardins/dist-lib';
 import { PersonCircle } from 'react-bootstrap-icons';
 
 interface Props {
   logout: () => void;
+  role: Role;
 }
 
 export const UserDropdown = ({ logout }: Props) => {

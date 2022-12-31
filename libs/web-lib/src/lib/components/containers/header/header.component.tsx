@@ -136,7 +136,7 @@ export const Navbar = ({
                 {t('button.loading', i18n)}
               </button>
             ) : authenticatedUser ? (
-              <UserDropdown logout={logout} />
+              <UserDropdown logout={logout} role={authenticatedUser.role} />
             ) : (
               <LoginButton
                 click={() =>
