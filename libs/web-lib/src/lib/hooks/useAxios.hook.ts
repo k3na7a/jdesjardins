@@ -41,6 +41,7 @@ export const useAxios = <T>({
   const sendRequest = useCallback(
     async (config?: AxiosRequestConfig) => {
       setLoading(true);
+
       await delay(1000);
       instance({
         ...config,

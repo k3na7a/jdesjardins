@@ -2,6 +2,7 @@
   "title": "Dunder Mifflin™",
   "subtitle": "Paper Company",
   "button": {
-    "login": "Login"
+    "login": "Login",
+    "loading": "Loading..."
   }
 }

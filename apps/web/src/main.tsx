@@ -1,9 +1,8 @@
 import * as ReactDOM from 'react-dom/client';
 
-import './styles.css';
+import './styles.scss';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min';
+import 'bootstrap';
 
 import './i18n';
 

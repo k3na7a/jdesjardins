@@ -6,7 +6,7 @@ export function NavigationLayout() {
   const auth = useAuth();
 
   return (
-    <>
+    <div className="content">
       <header className="sticky-top">
         <Navbar
           loading={auth.loading}
@@ -16,6 +16,6 @@ export function NavigationLayout() {
         />
       </header>
       {auth.loading ? <>LOADING!</> : <Outlet />}
-    </>
+    </div>
   );
 }

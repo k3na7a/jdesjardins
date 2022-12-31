@@ -1,10 +1,11 @@
 import './header.component.scss';
 
-import { Github, Linkedin, Twitter, PersonCircle } from 'react-bootstrap-icons';
+import { Github, Linkedin, Twitter } from 'react-bootstrap-icons';
 import { Link, useLocation } from 'react-router-dom';
 
 import { useTranslation } from 'react-i18next';
 import { IAccessToken } from '@jdesjardins/dist-lib';
+import { UserDropdown } from './components/userDropdown';
 
 interface NavItem {
   label: string;
@@ -131,47 +132,10 @@ export const Navbar = ({
                 type="submit"
                 disabled
               >
-                Loading
+                {t('button.loading', i18n)}
               </button>
             ) : authenticatedUser ? (
-              <div className="dropdown text-end ms-3">
-                <button
-                  className="d-block dropdown-toggle btn btn-link text-light opacity"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  <PersonCircle size="32" />
-                </button>
-                <ul className="dropdown-menu dropdown-menu-end dropdown-menu-dark text-small">
-                  <li>
-                    <a className="dropdown-item" href="index.js">
-                      New project...
-                    </a>
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="index.js">
-                      Settings
-                    </a>
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="index.js">
-                      Profile
-                    </a>
-                  </li>
-                  <li>
-                    <hr className="dropdown-divider" />
-                  </li>
-                  <li>
-                    <button
-                      className="dropdown-item btn-dark"
-                      type="button"
-                      onClick={logout}
-                    >
-                      Sign Out
-                    </button>
-                  </li>
-                </ul>
-              </div>
+              <UserDropdown logout={logout} />
             ) : (
               <button
                 className="btn btn-dark ms-2 btn-sm btn-login"
