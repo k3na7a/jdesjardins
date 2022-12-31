@@ -1,4 +1,4 @@
-import './header.component.css';
+import './header.component.scss';
 
 import { Github, Linkedin, Twitter, PersonCircle } from 'react-bootstrap-icons';
 import { Link, useLocation } from 'react-router-dom';

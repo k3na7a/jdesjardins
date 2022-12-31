@@ -1,8 +1,6 @@
 import { Outlet } from 'react-router-dom';
-import { useAuth } from '../../../hooks';
-import { Navbar } from '../../containers';
-
-import './Navigation.css';
+import { useAuth } from '../../hooks';
+import { Navbar } from '../containers';
 
 export function NavigationLayout() {
   const auth = useAuth();
