@@ -87,7 +87,7 @@ export const Navbar = ({
     );
   });
 
-  const socialLinks = socials.map((social: Social) => {
+  const _socialLinks = socials.map((social: Social) => {
     return (
       <a
         key={social.stub}
@@ -124,7 +124,7 @@ export const Navbar = ({
         >
           <ul className="navbar-nav me-auto mb-2 mb-md-0">{nav}</ul>
           <div className="d-flex align-items-center justify-content-end">
-            {socialLinks}
+            {/* {socialLinks} */}
             {loading ? (
               <button
                 className="btn btn-dark ms-2 btn-sm btn-login"
