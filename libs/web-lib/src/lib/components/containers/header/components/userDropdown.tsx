@@ -14,7 +14,7 @@ export const UserDropdown = ({ logout }: Props) => {
       >
         <PersonCircle size="32" />
       </button>
-      <ul className="dropdown-menu dropdown-menu-end dropdown-menu-dark text-small">
+      <ul className="dropdown-menu dropdown-menu-end dropdown-menu-dark m-0 text-small">
         <li>
           <a className="dropdown-item" href="index.js">
             New project...

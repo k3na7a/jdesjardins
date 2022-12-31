@@ -6,6 +6,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { IAccessToken } from '@jdesjardins/dist-lib';
 import { UserDropdown } from './components/userDropdown';
+import { LoginButton } from './components/loginButton';
 
 interface NavItem {
   label: string;
@@ -137,18 +138,15 @@ export const Navbar = ({
             ) : authenticatedUser ? (
               <UserDropdown logout={logout} />
             ) : (
-              <button
-                className="btn btn-dark ms-2 btn-sm btn-login"
-                type="submit"
-                onClick={() =>
+              <LoginButton
+                click={() =>
                   login({
                     username: 'Jdesjardins',
                     password: 'Password123!',
                   })
                 }
-              >
-                {t('button.login', i18n)}
-              </button>
+                text={t('button.login', i18n)}
+              />
             )}
           </div>
         </div>
