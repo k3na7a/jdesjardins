@@ -1,7 +1,7 @@
 import { Role } from '@jdesjardins/dist-lib';
 import { Navigate, RouteObject } from 'react-router-dom';
-import { NavigationLayout } from '../components/layout/Navigation';
-import { RequireAuth } from '../components/layout/RequireAuth';
+import { NavigationLayout } from '../components/layout/navigation/Navigation';
+import { RequireAuth } from '../components/layout/requireAuth/RequireAuth';
 import { Home } from '../pages';
 
 export const routes: RouteObject[] = [

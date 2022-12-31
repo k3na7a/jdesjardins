@@ -1,11 +1,9 @@
 import * as ReactDOM from 'react-dom/client';
 
-import './styles.css';
-
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min';
+import 'bootstrap';
 
 import './i18n';
+import './styles.scss';
 
 import { BrowserRouter } from 'react-router-dom';
 import { App } from '@jdesjardins/web-lib';

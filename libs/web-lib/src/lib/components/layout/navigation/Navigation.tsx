@@ -1,12 +1,14 @@
 import { Outlet } from 'react-router-dom';
-import { useAuth } from '../../hooks';
-import { Navbar } from '../containers';
+import { useAuth } from '../../../hooks';
+import { Navbar } from '../../containers';
+
+import './Navigation.css';
 
 export function NavigationLayout() {
   const auth = useAuth();
 
   return (
-    <>
+    <div className="cover-container d-flex flex-column">
       <header className="sticky-top">
         <Navbar
           loading={auth.loading}
@@ -15,7 +17,9 @@ export function NavigationLayout() {
           login={auth.login}
         />
       </header>
-      {auth.loading ? <>LOADING!</> : <Outlet />}
-    </>
+      <main className="content w-100 m-auto">
+        {auth.loading ? <>LOADING!</> : <Outlet />}
+      </main>
+    </div>
   );
 }
