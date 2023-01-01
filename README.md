@@ -14,7 +14,7 @@ Completed : Setup Basic File Structure of DIST library
 
 Completed : Setup React Project Libraries for main application and Shared React UI Components
 
-Completed : Setup FontAwesome / Bootstrap and other React Dependencies and initialize them.
+Completed : Setup Bootstrap / Bootstrap Icons and other React Dependencies and initialize them.
 
 Completed : Created React Hooks for Data Fetching using Axios.
 
