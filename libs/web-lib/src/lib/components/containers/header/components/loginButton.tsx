@@ -31,6 +31,7 @@ export const LoginButton = ({ text, click }: Props) => {
           <div className="mb-3">
             <input
               type="text"
+              autoComplete="on"
               className="form-control form-control-sm"
               id="username"
               value={state.username}
@@ -46,8 +47,9 @@ export const LoginButton = ({ text, click }: Props) => {
           <div className="mb-3">
             <input
               type="password"
+              autoComplete="on"
               className="form-control form-control-sm"
-              id="exampleDropdownFormPassword2"
+              id="password"
               placeholder="Password"
               value={state.password}
               onChange={(event) =>
