@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import './header.component.scss';
 
 import { Github, Linkedin, Twitter } from 'react-bootstrap-icons';
@@ -49,10 +50,6 @@ export const Navbar = ({
       label: 'About',
       stub: 'about',
     },
-    {
-      label: 'Admin',
-      stub: 'admin',
-    },
   ];
 
   const socials: Social[] = [
@@ -76,20 +73,64 @@ export const Navbar = ({
     },
   ];
 
-  const nav = navItems.map((navitem: NavItem) => {
-    return (
-      <li key={navitem.stub} className="nav-item">
-        <Link
-          to={`/${navitem.stub}`}
-          className={`nav-link ${location === navitem.stub ? 'active' : ''}`}
+  const renderedNavItems = (navItems: NavItem[]) => {
+    // if more than 4 NavItems exist, render 3 items and put the rest
+    // in a more dropdown (This math is to avoid Dropsdowns with a single item)
+    const INDEX = navItems.length > 4 ? 3 : 4;
+
+    const topnav = navItems.splice(0, INDEX);
+    const more = navItems.splice(-INDEX);
+
+    const nav = topnav.map((navitem: NavItem) => {
+      return (
+        <li key={navitem.stub} className="nav-item">
+          <Link
+            to={`/${navitem.stub}`}
+            className={`nav-link ${location === navitem.stub ? 'active' : ''}`}
+          >
+            {navitem.label}
+          </Link>
+        </li>
+      );
+    });
+
+    const dropdown = (
+      <li key="dropown" className="nav-item dropdown">
+        <a
+          className="nav-link dropdown-toggle"
+          href="#"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
         >
-          {navitem.label}
-        </Link>
+          Dropdown
+        </a>
+        <ul className="dropdown-menu dropdown-menu-dark m-0 text-small">
+          <li>
+            <a className="dropdown-item" href="#">
+              Action
+            </a>
+          </li>
+          <li>
+            <a className="dropdown-item" href="#">
+              Another action
+            </a>
+          </li>
+          <li>
+            <hr className="dropdown-divider" />
+          </li>
+          <li>
+            <a className="dropdown-item" href="#">
+              Something else here
+            </a>
+          </li>
+        </ul>
       </li>
     );
-  });
+    return [...nav, dropdown];
+  };
 
-  const _socialLinks = socials.map((social: Social) => {
+  const socialLinks = socials.map((social: Social) => {
     return (
       <a
         key={social.stub}
@@ -124,9 +165,11 @@ export const Navbar = ({
           className="collapse navbar-collapse me-auto mb-2 mb-md-0"
           id="navbarNav"
         >
-          <ul className="navbar-nav me-auto mb-2 mb-md-0">{nav}</ul>
+          <ul className="navbar-nav me-auto mb-2 mb-md-0">
+            {renderedNavItems(navItems)}
+          </ul>
           <div className="d-flex align-items-center justify-content-end">
-            {/* {socialLinks} */}
+            {socialLinks}
             {loading ? (
               <button
                 className="btn btn-dark ms-2 btn-sm btn-login"
