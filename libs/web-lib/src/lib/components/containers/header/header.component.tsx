@@ -49,10 +49,6 @@ export const Navbar = ({
       label: 'About',
       stub: 'about',
     },
-    {
-      label: 'Admin',
-      stub: 'admin',
-    },
   ];
 
   const socials: Social[] = [

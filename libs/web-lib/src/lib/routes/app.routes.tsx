@@ -13,24 +13,33 @@ export const routes: RouteObject[] = [
         element: <Home />,
       },
       {
-        path: 'projects',
+        path: '/projects',
         element: <>Projects!</>,
       },
       {
-        path: 'about',
+        path: '/about',
         element: <>About!</>,
+      },
+      {
+        element: <RequireAuth />,
+        children: [
+          {
+            path: '/profile',
+            element: <>PROFILE!</>,
+          },
+        ],
       },
       {
         element: <RequireAuth allowedRoles={[Role.ADMIN]} />,
         children: [
           {
-            path: 'admin',
+            path: '/admin',
             element: <>YOU MADE IT ADMIN!</>,
           },
         ],
       },
       {
-        path: 'unauthorized',
+        path: '/unauthorized',
         element: <>Unauthorized!</>,
       },
       {
