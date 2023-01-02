@@ -59,7 +59,7 @@ export const AuthContextProvider = ({ children }: Props) => {
   const onResolve = useCallback(() => {
     setLoading(false);
   }, []);
-  
+
   const onLogout = useCallback(() => {
     localStorage.removeItem('AccessToken');
     setAuthenticatedUser(undefined);
