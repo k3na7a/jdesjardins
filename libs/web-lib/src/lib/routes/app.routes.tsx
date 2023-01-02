@@ -21,6 +21,15 @@ export const routes: RouteObject[] = [
         element: <>About!</>,
       },
       {
+        element: <RequireAuth />,
+        children: [
+          {
+            path: '/profile',
+            element: <>PROFILE!</>,
+          },
+        ],
+      },
+      {
         element: <RequireAuth allowedRoles={[Role.ADMIN]} />,
         children: [
           {

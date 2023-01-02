@@ -1,12 +1,15 @@
 import { Role } from '@jdesjardins/dist-lib';
 import { PersonCircle } from 'react-bootstrap-icons';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   logout: () => void;
   role: Role;
 }
 
-export const UserDropdown = ({ logout }: Props) => {
+export const UserDropdown = ({ role, logout }: Props) => {
+  const navigate = useNavigate();
+
   return (
     <div className="dropdown text-end ms-3">
       <button
@@ -18,20 +21,23 @@ export const UserDropdown = ({ logout }: Props) => {
       </button>
       <ul className="dropdown-menu dropdown-menu-end dropdown-menu-dark m-0 text-small">
         <li>
-          <a className="dropdown-item" href="index.js">
-            New project...
-          </a>
-        </li>
-        <li>
-          <a className="dropdown-item" href="index.js">
-            Settings
-          </a>
-        </li>
-        <li>
-          <a className="dropdown-item" href="index.js">
+          <button
+            className="dropdown-item"
+            onClick={() => navigate('/profile')}
+          >
             Profile
-          </a>
+          </button>
         </li>
+        {role === Role.ADMIN && (
+          <li>
+            <button
+              className="dropdown-item"
+              onClick={() => navigate('/admin')}
+            >
+              Admin
+            </button>
+          </li>
+        )}
         <li>
           <hr className="dropdown-divider" />
         </li>
