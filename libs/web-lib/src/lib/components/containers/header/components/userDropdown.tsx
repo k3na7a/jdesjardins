@@ -1,16 +1,12 @@
 import { Role } from '@jdesjardins/dist-lib';
-import { useCallback } from 'react';
 import { PersonCircle } from 'react-bootstrap-icons';
-import { useNavigate } from 'react-router-dom';
 
 interface Props {
   logout: () => void;
   role: Role;
 }
 
-export const UserDropdown = ({ role, logout }: Props) => {
-  const navigate = useNavigate();
-
+export const UserDropdown = ({ logout }: Props) => {
   return (
     <div className="dropdown text-end ms-3">
       <button
@@ -22,28 +18,29 @@ export const UserDropdown = ({ role, logout }: Props) => {
       </button>
       <ul className="dropdown-menu dropdown-menu-end dropdown-menu-dark m-0 text-small">
         <li>
-          <button
-            className="dropdown-item"
-            onClick={() => navigate('/profile')}
-          >
-            Profile
-          </button>
+          <a className="dropdown-item" href="index.js">
+            New project...
+          </a>
         </li>
-        {role === Role.ADMIN && (
-          <li>
-            <button
-              className="dropdown-item"
-              onClick={() => navigate('/admin')}
-            >
-              Admin
-            </button>
-          </li>
-        )}
+        <li>
+          <a className="dropdown-item" href="index.js">
+            Settings
+          </a>
+        </li>
+        <li>
+          <a className="dropdown-item" href="index.js">
+            Profile
+          </a>
+        </li>
         <li>
           <hr className="dropdown-divider" />
         </li>
         <li>
-          <button className="dropdown-item" type="button" onClick={logout}>
+          <button
+            className="dropdown-item btn-dark"
+            type="button"
+            onClick={logout}
+          >
             Sign Out
           </button>
         </li>

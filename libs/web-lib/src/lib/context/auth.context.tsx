@@ -51,37 +51,34 @@ export const AuthContextProvider = ({ children }: Props) => {
   const [authenticatedUser, setAuthenticatedUser] = useState<IAccessToken>();
   const [loading, setLoading] = useState<boolean>(true);
 
+  const onSuccess = useCallback((res: IAccessToken) => {
+    localStorage.setItem('AccessToken', res.refresh_token);
+    setAuthenticatedUser(res);
+  }, []);
+
+  const onResolve = useCallback(() => {
+    setLoading(false);
+  }, []);
+  
+  const onLogout = useCallback(() => {
+    localStorage.removeItem('AccessToken');
+    setAuthenticatedUser(undefined);
+  }, []);
+
   const [login, cancel_login] = useAxios<IAccessToken>({
     instance: usePrivateAxiosInstance(localLogin),
-    onSuccess: useCallback((res: IAccessToken) => {
-      localStorage.setItem('AccessToken', res.refresh_token);
-      setAuthenticatedUser(res);
-    }, []),
-    onResolve: useCallback(() => {
-      setLoading(false);
-    }, []),
+    onSuccess,
+    onResolve,
   });
-
   const [logout, cancel_logout] = useAxios<IAccessToken>({
     instance: usePrivateAxiosInstance(localLogout),
-    onSuccess: useCallback(() => {
-      localStorage.removeItem('AccessToken');
-      setAuthenticatedUser(undefined);
-    }, []),
-    onResolve: useCallback(() => {
-      setLoading(false);
-    }, []),
+    onSuccess: onLogout,
+    onResolve,
   });
-
   const [authenticate, cancel_auth] = useAxios<IAccessToken>({
     instance: usePrivateAxiosInstance(localRefresh),
-    onSuccess: useCallback((res: IAccessToken) => {
-      localStorage.setItem('AccessToken', res.refresh_token);
-      setAuthenticatedUser(res);
-    }, []),
-    onResolve: useCallback(() => {
-      setLoading(false);
-    }, []),
+    onSuccess,
+    onResolve,
   });
 
   useEffect(() => {
