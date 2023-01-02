@@ -1,4 +1,5 @@
 import { Role } from '@jdesjardins/dist-lib';
+import { useCallback } from 'react';
 import { PersonCircle } from 'react-bootstrap-icons';
 import { useNavigate } from 'react-router-dom';
 
