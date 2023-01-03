@@ -36,6 +36,8 @@ In Progress : Refactor Navigation to be more modular and allow easy addition or 
 
 TODO : Refactor User Roles so user can have multiple roles
 
+TODO : Create User Profile Page to edit User Info and User Registration Form to Create User
+
 TODO : Refactor API to have more verbose Error Checking and Documentation
 
 TODO : Create global Provider for Modals and Toasts.
