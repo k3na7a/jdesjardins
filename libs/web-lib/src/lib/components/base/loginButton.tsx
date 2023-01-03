@@ -1,7 +1,7 @@
 import {
   LoginFormReducerActionTypes,
   LoginReducer,
-} from '../../../../reducers/login.reducer';
+} from '../../reducers/login.reducer';
 import { useReducer } from 'react';
 
 interface Props {

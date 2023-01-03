@@ -6,8 +6,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import { useTranslation } from 'react-i18next';
 import { IAccessToken } from '@jdesjardins/dist-lib';
-import { UserDropdown } from './components/userDropdown';
-import { LoginButton } from './components/loginButton';
+import { UserDropdown } from '../../base/userDropdown';
+import { LoginButton } from '../../base/loginButton';
 
 interface NavItem {
   label: string;
