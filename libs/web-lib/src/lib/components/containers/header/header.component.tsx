@@ -2,7 +2,7 @@
 import './header.component.scss';
 
 import { Github, Linkedin, Twitter } from 'react-bootstrap-icons';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import { useTranslation } from 'react-i18next';
 import { IAccessToken } from '@jdesjardins/dist-lib';
@@ -36,6 +36,7 @@ export const Navbar = ({
 }: Props) => {
   const location = useLocation().pathname.split('/')[1];
   const { t, i18n } = useTranslation('common');
+  const navigate = useNavigate();
 
   const navItems: NavItem[] = [
     {
@@ -76,6 +77,7 @@ export const Navbar = ({
   const renderedNavItems = (navItems: NavItem[]) => {
     // if more than 4 NavItems exist, render 3 items and put the rest
     // in a more dropdown (This math is to avoid Dropsdowns with a single item)
+    // This is to avoid too many items on the top nav which causes visual clutter
     const INDEX = navItems.length > 4 ? 3 : 4;
 
     const topnav = navItems.splice(0, INDEX);
@@ -103,31 +105,27 @@ export const Navbar = ({
           data-bs-toggle="dropdown"
           aria-expanded="false"
         >
-          Dropdown
+          More
         </a>
         <ul className="dropdown-menu dropdown-menu-dark m-0 text-small">
-          <li>
-            <a className="dropdown-item" href="#">
-              Action
-            </a>
-          </li>
-          <li>
-            <a className="dropdown-item" href="#">
-              Another action
-            </a>
-          </li>
-          <li>
-            <hr className="dropdown-divider" />
-          </li>
-          <li>
-            <a className="dropdown-item" href="#">
-              Something else here
-            </a>
-          </li>
+          {more.map((navItem: NavItem) => {
+            return (
+              <li>
+                <button
+                  className="dropdown-item"
+                  onClick={() => navigate(`/${navItem.stub}`)}
+                >
+                  {navItem.label}
+                </button>
+              </li>
+            );
+          })}
         </ul>
       </li>
     );
-    return [...nav, dropdown];
+
+    if (more.length) return [...nav, dropdown];
+    return nav;
   };
 
   const socialLinks = socials.map((social: Social) => {

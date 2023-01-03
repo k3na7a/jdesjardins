@@ -17,7 +17,7 @@ export const LoginButton = ({ text, click }: Props) => {
   return (
     <div className="dropdown">
       <button
-        className="btn btn-dark ms-2 btn-sm btn-login dropdown-toggle p-1"
+        className="btn btn-dark ms-2 btn-sm btn-login dropdown-toggle p-1 login-btn"
         data-bs-toggle="dropdown"
         aria-expanded="false"
         data-bs-auto-close="outside"
