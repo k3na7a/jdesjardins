@@ -48,6 +48,8 @@ const defaultState = {
 
 export const AuthContext = createContext<AuthContextInterface>(defaultState);
 
+let didInit = false;
+
 export const AuthContextProvider = ({ children }: Props) => {
   const [authenticatedUser, setAuthenticatedUser] = useState<IAccessToken>();
   const [loading, setLoading] = useState<boolean>(true);
@@ -82,11 +84,14 @@ export const AuthContextProvider = ({ children }: Props) => {
   });
 
   useEffect(() => {
-    if (localStorage.getItem('AccessToken')) authenticate();
-    else setLoading(false);
-    return () => {
-      cancel_auth();
-    };
+    if (!didInit) {
+      didInit = true;
+      if (localStorage.getItem('AccessToken')) authenticate();
+      else setLoading(false);
+    }
+    // return () => {
+    //   cancel_auth();
+    // };
   }, [authenticate, cancel_auth]);
 
   const Login = useCallback(
