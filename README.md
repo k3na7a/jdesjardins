@@ -36,7 +36,7 @@ In Progress : Refactor Navigation to be more modular and allow easy addition or 
 
 TODO : Refactor User Roles so user can have multiple roles
 
-TODO : Refactor API to have more verbose Error Checking for when Username or Email is already in use. Swagger Documentation needs Updating
+TODO : Refactor API to have more verbose Error Checking and Documentation
 
 TODO : Create global Provider for Modals and Toasts.
 
