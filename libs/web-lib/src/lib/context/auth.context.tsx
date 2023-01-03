@@ -89,7 +89,8 @@ export const AuthContextProvider = ({ children }: Props) => {
     onResolve,
   });
 
-  // useEffect called twice in dev mode, need to find a better way to handle this
+  // useEffect called twice in dev mode due to React Strict Mode,
+  // need to find a better way to handle this!!
   const effectCalled = useRef<boolean>(false);
 
   useEffect(() => {
