@@ -1,6 +1,11 @@
 import { IAccessToken } from '@jdesjardins/dist-lib';
-import { AxiosError } from 'axios';
-import React, { createContext, useCallback, useEffect, useState } from 'react';
+import React, {
+  createContext,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { localLogin, localLogout, localRefresh } from '../apis';
 import { useAxios } from '../hooks';
 import { usePrivateAxiosInstance } from '../hooks';
@@ -48,8 +53,6 @@ const defaultState = {
 
 export const AuthContext = createContext<AuthContextInterface>(defaultState);
 
-let didInit = false;
-
 export const AuthContextProvider = ({ children }: Props) => {
   const [authenticatedUser, setAuthenticatedUser] = useState<IAccessToken>();
   const [loading, setLoading] = useState<boolean>(true);
@@ -57,11 +60,10 @@ export const AuthContextProvider = ({ children }: Props) => {
   const onSuccess = useCallback((res: IAccessToken) => {
     localStorage.setItem('AccessToken', res.refresh_token);
     setAuthenticatedUser(res);
-    setLoading(false);
   }, []);
 
-  const onError = useCallback((err: AxiosError) => {
-    console.log(err.code);
+  const onResolve = useCallback(() => {
+    setLoading(false);
   }, []);
 
   const onLogout = useCallback(() => {
@@ -72,26 +74,35 @@ export const AuthContextProvider = ({ children }: Props) => {
   const [login, cancel_login] = useAxios<IAccessToken>({
     instance: usePrivateAxiosInstance(localLogin),
     onSuccess,
+    onResolve,
   });
+
   const [logout, cancel_logout] = useAxios<IAccessToken>({
     instance: usePrivateAxiosInstance(localLogout),
     onSuccess: onLogout,
+    onResolve,
   });
+
   const [authenticate, cancel_auth] = useAxios<IAccessToken>({
     instance: usePrivateAxiosInstance(localRefresh),
     onSuccess,
-    onError,
+    onResolve,
   });
 
+  // useEffect called twice in dev mode, need to find a better way to handle this
+  const effectCalled = useRef<boolean>(false);
+
   useEffect(() => {
-    if (!didInit) {
-      didInit = true;
+    if (effectCalled.current) {
       if (localStorage.getItem('AccessToken')) authenticate();
       else setLoading(false);
     }
-    // return () => {
-    //   cancel_auth();
-    // };
+
+    effectCalled.current = true;
+
+    return () => {
+      cancel_auth();
+    };
   }, [authenticate, cancel_auth]);
 
   const Login = useCallback(
