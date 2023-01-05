@@ -2,7 +2,8 @@ import { Role } from '@jdesjardins/dist-lib';
 import { Navigate, RouteObject } from 'react-router-dom';
 import { NavigationLayout } from '../components/layout/Navigation';
 import { RequireAuth } from '../components/layout/RequireAuth';
-import { Home } from '../pages';
+import { HomePageComponent } from '../pages';
+import { ProfilePageComponent } from '../pages/profile/profile.page';
 
 export const routes: RouteObject[] = [
   {
@@ -10,7 +11,7 @@ export const routes: RouteObject[] = [
     children: [
       {
         path: '/home',
-        element: <Home />,
+        element: <HomePageComponent />,
       },
       {
         path: 'projects',
@@ -25,7 +26,7 @@ export const routes: RouteObject[] = [
         children: [
           {
             path: '/profile',
-            element: <>PROFILE!</>,
+            element: <ProfilePageComponent />,
           },
         ],
       },
