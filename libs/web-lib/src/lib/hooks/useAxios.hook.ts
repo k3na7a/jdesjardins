@@ -23,8 +23,7 @@ export const useAxios = <T>({
   () => void,
   T | undefined,
   boolean,
-  AxiosError | undefined,
-  (request?: AxiosRequestConfig) => Promise<T | undefined>
+  AxiosError | undefined
 ] => {
   const [data, setData] = useState<T>();
   const [loading, setLoading] = useState<boolean>(true);
@@ -36,23 +35,6 @@ export const useAxios = <T>({
     controllerRef.current.abort();
     controllerRef.current = new AbortController();
   }, []);
-
-  const fetchData = useCallback(
-    async (config?: AxiosRequestConfig) => {
-      const data: T | undefined = await instance({
-        ...config,
-        signal: controllerRef.current.signal,
-      })
-        .then((response: AxiosResponse) => {
-          return response.data;
-        })
-        .catch(() => {
-          return undefined;
-        });
-      return data;
-    },
-    [instance]
-  );
 
   const sendRequest = useCallback(
     async (config?: AxiosRequestConfig) => {
@@ -79,5 +61,5 @@ export const useAxios = <T>({
     [instance, onError, onSuccess, onResolve]
   );
 
-  return [sendRequest, cancel, data, loading, error, fetchData];
+  return [sendRequest, cancel, data, loading, error];
 };
