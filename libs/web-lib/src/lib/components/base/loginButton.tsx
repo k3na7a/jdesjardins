@@ -2,40 +2,45 @@ import {
   LoginFormReducerActionTypes,
   LoginReducer,
 } from '../../reducers/login.reducer';
-import { useReducer } from 'react';
+import { ChangeEvent, useReducer } from 'react';
+import { IUserLogin } from '@jdesjardins/dist-lib';
 
 interface Props {
+  loading: boolean;
   text: string;
-  click: (data: { username: string; password: string }) => void;
+  click: (data: IUserLogin) => void;
 }
 
-export const LoginButton = ({ text, click }: Props) => {
+export const LoginButton = ({ loading, text, click }: Props) => {
   const [state, dispatch] = useReducer(LoginReducer, {
     username: '',
     password: '',
   });
+
   return (
     <div className="dropdown">
       <button
         className="btn btn-dark ms-2 btn-sm btn-login dropdown-toggle p-1 login-btn"
+        disabled={loading}
         data-bs-toggle="dropdown"
         aria-expanded="false"
         data-bs-auto-close="outside"
       >
-        {text}
+        {loading ? 'Loading' : text}
       </button>
 
       <div className="dropdown-menu dropdown-menu-end dropdown-menu-dark m-0 p-0">
         <form className="p-3">
           <div className="mb-3">
             <input
+              disabled={loading}
               type="text"
               autoComplete="on"
               className="form-control form-control-sm"
               id="username"
               value={state.username}
               placeholder="Username"
-              onChange={(event) =>
+              onChange={(event: ChangeEvent<HTMLInputElement>) =>
                 dispatch({
                   type: LoginFormReducerActionTypes.UPDATE_USERNAME,
                   payload: event.target.value,
@@ -46,12 +51,13 @@ export const LoginButton = ({ text, click }: Props) => {
           <div className="mb-3">
             <input
               type="password"
+              disabled={loading}
               autoComplete="on"
               className="form-control form-control-sm"
               id="password"
               placeholder="Password"
               value={state.password}
-              onChange={(event) =>
+              onChange={(event: ChangeEvent<HTMLInputElement>) =>
                 dispatch({
                   type: LoginFormReducerActionTypes.UPDATE_PASSWORD,
                   payload: event.target.value,
@@ -61,10 +67,11 @@ export const LoginButton = ({ text, click }: Props) => {
           </div>
           <button
             type="submit"
+            disabled={loading}
             className="btn btn-primary btn-sm"
             onClick={() => click(state)}
           >
-            {text}
+            {loading ? 'Loading' : text}
           </button>
         </form>
       </div>

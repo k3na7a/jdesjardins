@@ -75,9 +75,6 @@ export const Navbar = ({
   ];
 
   const renderedNavItems = (navItems: NavItem[]) => {
-    // if more than 4 NavItems exist, render 3 items and put the rest
-    // in a more dropdown (This math is to avoid Dropsdowns with a single item)
-    // This is to avoid too many items on the top nav which causes visual clutter
     const INDEX = navItems.length > 4 ? 3 : 4;
 
     const topnav = navItems.splice(0, INDEX);
@@ -105,7 +102,7 @@ export const Navbar = ({
           data-bs-toggle="dropdown"
           aria-expanded="false"
         >
-          More
+          More...
         </a>
         <ul className="dropdown-menu dropdown-menu-dark m-0 text-small">
           {more.map((navItem: NavItem) => {
@@ -168,18 +165,14 @@ export const Navbar = ({
           </ul>
           <div className="d-flex align-items-center justify-content-end">
             {socialLinks}
-            {loading ? (
-              <button
-                className="btn btn-dark ms-2 btn-sm btn-login"
-                type="submit"
-                disabled
-              >
-                {t('button.loading', i18n)}
-              </button>
-            ) : authenticatedUser ? (
+            {authenticatedUser ? (
               <UserDropdown logout={logout} role={authenticatedUser.role} />
             ) : (
-              <LoginButton click={login} text={t('button.login', i18n)} />
+              <LoginButton
+                loading={loading}
+                click={login}
+                text={t('button.login', i18n)}
+              />
             )}
           </div>
         </div>
