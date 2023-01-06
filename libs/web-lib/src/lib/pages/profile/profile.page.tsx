@@ -1,12 +1,11 @@
-import { useRequireAuthContext } from '../../hooks';
+import { UpdateUserForm } from './updateUserForm';
 
 export const ProfilePageComponent = () => {
-  const auth = useRequireAuthContext();
-
   return (
     <>
       PROFILE
-      <p>{auth.username}</p>
+      <p>Change Information</p>
+      <UpdateUserForm />
     </>
   );
 };

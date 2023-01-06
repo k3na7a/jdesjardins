@@ -4,10 +4,11 @@ import {
   AxiosRequestConfig,
   AxiosResponse,
 } from 'axios';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 interface AxiosHookInterface<T> {
   instance: AxiosInstance;
+  loadOnStart?: boolean;
   onSuccess?: (res: T) => void;
   onError?: (err: AxiosError) => void;
   onResolve?: () => void;
@@ -15,6 +16,7 @@ interface AxiosHookInterface<T> {
 
 export const useAxios = <T>({
   instance,
+  loadOnStart = false,
   onSuccess,
   onError,
   onResolve,
@@ -26,19 +28,19 @@ export const useAxios = <T>({
   AxiosError | undefined
 ] => {
   const [data, setData] = useState<T>();
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(loadOnStart);
   const [error, setError] = useState<AxiosError>();
-
   const controllerRef = useRef(new AbortController());
 
   const cancel = useCallback(() => {
     controllerRef.current.abort();
-    controllerRef.current = new AbortController();
   }, []);
 
   const sendRequest = useCallback(
-    async (config?: AxiosRequestConfig) => {
+    (config?: AxiosRequestConfig) => {
       setLoading(true);
+      if (controllerRef.current.signal.aborted)
+        controllerRef.current = new AbortController();
       instance({
         ...config,
         signal: controllerRef.current.signal,
@@ -60,6 +62,13 @@ export const useAxios = <T>({
     },
     [instance, onError, onSuccess, onResolve]
   );
+
+  useEffect(() => {
+    if (loadOnStart) sendRequest();
+    return () => {
+      cancel();
+    };
+  }, [cancel, loadOnStart, sendRequest]);
 
   return [sendRequest, cancel, data, loading, error];
 };

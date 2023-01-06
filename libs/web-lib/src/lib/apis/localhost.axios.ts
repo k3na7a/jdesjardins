@@ -9,8 +9,8 @@ export const localhost = axios.create({
   },
 });
 
-export const localAuthenticate = axios.create({
-  baseURL: `${BASE_URL}/authenticate`,
+export const localGetSelf = axios.create({
+  baseURL: `${BASE_URL}/me`,
   method: 'GET',
   headers: {
     'Content-type': 'application/json',

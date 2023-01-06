@@ -58,4 +58,11 @@ export class AuthController {
   refreshTokens(@Req() req: { user: UserEntity }): Promise<AccessTokenModel> {
     return this.authService.RefreshTokens(req.user.id, req.user.refreshToken);
   }
+  @ApiBearerAuth('access-token')
+  @UseGuards(RefreshTokenGuard)
+  @UseGuards()
+  @Get('me')
+  getSelf(@Req() req: { user: UserEntity }): Promise<UserEntity> {
+    return this.userService.findById(req.user.id);
+  }
 }
