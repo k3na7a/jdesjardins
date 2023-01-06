@@ -4,7 +4,7 @@ import { IsNotEmpty, IsString } from 'class-validator';
 import { UserModel } from './user.model';
 
 interface AccessTokenModelParameters {
-  tokens: {
+  tokens?: {
     access_token: string;
     refresh_token: string;
   };
@@ -13,15 +13,15 @@ interface AccessTokenModelParameters {
 
 export class AccessTokenModel extends UserModel implements IAccessToken {
   @ApiProperty()
-  access_token: string;
+  access_token: string | null;
   @ApiProperty()
-  refresh_token: string;
+  refresh_token: string | null;
 
   constructor({ tokens, user }: AccessTokenModelParameters) {
     super();
 
-    this.access_token = tokens.access_token;
-    this.refresh_token = tokens.refresh_token;
+    this.access_token = tokens?.access_token || null;
+    this.refresh_token = tokens?.refresh_token || null;
     this.id = user.id;
     this.username = user.username;
     this.email = user.email;

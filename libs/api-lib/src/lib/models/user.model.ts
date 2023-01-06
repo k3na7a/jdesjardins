@@ -1,7 +1,9 @@
 import {
   IUser,
+  PASSWORD_VALIDATION_MESSAGE,
   PASSWORD_VALIDATION_REGEX,
   Role,
+  USERNAME_VALIDATION_MESSAGE,
   USERNAME_VALIDATION_REGEX,
 } from '@jdesjardins/dist-lib';
 import { ApiProperty } from '@nestjs/swagger';
@@ -35,6 +37,16 @@ export class UpdateUserModel {
   @IsEmail()
   @IsNotEmpty()
   public email?: string;
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsEmail()
+  @IsNotEmpty()
+  public firstName?: string;
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsEmail()
+  @IsNotEmpty()
+  public lastName?: string;
   @IsOptional()
   @IsString()
   @IsNotEmpty()
@@ -46,8 +58,7 @@ export class CreateUserModel {
   @IsString()
   @IsNotEmpty()
   @Matches(USERNAME_VALIDATION_REGEX, {
-    message:
-      'Username must contain one lowercase letter, one uppercase letter, no space, no digits, no special characters, and it must be 4-16 chaaracters long.',
+    message: USERNAME_VALIDATION_MESSAGE,
   })
   public username: string;
   @ApiProperty()
@@ -57,10 +68,17 @@ export class CreateUserModel {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
+  public firstName: string;
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  public lastName: string;
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
   @MinLength(8)
   @Matches(PASSWORD_VALIDATION_REGEX, {
-    message:
-      'Password must contain one digit from 1 to 9, one lowercase letter, one uppercase letter, one special character, no space, and it must be 8-16 characters long.',
+    message: PASSWORD_VALIDATION_MESSAGE,
   })
   public password: string;
 }

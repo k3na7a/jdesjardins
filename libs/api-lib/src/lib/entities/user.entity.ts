@@ -14,6 +14,14 @@ export class UserEntity extends BaseEntity implements IUser {
   @Column({ unique: true })
   email: string;
 
+  @ApiProperty()
+  @Column()
+  firstName: string;
+
+  @ApiProperty()
+  @Column()
+  lastName: string;
+
   @Column()
   @Exclude()
   password: string;

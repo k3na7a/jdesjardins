@@ -46,8 +46,10 @@ export class AuthService {
     return { access_token, refresh_token };
   }
 
-  async logout(userId: string) {
-    return this.usersService.update(userId, { refreshToken: null });
+  async logout(userId: string): Promise<AccessTokenModel> {
+    const user = await this.usersService.findById(userId);
+    await this.usersService.update(userId, { refreshToken: null });
+    return new AccessTokenModel({ user });
   }
 
   async updateRefreshToken(id: string, refreshToken: string): Promise<void> {

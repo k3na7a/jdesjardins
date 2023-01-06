@@ -14,7 +14,6 @@ import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 import { LocalAuthGuard } from '../../../guards/local.auth.guard';
 import { AuthService } from '../services/auth.service';
 import { UserEntity } from '../../../entities';
-import { UserService } from '../../users/services/user.service';
 import {
   AccessTokenModel,
   CreateUserModel,
@@ -26,10 +25,7 @@ import { RefreshTokenGuard } from '../../../guards/refreshToken.guard';
 @Controller('')
 @UseInterceptors(ClassSerializerInterceptor)
 export class AuthController {
-  constructor(
-    private readonly authService: AuthService,
-    private readonly userService: UserService
-  ) {}
+  constructor(private readonly authService: AuthService) {}
 
   @ApiBody({ type: CreateUserModel })
   @Put('register')
@@ -47,7 +43,7 @@ export class AuthController {
   @ApiBearerAuth('access-token')
   @UseGuards(RefreshTokenGuard)
   @Get('logout')
-  logout(@Req() req: { user: UserEntity }): Promise<UserEntity> {
+  logout(@Req() req: { user: UserEntity }): Promise<AccessTokenModel> {
     return this.authService.logout(req.user.id);
   }
 
@@ -57,12 +53,5 @@ export class AuthController {
   @Get('refresh')
   refreshTokens(@Req() req: { user: UserEntity }): Promise<AccessTokenModel> {
     return this.authService.RefreshTokens(req.user.id, req.user.refreshToken);
-  }
-  @ApiBearerAuth('access-token')
-  @UseGuards(RefreshTokenGuard)
-  @UseGuards()
-  @Get('me')
-  getSelf(@Req() req: { user: UserEntity }): Promise<UserEntity> {
-    return this.userService.findById(req.user.id);
   }
 }
