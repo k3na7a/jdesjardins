@@ -5,6 +5,14 @@ import {
 import { ChangeEvent, useReducer } from 'react';
 import { IUserLogin } from '@jdesjardins/dist-lib';
 
+interface formItem {
+  type: string;
+  id: string;
+  placeholder: string;
+  dispatchType: LoginFormReducerActionTypes;
+  value: string;
+}
+
 interface Props {
   loading: boolean;
   text: string;
@@ -16,6 +24,23 @@ export const LoginButton = ({ loading, text, click }: Props) => {
     username: '',
     password: '',
   });
+
+  const form: formItem[] = [
+    {
+      type: 'text',
+      id: 'username',
+      placeholder: 'Username',
+      dispatchType: LoginFormReducerActionTypes.UPDATE_USERNAME,
+      value: state.username,
+    },
+    {
+      type: 'password',
+      id: 'password',
+      placeholder: 'Password',
+      dispatchType: LoginFormReducerActionTypes.UPDATE_PASSWORD,
+      value: state.password,
+    },
+  ];
 
   return (
     <div className="dropdown">
@@ -30,41 +55,28 @@ export const LoginButton = ({ loading, text, click }: Props) => {
       </button>
 
       <div className="dropdown-menu dropdown-menu-end dropdown-menu-dark m-0 p-0">
-        <form className="p-3">
-          <div className="mb-3">
-            <input
-              disabled={loading}
-              type="text"
-              autoComplete="on"
-              className="form-control form-control-sm"
-              id="username"
-              value={state.username}
-              placeholder="Username"
-              onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                dispatch({
-                  type: LoginFormReducerActionTypes.UPDATE_USERNAME,
-                  payload: event.target.value,
-                })
-              }
-            />
-          </div>
-          <div className="mb-3">
-            <input
-              type="password"
-              disabled={loading}
-              autoComplete="on"
-              className="form-control form-control-sm"
-              id="password"
-              placeholder="Password"
-              value={state.password}
-              onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                dispatch({
-                  type: LoginFormReducerActionTypes.UPDATE_PASSWORD,
-                  payload: event.target.value,
-                })
-              }
-            />
-          </div>
+        <form autoComplete="on" className="p-3">
+          {form.map((e: formItem) => {
+            return (
+              <div className="mb-3">
+                <input
+                  disabled={loading}
+                  type={e.type}
+                  autoComplete="on"
+                  className="form-control form-control-sm"
+                  id={e.id}
+                  value={e.value}
+                  placeholder={e.placeholder}
+                  onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                    dispatch({
+                      type: e.dispatchType,
+                      payload: event.target.value,
+                    })
+                  }
+                />
+              </div>
+            );
+          })}
           <button
             type="submit"
             disabled={loading}
