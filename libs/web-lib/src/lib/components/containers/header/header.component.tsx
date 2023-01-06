@@ -139,7 +139,7 @@ export const Navbar = ({
   });
 
   return (
-    <nav className="navbar navbar-dark bg-dark navbar-expand-md">
+    <nav className="navbar navbar-dark bg-primary navbar-expand-md">
       <div className="container-fluid">
         <Link to={`/home`} className="navbar-brand noselect">
           <p>{t('title', i18n)}</p>

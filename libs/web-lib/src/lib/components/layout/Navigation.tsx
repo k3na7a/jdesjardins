@@ -2,6 +2,8 @@ import { Outlet } from 'react-router-dom';
 import { useAuth } from '../../hooks';
 import { Navbar } from '../containers';
 
+import './Navigation.scss';
+
 export function NavigationLayout() {
   const auth = useAuth();
 
@@ -15,7 +17,7 @@ export function NavigationLayout() {
           login={auth.login}
         />
       </header>
-      {auth.loading ? <>LOADING!</> : <Outlet />}
+      <div className="section">{auth.loading ? <>LOADING!</> : <Outlet />}</div>
     </div>
   );
 }
