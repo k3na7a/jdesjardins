@@ -3,11 +3,13 @@ import './header.component.scss';
 
 import { Github, Linkedin, Twitter } from 'react-bootstrap-icons';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import Navbar from 'react-bootstrap/Navbar';
 
 import { useTranslation } from 'react-i18next';
 import { IAccessToken } from '@jdesjardins/dist-lib';
 import { UserDropdown } from '../../base/userDropdown';
 import { LoginButton } from '../../base/loginButton';
+import { Container } from 'react-bootstrap';
 
 interface NavItem {
   label: string;
@@ -28,7 +30,7 @@ interface Props {
   login: (data: { username: string; password: string }) => void;
 }
 
-export const Navbar = ({
+export const NavbarComponent = ({
   loading,
   authenticatedUser,
   logout,
@@ -139,27 +141,15 @@ export const Navbar = ({
   });
 
   return (
-    <nav className="navbar navbar-dark bg-primary navbar-expand-md">
-      <div className="container-fluid">
+    // <nav className="navbar navbar-dark bg-primary navbar-expand-md">
+    <Navbar collapseOnSelect bg="dark" expand="lg" variant="dark">
+      <Container fluid>
         <Link to={`/home`} className="navbar-brand noselect">
           <p>{t('title', i18n)}</p>
           <span>{t('subtitle', i18n)}</span>
         </Link>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div
-          className="collapse navbar-collapse me-auto mb-2 mb-md-0"
-          id="navbarNav"
-        >
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse>
           <ul className="navbar-nav me-auto mb-2 mb-md-0">
             {renderedNavItems(navItems)}
           </ul>
@@ -175,8 +165,9 @@ export const Navbar = ({
               />
             )}
           </div>
-        </div>
-      </div>
-    </nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+    //  </nav>
   );
 };

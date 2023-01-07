@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
-import { ModalContext, ModalProvider } from '../../context/modal.context';
+import { ModalProvider } from '../../context/modal.context';
 import { useAuth } from '../../hooks';
-import { Navbar } from '../containers';
+import { NavbarComponent } from '../containers';
 
 import './Navigation.scss';
 
@@ -12,7 +12,7 @@ export function NavigationLayout() {
     <ModalProvider>
       <div className="content">
         <header className="sticky-top">
-          <Navbar
+          <NavbarComponent
             loading={auth.loading}
             authenticatedUser={auth.authenticatedUser}
             logout={auth.logout}
