@@ -1,5 +1,3 @@
-import $ from 'jquery';
-
 import {
   createContext,
   Dispatch,
@@ -32,7 +30,13 @@ const ModalComponent = ({
   unSetModal: () => void;
 }) => {
   return (
-    <Modal show={true} onHide={unSetModal} animation={true}>
+    <Modal
+      centered
+      show={true}
+      onHide={unSetModal}
+      backdrop="static"
+      animation={true}
+    >
       <Modal.Header closeButton>
         <Modal.Title>Modal heading</Modal.Title>
       </Modal.Header>
