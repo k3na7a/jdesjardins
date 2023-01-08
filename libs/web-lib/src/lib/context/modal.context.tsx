@@ -6,13 +6,39 @@ import {
   useContext,
   useState,
 } from 'react';
-import { Button, Modal } from 'react-bootstrap';
+import { Button, Modal, Toast, ToastContainer } from 'react-bootstrap';
 
 import './modal.scss';
+
+interface ToastItem {
+  title: string;
+  subtitle: string;
+  message: string;
+  timeout: number;
+}
+
+const ToastComponent = ({ item }: { item: ToastItem }) => {
+  const [show, setShow] = useState<boolean>(true);
+  return (
+    <Toast
+      show={show}
+      onClose={() => setShow(false)}
+      delay={item.timeout}
+      autohide
+    >
+      <Toast.Header closeButton>
+        <strong className="me-auto">{item.title}</strong>
+        <small>{item.subtitle}</small>
+      </Toast.Header>
+      <Toast.Body>{item.message}</Toast.Body>
+    </Toast>
+  );
+};
 
 interface ModalContextInterface {
   setModal: Dispatch<SetStateAction<State | undefined>>;
   unSetModal: () => void;
+  newToast: (item: ToastItem) => void;
 }
 
 const defaultState = {
@@ -20,6 +46,9 @@ const defaultState = {
     return;
   },
   unSetModal: () => {
+    return;
+  },
+  newToast: () => {
     return;
   },
 };
@@ -76,12 +105,22 @@ interface State {
 
 export const ModalProvider = ({ children }: Props) => {
   const [modal, setModal] = useState<State>();
+
+  const [toasts, setToasts] = useState<ToastItem[]>([]);
+
+  const newToast = useCallback(
+    (item: ToastItem) => {
+      setToasts((e) => [...e, item]);
+    },
+    [setToasts]
+  );
+
   const unSetModal = useCallback(() => {
     setModal(undefined);
   }, [setModal]);
 
   return (
-    <ModalContext.Provider value={{ unSetModal, setModal }}>
+    <ModalContext.Provider value={{ unSetModal, setModal, newToast }}>
       {children}
       {modal && (
         <ModalComponent
@@ -89,6 +128,13 @@ export const ModalProvider = ({ children }: Props) => {
           unSetModal={unSetModal}
           callback={modal.callback}
         />
+      )}
+      {true && (
+        <ToastContainer className="p-3" position="bottom-end">
+          {toasts.map((e) => {
+            return <ToastComponent item={e} />;
+          })}
+        </ToastContainer>
       )}
     </ModalContext.Provider>
   );
