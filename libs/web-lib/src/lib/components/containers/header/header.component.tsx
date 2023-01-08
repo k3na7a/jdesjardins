@@ -1,12 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import './header.component.scss';
 
-import { Github, Linkedin, Twitter } from 'react-bootstrap-icons';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar';
 
 import { useTranslation } from 'react-i18next';
-import { IAccessToken } from '@jdesjardins/dist-lib';
+import { IAccessToken, Role } from '@jdesjardins/dist-lib';
 import { UserDropdown } from './base/userDropdown';
 import { LoginButton } from './base/loginButton';
 import { Container, Nav, NavDropdown } from 'react-bootstrap';
@@ -14,13 +13,7 @@ import { Container, Nav, NavDropdown } from 'react-bootstrap';
 interface NavItem {
   label: string;
   stub: string;
-}
-
-interface Social {
-  label: string;
-  link: string;
-  stub: string;
-  icon: React.ReactNode;
+  guard?: Role[];
 }
 
 interface Props {
@@ -48,31 +41,11 @@ export const NavbarComponent = ({
     {
       label: 'Projects',
       stub: 'projects',
+      guard: [Role.USER, Role.ADMIN],
     },
     {
       label: 'About',
       stub: 'about',
-    },
-  ];
-
-  const socials: Social[] = [
-    {
-      label: 'Twitter',
-      stub: 'twitter',
-      link: 'https://twitter.com/K38Tweets',
-      icon: <Twitter />,
-    },
-    {
-      label: 'Linkedin',
-      stub: 'linkedin',
-      link: 'https://www.linkedin.com/in/john-desjardins-96593914b/',
-      icon: <Linkedin />,
-    },
-    {
-      label: 'Github',
-      stub: 'github',
-      link: 'https://github.com/k3na7a/jdesjardins',
-      icon: <Github />,
     },
   ];
 
@@ -84,17 +57,23 @@ export const NavbarComponent = ({
 
     return (
       <>
-        {topnav.map((navitem: NavItem) => {
-          return (
-            <Nav.Link
-              key={navitem.stub}
-              onClick={() => navigate(`/${navitem.stub}`)}
-              active={location === navitem.stub}
-            >
-              {navitem.label}
-            </Nav.Link>
-          );
-        })}
+        {topnav
+          .filter(
+            (e) =>
+              !e.guard ||
+              (authenticatedUser && e.guard?.includes(authenticatedUser.role))
+          )
+          .map((navitem: NavItem) => {
+            return (
+              <Nav.Link
+                key={navitem.stub}
+                onClick={() => navigate(`/${navitem.stub}`)}
+                active={location === navitem.stub}
+              >
+                {navitem.label}
+              </Nav.Link>
+            );
+          })}
         {!!more.length && (
           <NavDropdown
             key="more_dropdown"
@@ -121,19 +100,6 @@ export const NavbarComponent = ({
     );
   };
 
-  const socialLinks = socials.map((social: Social) => {
-    return (
-      <a
-        key={social.stub}
-        className="social link-light opacity"
-        href={social.link}
-        role="button"
-      >
-        {social.icon}
-      </a>
-    );
-  });
-
   return (
     <Navbar collapseOnSelect bg="dark" expand="lg" variant="dark">
       <Container fluid>
@@ -147,9 +113,12 @@ export const NavbarComponent = ({
             {renderedNavItems(navItems)}
           </Nav>
           <div className="d-flex align-items-center justify-content-end">
-            {socialLinks}
             {authenticatedUser ? (
-              <UserDropdown logout={logout} role={authenticatedUser.role} />
+              <UserDropdown
+                location={location}
+                logout={logout}
+                role={authenticatedUser.role}
+              />
             ) : (
               <LoginButton
                 loading={loading}

@@ -1,15 +1,25 @@
+import { useState } from 'react';
+import { Button } from 'react-bootstrap';
 import { useModal } from '../../../context/modal.context';
 
 export const UpdateUserForm = () => {
-  const { setModal } = useModal();
+  const { setModal, unSetModal } = useModal();
+  const [someValue, setSomeValue] = useState<string>('DEFAULT VALUE');
+
   return (
-    <button
+    <Button
       className="App-link"
       onClick={() => {
-        setModal(<h1>Hola senora!</h1>);
+        setModal({
+          modal: <>A Dialog from Profile Children</>,
+          callback: () => {
+            setSomeValue('NEW VALUE FROM MODAL');
+            unSetModal();
+          },
+        });
       }}
     >
-      Start a dialogue
-    </button>
+      {someValue}
+    </Button>
   );
 };

@@ -11,7 +11,7 @@ import { Button, Modal } from 'react-bootstrap';
 import './modal.scss';
 
 interface ModalContextInterface {
-  setModal: Dispatch<SetStateAction<React.ReactNode | undefined>>;
+  setModal: Dispatch<SetStateAction<State | undefined>>;
   unSetModal: () => void;
 }
 
@@ -27,9 +27,11 @@ const defaultState = {
 const ModalComponent = ({
   modal,
   unSetModal,
+  callback,
 }: {
   modal: React.ReactNode;
   unSetModal: () => void;
+  callback: () => unknown;
 }) => {
   return (
     <Modal
@@ -53,7 +55,7 @@ const ModalComponent = ({
         <Button variant="outline-danger" onClick={unSetModal}>
           Close
         </Button>
-        <Button variant="outline-light" onClick={unSetModal}>
+        <Button variant="outline-light" onClick={callback}>
           Save Changes
         </Button>
       </Modal.Footer>
@@ -67,8 +69,13 @@ interface Props {
   children: React.ReactNode;
 }
 
+interface State {
+  modal: React.ReactNode;
+  callback: () => void;
+}
+
 export const ModalProvider = ({ children }: Props) => {
-  const [modal, setModal] = useState<React.ReactNode>();
+  const [modal, setModal] = useState<State>();
   const unSetModal = useCallback(() => {
     setModal(undefined);
   }, [setModal]);
@@ -76,7 +83,13 @@ export const ModalProvider = ({ children }: Props) => {
   return (
     <ModalContext.Provider value={{ unSetModal, setModal }}>
       {children}
-      {modal && <ModalComponent modal={modal} unSetModal={unSetModal} />}
+      {modal && (
+        <ModalComponent
+          modal={modal.modal}
+          unSetModal={unSetModal}
+          callback={modal.callback}
+        />
+      )}
     </ModalContext.Provider>
   );
 };
