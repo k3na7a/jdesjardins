@@ -58,7 +58,7 @@ export const LoginButton = ({ loading, text, click }: Props) => {
         <form autoComplete="on" className="p-3">
           {form.map((e: formItem) => {
             return (
-              <div className="mb-3">
+              <div className="mb-3" key={e.id}>
                 <input
                   disabled={loading}
                   type={e.type}

@@ -2,14 +2,14 @@
 import './header.component.scss';
 
 import { Github, Linkedin, Twitter } from 'react-bootstrap-icons';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar';
 
 import { useTranslation } from 'react-i18next';
 import { IAccessToken } from '@jdesjardins/dist-lib';
 import { UserDropdown } from '../../base/userDropdown';
 import { LoginButton } from '../../base/loginButton';
-import { Container } from 'react-bootstrap';
+import { Container, Nav, NavDropdown } from 'react-bootstrap';
 
 interface NavItem {
   label: string;
@@ -82,49 +82,43 @@ export const NavbarComponent = ({
     const topnav = navItems.splice(0, INDEX);
     const more = navItems.splice(-INDEX);
 
-    const nav = topnav.map((navitem: NavItem) => {
-      return (
-        <li key={navitem.stub} className="nav-item">
-          <Link
-            to={`/${navitem.stub}`}
-            className={`nav-link ${location === navitem.stub ? 'active' : ''}`}
+    return (
+      <>
+        {topnav.map((navitem: NavItem) => {
+          return (
+            <Nav.Link
+              key={navitem.stub}
+              onClick={() => navigate(`/${navitem.stub}`)}
+              active={location === navitem.stub}
+            >
+              {navitem.label}
+            </Nav.Link>
+          );
+        })}
+        {more.length && (
+          <NavDropdown
+            key="more_dropdown"
+            title="More..."
+            menuVariant="dark"
+            active={more.some((e: NavItem) => e.stub === location)}
           >
-            {navitem.label}
-          </Link>
-        </li>
-      );
-    });
-
-    const dropdown = (
-      <li key="dropown" className="nav-item dropdown">
-        <a
-          className="nav-link dropdown-toggle"
-          href="#"
-          role="button"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          More...
-        </a>
-        <ul className="dropdown-menu dropdown-menu-dark m-0 text-small">
-          {more.map((navItem: NavItem) => {
-            return (
-              <li>
-                <button
-                  className="dropdown-item"
+            <NavDropdown.Header>More Options</NavDropdown.Header>
+            {more.map((navItem: NavItem) => {
+              return (
+                <NavDropdown.Item
+                  key={navItem.stub}
+                  as="button"
                   onClick={() => navigate(`/${navItem.stub}`)}
+                  active={location === navItem.stub}
                 >
                   {navItem.label}
-                </button>
-              </li>
-            );
-          })}
-        </ul>
-      </li>
+                </NavDropdown.Item>
+              );
+            })}
+          </NavDropdown>
+        )}
+      </>
     );
-
-    if (more.length) return [...nav, dropdown];
-    return nav;
   };
 
   const socialLinks = socials.map((social: Social) => {
@@ -141,18 +135,17 @@ export const NavbarComponent = ({
   });
 
   return (
-    // <nav className="navbar navbar-dark bg-primary navbar-expand-md">
     <Navbar collapseOnSelect bg="dark" expand="lg" variant="dark">
       <Container fluid>
-        <Link to={`/home`} className="navbar-brand noselect">
+        <Navbar.Brand onClick={() => navigate(`home`)} className="noselect">
           <p>{t('title', i18n)}</p>
           <span>{t('subtitle', i18n)}</span>
-        </Link>
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse>
-          <ul className="navbar-nav me-auto mb-2 mb-md-0">
+          <Nav className="me-auto mb-2 mb-md-0">
             {renderedNavItems(navItems)}
-          </ul>
+          </Nav>
           <div className="d-flex align-items-center justify-content-end">
             {socialLinks}
             {authenticatedUser ? (
@@ -168,6 +161,5 @@ export const NavbarComponent = ({
         </Navbar.Collapse>
       </Container>
     </Navbar>
-    //  </nav>
   );
 };
