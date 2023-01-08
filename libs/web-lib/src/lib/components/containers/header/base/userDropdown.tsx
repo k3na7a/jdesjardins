@@ -1,7 +1,7 @@
 import { Role } from '@jdesjardins/dist-lib';
 import { Dropdown } from 'react-bootstrap';
 import { PersonCircle } from 'react-bootstrap-icons';
-import { Form, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   logout: () => void;
