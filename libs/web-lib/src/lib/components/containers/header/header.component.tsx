@@ -7,8 +7,8 @@ import Navbar from 'react-bootstrap/Navbar';
 
 import { useTranslation } from 'react-i18next';
 import { IAccessToken } from '@jdesjardins/dist-lib';
-import { UserDropdown } from '../../base/userDropdown';
-import { LoginButton } from '../../base/loginButton';
+import { UserDropdown } from './base/userDropdown';
+import { LoginButton } from './base/loginButton';
 import { Container, Nav, NavDropdown } from 'react-bootstrap';
 
 interface NavItem {

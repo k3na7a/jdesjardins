@@ -1,10 +1,10 @@
 import {
   LoginFormReducerActionTypes,
   LoginReducer,
-} from '../../reducers/login.reducer';
+} from '../../../../reducers/login.reducer';
 import { ChangeEvent, useReducer } from 'react';
 import { IUserLogin } from '@jdesjardins/dist-lib';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Dropdown, Form } from 'react-bootstrap';
 
 interface formItem {
   type: string;
@@ -44,38 +44,39 @@ export const LoginButton = ({ loading, text, click }: Props) => {
   ];
 
   return (
-    <div className="dropdown">
-      <button
-        className="btn btn-dark ms-2 btn-sm btn-login dropdown-toggle p-1"
+    <Dropdown align="end">
+      <Dropdown.Toggle
+        className="ms-2 p-1 btn-login"
+        variant="dark"
+        id="login-btn"
+        size="sm"
         disabled={loading}
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
-        data-bs-auto-close="outside"
       >
         {loading ? 'Loading' : text}
-      </button>
+      </Dropdown.Toggle>
 
-      <div className="dropdown-menu dropdown-menu-end dropdown-menu-dark m-0 p-0">
-        <Form autoComplete="on" className="p-3">
+      <Dropdown.Menu variant="dark" className="p-0">
+        <Dropdown.Header className="pb-0">User Login Header</Dropdown.Header>
+        <Dropdown.Divider />
+        <Form autoComplete="on" className="p-3 pt-0">
           {form.map((e: formItem) => {
             return (
-              <div className="mb-3" key={e.id}>
-                <input
-                  disabled={loading}
-                  type={e.type}
-                  autoComplete="on"
-                  className="form-control form-control-sm"
-                  id={e.id}
-                  value={e.value}
-                  placeholder={e.placeholder}
-                  onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                    dispatch({
-                      type: e.dispatchType,
-                      payload: event.target.value,
-                    })
-                  }
-                />
-              </div>
+              <Form.Control
+                disabled={loading}
+                id={e.id}
+                key={e.id}
+                value={e.value}
+                size="sm"
+                className="mb-3"
+                type={e.type}
+                placeholder={e.placeholder}
+                onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                  dispatch({
+                    type: e.dispatchType,
+                    payload: event.target.value,
+                  })
+                }
+              />
             );
           })}
           <Button
@@ -91,7 +92,7 @@ export const LoginButton = ({ loading, text, click }: Props) => {
             {loading ? 'Loading' : text}
           </Button>
         </Form>
-      </div>
-    </div>
+      </Dropdown.Menu>
+    </Dropdown>
   );
 };

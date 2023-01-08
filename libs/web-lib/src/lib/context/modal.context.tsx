@@ -8,6 +8,8 @@ import {
 } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 
+import './modal.scss';
+
 interface ModalContextInterface {
   setModal: Dispatch<SetStateAction<React.ReactNode | undefined>>;
   unSetModal: () => void;
@@ -37,15 +39,21 @@ const ModalComponent = ({
       backdrop="static"
       animation={true}
     >
-      <Modal.Header closeButton>
+      <Modal.Header className="bg-dark text-light">
         <Modal.Title>Modal heading</Modal.Title>
+        <button
+          type="button"
+          className="btn-close btn-close-white"
+          aria-label="Close"
+          onClick={unSetModal}
+        />
       </Modal.Header>
-      <Modal.Body>{modal}</Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={unSetModal}>
+      <Modal.Body className="bg-dark text-light">{modal}</Modal.Body>
+      <Modal.Footer className="bg-dark">
+        <Button variant="outline-danger" onClick={unSetModal}>
           Close
         </Button>
-        <Button variant="primary" onClick={unSetModal}>
+        <Button variant="outline-light" onClick={unSetModal}>
           Save Changes
         </Button>
       </Modal.Footer>

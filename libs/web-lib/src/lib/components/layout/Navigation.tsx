@@ -3,8 +3,6 @@ import { ModalProvider } from '../../context/modal.context';
 import { useAuth } from '../../hooks';
 import { NavbarComponent } from '../containers';
 
-import './Navigation.scss';
-
 export function NavigationLayout() {
   const auth = useAuth();
 
