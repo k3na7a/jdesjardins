@@ -95,7 +95,7 @@ export const NavbarComponent = ({
             </Nav.Link>
           );
         })}
-        {more.length && (
+        {!!more.length && (
           <NavDropdown
             key="more_dropdown"
             title="More..."

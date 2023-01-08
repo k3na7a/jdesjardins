@@ -4,6 +4,7 @@ import {
 } from '../../reducers/login.reducer';
 import { ChangeEvent, useReducer } from 'react';
 import { IUserLogin } from '@jdesjardins/dist-lib';
+import { Button, Form } from 'react-bootstrap';
 
 interface formItem {
   type: string;
@@ -45,7 +46,7 @@ export const LoginButton = ({ loading, text, click }: Props) => {
   return (
     <div className="dropdown">
       <button
-        className="btn btn-dark ms-2 btn-sm btn-login dropdown-toggle p-1 login-btn"
+        className="btn btn-dark ms-2 btn-sm btn-login dropdown-toggle p-1"
         disabled={loading}
         data-bs-toggle="dropdown"
         aria-expanded="false"
@@ -55,7 +56,7 @@ export const LoginButton = ({ loading, text, click }: Props) => {
       </button>
 
       <div className="dropdown-menu dropdown-menu-end dropdown-menu-dark m-0 p-0">
-        <form autoComplete="on" className="p-3">
+        <Form autoComplete="on" className="p-3">
           {form.map((e: formItem) => {
             return (
               <div className="mb-3" key={e.id}>
@@ -77,15 +78,19 @@ export const LoginButton = ({ loading, text, click }: Props) => {
               </div>
             );
           })}
-          <button
+          <Button
+            variant="primary"
+            size="sm"
             type="submit"
             disabled={loading}
-            className="btn btn-primary btn-sm"
-            onClick={() => click(state)}
+            onClick={(e) => {
+              e.preventDefault();
+              click(state);
+            }}
           >
             {loading ? 'Loading' : text}
-          </button>
-        </form>
+          </Button>
+        </Form>
       </div>
     </div>
   );
