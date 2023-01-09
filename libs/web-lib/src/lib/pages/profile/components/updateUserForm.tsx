@@ -28,6 +28,20 @@ export const UpdateUserForm = () => {
           message: 'A generic Toast with Primary Colours',
           timeout: 5000,
         });
+        addToast({
+          title: 'Info',
+          subtitle: 'ORLY?!',
+          message: 'A Toast that has no real use but exists.',
+          variant: 'info',
+          timeout: 5000,
+        });
+        addToast({
+          title: 'Warning',
+          subtitle: 'HEY YOU!',
+          message: 'A Toast used to WARN the user',
+          variant: 'warning',
+          timeout: 5000,
+        });
       }}
     >
       CLICK

@@ -8,6 +8,8 @@ export const ToastComponent = ({ toast }: { toast: ToastItem }) => {
 
   const variant = toast.variant || 'primary';
 
+  const themeRef: boolean = variant === 'info' || variant === 'warning';
+
   useEffect(() => {
     const controller = new AbortController();
     setShow(true);
@@ -28,15 +30,19 @@ export const ToastComponent = ({ toast }: { toast: ToastItem }) => {
       }}
     >
       <Toast.Header
-        className={`bg-${variant} text-light rounded-0`}
-        closeVariant="white"
+        className={`bg-${variant} text-${
+          themeRef ? 'dark' : 'light'
+        } rounded-0`}
+        closeVariant={themeRef ? 'dark' : 'white'}
         closeButton
       >
         <Check size={18} className="me-1" />
         <strong className="me-auto">{toast.title}</strong>
         {!!toast.subtitle && <small>{toast.subtitle}</small>}
       </Toast.Header>
-      <Toast.Body className="text-light rounded-0">{toast.message}</Toast.Body>
+      <Toast.Body className={`text-light rounded-0`}>
+        {toast.message}
+      </Toast.Body>
     </Toast>
   );
 };

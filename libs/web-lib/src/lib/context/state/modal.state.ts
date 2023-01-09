@@ -5,7 +5,7 @@ export interface ToastItem {
   title: string;
   subtitle?: string;
   message: string;
-  variant?: 'primary' | 'success' | 'danger';
+  variant?: 'primary' | 'success' | 'danger' | 'warning' | 'info';
   timeout?: number;
   remove: () => void;
 }
@@ -15,7 +15,7 @@ export interface AddToastInterface {
   subtitle?: string;
   message: string;
   timeout?: number;
-  variant?: 'primary' | 'success' | 'danger';
+  variant?: 'primary' | 'success' | 'danger' | 'warning' | 'info';
 }
 
 export interface ModalContextInterface {
