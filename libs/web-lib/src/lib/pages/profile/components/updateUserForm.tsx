@@ -21,7 +21,7 @@ export const UpdateUserForm = () => {
           title: 'TEST',
           subtitle: 'TEST',
           message: 'TEST',
-          timeout: 5000,
+          timeout: 3000,
         });
       }}
     >

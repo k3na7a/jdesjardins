@@ -13,17 +13,24 @@ import { Button, Modal, Toast, ToastContainer } from 'react-bootstrap';
 import './modal.scss';
 
 interface ToastItem {
-  index?: string;
+  index: number;
   title: string;
-  subtitle: string;
+  subtitle?: string;
   message: string;
   timeout: number;
-  remove?: () => void;
+  remove: () => void;
+}
+
+interface AddToastInterface {
+  title: string;
+  subtitle?: string;
+  message: string;
+  timeout: number;
 }
 
 const ToastComponent = ({ toast }: { toast: ToastItem }) => {
   useEffect(() => {
-    if (toast.remove) setTimeout(toast.remove, toast.timeout);
+    setTimeout(toast.remove, toast.timeout);
 
     //  return () => clearTimeout(timeoutHandle);
   }, [toast.remove, toast.timeout]);
@@ -47,7 +54,7 @@ const ToastComponent = ({ toast }: { toast: ToastItem }) => {
 interface ModalContextInterface {
   setModal: Dispatch<SetStateAction<State | undefined>>;
   unSetModal: () => void;
-  addToast: (item: ToastItem) => void;
+  addToast: (item: AddToastInterface) => void;
 }
 
 const defaultState = {
@@ -113,15 +120,14 @@ interface State {
 }
 
 export const ModalProvider = ({ children }: Props) => {
-  let counter = 0;
-  const getUniqueId = () => `id-${counter++}`;
+  const taostRef = useRef<number>(0);
 
   const [modal, setModal] = useState<State>();
   const [toasts, setToasts] = useState<ToastItem[]>([]);
 
   const addToast = useCallback(
-    (item: ToastItem) => {
-      const id = getUniqueId();
+    (item: AddToastInterface) => {
+      const id = taostRef.current;
       setToasts((toasts) => {
         return [
           ...toasts,
@@ -134,6 +140,7 @@ export const ModalProvider = ({ children }: Props) => {
           },
         ];
       });
+      taostRef.current++;
     },
     [setToasts]
   );

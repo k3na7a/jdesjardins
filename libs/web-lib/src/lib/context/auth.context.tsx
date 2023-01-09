@@ -61,11 +61,9 @@ export const AuthContextProvider = ({ children }: Props) => {
     localStorage.setItem('AccessToken', res.refresh_token);
     setAuthenticatedUser(res);
   }, []);
-
   const onResolve = useCallback(() => {
     setLoading(false);
   }, []);
-
   const onLogout = useCallback(() => {
     localStorage.removeItem('AccessToken');
     setAuthenticatedUser(undefined);
@@ -76,18 +74,29 @@ export const AuthContextProvider = ({ children }: Props) => {
     onSuccess,
     onResolve,
   });
-
   const [logout, cancel_logout] = useAxios<IAccessToken>({
     instance: usePrivateAxiosInstance(localLogout),
     onSuccess: onLogout,
     onResolve,
   });
-
   const [authenticate, cancel_auth] = useAxios<IAccessToken>({
     instance: usePrivateAxiosInstance(localRefresh),
     onSuccess,
     onResolve,
   });
+
+  const Login = useCallback(
+    (data: { username: string; password: string }) => {
+      setLoading(true);
+      login({ data });
+    },
+    [login]
+  );
+
+  const Logout = useCallback(() => {
+    setLoading(true);
+    logout();
+  }, [logout]);
 
   // useEffect called twice in dev mode due to React Strict Mode,
   // need to find a better way to handle this!!
@@ -105,19 +114,6 @@ export const AuthContextProvider = ({ children }: Props) => {
       cancel_auth();
     };
   }, [authenticate, cancel_auth]);
-
-  const Login = useCallback(
-    (data: { username: string; password: string }) => {
-      setLoading(true);
-      login({ data });
-    },
-    [login]
-  );
-
-  const Logout = useCallback(() => {
-    setLoading(true);
-    logout();
-  }, [logout]);
 
   return (
     <AuthContext.Provider
