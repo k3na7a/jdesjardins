@@ -10,54 +10,18 @@ import { localLogin, localLogout, localRefresh } from '../apis';
 import { useAxios } from '../hooks';
 import { usePrivateAxiosInstance } from '../hooks';
 import { useModal } from './modal.context';
+import { AuthContextInterface, defaultAuthState } from './state/auth.state';
 
-interface AuthContextInterface {
-  authenticatedUser: IAccessToken | undefined;
-  loading: boolean;
+export const AuthContext =
+  createContext<AuthContextInterface>(defaultAuthState);
 
-  authenticate: () => void;
-  cancel: () => void;
-
-  login: (data: { username: string; password: string }) => void;
-  cancelLogin: () => void;
-
-  logout: () => void;
-  cancelLogout: () => void;
-}
-
-interface Props {
+export const AuthContextProvider = ({
+  children,
+}: {
   children: React.ReactNode;
-}
-
-const defaultState = {
-  authenticatedUser: undefined,
-  loading: true,
-  authenticate: () => {
-    return;
-  },
-  cancel: () => {
-    return;
-  },
-  login: () => {
-    return;
-  },
-  cancelLogin: () => {
-    return;
-  },
-  logout: () => {
-    return;
-  },
-  cancelLogout: () => {
-    return;
-  },
-};
-
-export const AuthContext = createContext<AuthContextInterface>(defaultState);
-
-export const AuthContextProvider = ({ children }: Props) => {
+}) => {
   const [authenticatedUser, setAuthenticatedUser] = useState<IAccessToken>();
   const [loading, setLoading] = useState<boolean>(true);
-
   const { addToast } = useModal();
 
   const onResolve = useCallback(() => {
@@ -107,18 +71,6 @@ export const AuthContextProvider = ({ children }: Props) => {
     onResolve,
   });
 
-  const Login = useCallback(
-    (data: { username: string; password: string }) => {
-      setLoading(true);
-      login({ data });
-    },
-    [login]
-  );
-  const Logout = useCallback(() => {
-    setLoading(true);
-    logout();
-  }, [logout]);
-
   // useEffect called twice in dev mode due to React Strict Mode,
   // need to find a better way to handle this!!
   const effectCalled = useRef<boolean>(false);
@@ -135,6 +87,18 @@ export const AuthContextProvider = ({ children }: Props) => {
       cancel_auth();
     };
   }, [authenticate, cancel_auth]);
+
+  const Login = useCallback(
+    (data: { username: string; password: string }) => {
+      setLoading(true);
+      login({ data });
+    },
+    [login]
+  );
+  const Logout = useCallback(() => {
+    setLoading(true);
+    logout();
+  }, [logout]);
 
   return (
     <AuthContext.Provider
