@@ -64,15 +64,18 @@ export const AuthContextProvider = ({ children }: Props) => {
     setLoading(false);
   }, []);
 
-  const onLogin = useCallback((res: IAccessToken) => {
-    localStorage.setItem('AccessToken', res.refresh_token);
-    setAuthenticatedUser(res);
-    addToast({
-      title: 'Success',
-      message: `Login as ${res.role} ${res.username}`,
-      timeout: 5000,
-    });
-  }, []);
+  const onLogin = useCallback(
+    (res: IAccessToken) => {
+      localStorage.setItem('AccessToken', res.refresh_token);
+      setAuthenticatedUser(res);
+      addToast({
+        title: 'Success',
+        message: `Login as ${res.role} ${res.username}`,
+        timeout: 5000,
+      });
+    },
+    [addToast]
+  );
   const [login, cancel_login] = useAxios<IAccessToken>({
     instance: usePrivateAxiosInstance(localLogin),
     onSuccess: onLogin,
