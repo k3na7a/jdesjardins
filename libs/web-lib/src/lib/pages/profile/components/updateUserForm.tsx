@@ -18,9 +18,9 @@ export const UpdateUserForm = () => {
         //   },
         // });
         addToast({
-          title: 'TEST',
-          subtitle: 'TEST',
-          message: 'TEST',
+          title: 'Title',
+          subtitle: 'Subtitle',
+          message: 'Content',
           timeout: 3000,
         });
       }}

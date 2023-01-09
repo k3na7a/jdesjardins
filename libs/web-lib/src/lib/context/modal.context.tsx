@@ -42,9 +42,13 @@ const ToastComponent = ({ toast }: { toast: ToastItem }) => {
         if (toast.remove) toast.remove();
       }}
     >
-      <Toast.Header closeButton>
+      <Toast.Header
+        className={'bg-dark text-light'}
+        closeVariant="white"
+        closeButton
+      >
         <strong className="me-auto">{toast.title}</strong>
-        <small>{toast.index}</small>
+        {!!toast.subtitle && <small>{toast.subtitle}</small>}
       </Toast.Header>
       <Toast.Body>{toast.message}</Toast.Body>
     </Toast>
