@@ -12,25 +12,25 @@ export const ModalComponent = ({
 }) => {
   return (
     <Modal
+      contentClassName="border border-primary rounded-0"
       centered
       show={true}
       onHide={unSetModal}
-      backdrop="static"
       animation={true}
     >
       <Modal.Header
-        className="bg-dark text-light"
+        className="bg-primary border-0 text-light rounded-0"
         closeButton
         closeVariant="white"
       >
         <Modal.Title>Modal heading</Modal.Title>
       </Modal.Header>
       <Modal.Body className="bg-dark text-light">{modal}</Modal.Body>
-      <Modal.Footer className="bg-dark">
-        <Button variant="outline-danger" onClick={unSetModal}>
+      <Modal.Footer className="bg-dark border-0 rounded-0">
+        <Button variant="danger" onClick={unSetModal}>
           Close
         </Button>
-        <Button variant="outline-light" onClick={callback}>
+        <Button variant="primary" onClick={callback}>
           Save Changes
         </Button>
       </Modal.Footer>

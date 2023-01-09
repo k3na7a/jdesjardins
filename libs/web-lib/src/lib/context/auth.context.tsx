@@ -36,6 +36,7 @@ export const AuthContextProvider = ({
       addToast({
         title: 'Success',
         message: `Login Successful`,
+        variant: 'success',
         timeout: 5000,
       });
     },
@@ -63,6 +64,7 @@ export const AuthContextProvider = ({
     addToast({
       title: 'Success',
       message: 'Logout Successful',
+      variant: 'success',
       timeout: 5000,
     });
   }, [addToast]);
