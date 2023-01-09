@@ -14,13 +14,15 @@ interface formItem {
   value: string;
 }
 
-interface Props {
+export const LoginButton = ({
+  loading,
+  text,
+  click,
+}: {
   loading: boolean;
   text: string;
   click: (data: IUserLogin) => void;
-}
-
-export const LoginButton = ({ loading, text, click }: Props) => {
+}) => {
   const [state, dispatch] = useReducer(LoginReducer, {
     username: '',
     password: '',
@@ -56,9 +58,7 @@ export const LoginButton = ({ loading, text, click }: Props) => {
       </Dropdown.Toggle>
 
       <Dropdown.Menu variant="dark" className="p-0">
-        <Dropdown.Header className="pb-0">User Login Header</Dropdown.Header>
-        <Dropdown.Divider />
-        <Form autoComplete="on" className="p-3 pt-0">
+        <Form autoComplete="on" className="p-3">
           {form.map((e: formItem) => {
             return (
               <Form.Control

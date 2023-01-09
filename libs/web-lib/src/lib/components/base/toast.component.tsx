@@ -1,11 +1,14 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Toast } from 'react-bootstrap';
 import { ToastItem } from '../../context/state/modal.state';
 
 export const ToastComponent = ({ toast }: { toast: ToastItem }) => {
+  const [show, setShow] = useState<boolean>(false);
+
   useEffect(() => {
     const controller = new AbortController();
-    if (toast.timeout) setTimeout(toast.remove, toast.timeout);
+    setShow(true);
+    if (toast.timeout) setTimeout(toast.remove, toast.timeout + 500);
     return () => {
       controller.abort();
     };
@@ -13,7 +16,8 @@ export const ToastComponent = ({ toast }: { toast: ToastItem }) => {
 
   return (
     <Toast
-      show
+      show={show}
+      animation={true}
       onClose={() => {
         toast.remove();
       }}

@@ -23,7 +23,7 @@ export const NavItemList = ({
     {
       label: 'Projects',
       stub: 'projects',
-      guard: [Role.USER, Role.ADMIN],
+      // guard: [Role.USER, Role.ADMIN],
     },
     {
       label: 'About',

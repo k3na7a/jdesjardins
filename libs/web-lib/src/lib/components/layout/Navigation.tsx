@@ -2,11 +2,13 @@ import { Outlet } from 'react-router-dom';
 import { useAuth } from '../../context';
 import { NavbarComponent } from '../containers';
 
+import './Navigation.scss';
+
 export function NavigationLayout() {
   const auth = useAuth();
 
   return (
-    <div className="content">
+    <div className="content w-100 d-flex flex-column">
       <header className="sticky-top">
         <NavbarComponent
           loading={auth.loading}
