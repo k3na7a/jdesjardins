@@ -4,6 +4,8 @@ import {
   SetStateAction,
   useCallback,
   useContext,
+  useEffect,
+  useRef,
   useState,
 } from 'react';
 import { Button, Modal, Toast, ToastContainer } from 'react-bootstrap';
@@ -11,26 +13,33 @@ import { Button, Modal, Toast, ToastContainer } from 'react-bootstrap';
 import './modal.scss';
 
 interface ToastItem {
+  index?: string;
   title: string;
   subtitle: string;
   message: string;
   timeout: number;
+  remove?: () => void;
 }
 
-const ToastComponent = ({ item }: { item: ToastItem }) => {
-  const [show, setShow] = useState<boolean>(true);
+const ToastComponent = ({ toast }: { toast: ToastItem }) => {
+  useEffect(() => {
+    if (toast.remove) setTimeout(toast.remove, toast.timeout);
+
+    //  return () => clearTimeout(timeoutHandle);
+  }, [toast.remove, toast.timeout]);
+
   return (
     <Toast
-      show={show}
-      onClose={() => setShow(false)}
-      delay={item.timeout}
-      autohide
+      show
+      onClose={() => {
+        if (toast.remove) toast.remove();
+      }}
     >
       <Toast.Header closeButton>
-        <strong className="me-auto">{item.title}</strong>
-        <small>{item.subtitle}</small>
+        <strong className="me-auto">{toast.title}</strong>
+        <small>{toast.index}</small>
       </Toast.Header>
-      <Toast.Body>{item.message}</Toast.Body>
+      <Toast.Body>{toast.message}</Toast.Body>
     </Toast>
   );
 };
@@ -38,7 +47,7 @@ const ToastComponent = ({ item }: { item: ToastItem }) => {
 interface ModalContextInterface {
   setModal: Dispatch<SetStateAction<State | undefined>>;
   unSetModal: () => void;
-  newToast: (item: ToastItem) => void;
+  addToast: (item: ToastItem) => void;
 }
 
 const defaultState = {
@@ -48,7 +57,7 @@ const defaultState = {
   unSetModal: () => {
     return;
   },
-  newToast: () => {
+  addToast: () => {
     return;
   },
 };
@@ -104,13 +113,27 @@ interface State {
 }
 
 export const ModalProvider = ({ children }: Props) => {
-  const [modal, setModal] = useState<State>();
+  let counter = 0;
+  const getUniqueId = () => `id-${counter++}`;
 
+  const [modal, setModal] = useState<State>();
   const [toasts, setToasts] = useState<ToastItem[]>([]);
 
-  const newToast = useCallback(
+  const addToast = useCallback(
     (item: ToastItem) => {
-      setToasts((e) => [...e, item]);
+      const id = getUniqueId();
+      setToasts((toasts) => {
+        return [
+          ...toasts,
+          {
+            ...item,
+            index: id,
+            remove: () => {
+              setToasts((e) => e.filter((t) => t.index !== id));
+            },
+          },
+        ];
+      });
     },
     [setToasts]
   );
@@ -120,7 +143,7 @@ export const ModalProvider = ({ children }: Props) => {
   }, [setModal]);
 
   return (
-    <ModalContext.Provider value={{ unSetModal, setModal, newToast }}>
+    <ModalContext.Provider value={{ unSetModal, setModal, addToast }}>
       {children}
       {modal && (
         <ModalComponent
@@ -131,8 +154,8 @@ export const ModalProvider = ({ children }: Props) => {
       )}
       {true && (
         <ToastContainer className="p-3" position="bottom-end">
-          {toasts.map((e) => {
-            return <ToastComponent item={e} />;
+          {toasts.map((e, i) => {
+            return <ToastComponent key={i} toast={e} />;
           })}
         </ToastContainer>
       )}

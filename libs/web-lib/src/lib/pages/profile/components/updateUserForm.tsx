@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 import { useModal } from '../../../context/modal.context';
 
 export const UpdateUserForm = () => {
-  const { setModal, unSetModal, newToast } = useModal();
+  const { setModal, unSetModal, addToast } = useModal();
   const [someValue, setSomeValue] = useState<string>('DEFAULT VALUE');
 
   return (
@@ -17,7 +17,7 @@ export const UpdateUserForm = () => {
         //     unSetModal();
         //   },
         // });
-        newToast({
+        addToast({
           title: 'TEST',
           subtitle: 'TEST',
           message: 'TEST',
