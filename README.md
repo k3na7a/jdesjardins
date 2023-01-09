@@ -32,14 +32,12 @@ Completed : Create Layout Components using Router Outlet to have global overlay 
 
 Completed : Implement Persistent Login State using useContext global state & add Global Loading State for Authentication ( Still tinkering with logic )
 
-In Progress : Refactor Navigation to be more modular and allow easy addition or removal of routes without needing refactor components. ( User Dropdown needs improvements )
+Completed : Refactor Navigation to be more modular and allow easy addition or removal of routes without needing refactor components. ( User Dropdown needs improvements )
+
+Completed : Create global Provider for Modals and Toasts.
 
 TODO : Refactor User Roles so user can have multiple roles
 
 TODO : Create User Profile Page to edit User Info and User Registration Form to Create User
-
-TODO : Refactor API to have more verbose Error Checking and Documentation
-
-TODO : Create global Provider for Modals and Toasts.
 
 TODO : MUCH MUCH MORE!
