@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import { useAuth } from '../../hooks';
+import { useAuth } from '../../context';
 import { NavbarComponent } from '../containers';
 
 export function NavigationLayout() {

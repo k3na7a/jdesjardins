@@ -9,7 +9,6 @@ import { ToastContainer } from 'react-bootstrap';
 import { ModalComponent } from '../components/base/modal.component';
 import { ToastComponent } from '../components/base/toast.component';
 
-import './modal.scss';
 import {
   AddToastInterface,
   defaultModalState,

@@ -1,4 +1,5 @@
 import { Button, Modal } from 'react-bootstrap';
+import './modal.scss';
 
 export const ModalComponent = ({
   modal,

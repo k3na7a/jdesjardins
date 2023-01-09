@@ -2,6 +2,7 @@ import { IAccessToken } from '@jdesjardins/dist-lib';
 import React, {
   createContext,
   useCallback,
+  useContext,
   useEffect,
   useRef,
   useState,
@@ -105,13 +106,10 @@ export const AuthContextProvider = ({
       value={{
         authenticatedUser,
         loading,
-
         authenticate,
         cancel: cancel_auth,
-
         login: Login,
         cancelLogin: cancel_login,
-
         logout: Logout,
         cancelLogout: cancel_logout,
       }}
@@ -119,4 +117,8 @@ export const AuthContextProvider = ({
       {children}
     </AuthContext.Provider>
   );
+};
+
+export const useAuth = () => {
+  return useContext(AuthContext);
 };

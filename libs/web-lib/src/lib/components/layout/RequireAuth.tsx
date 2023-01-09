@@ -1,6 +1,11 @@
-import { Role } from '@jdesjardins/dist-lib';
-import { Navigate, Outlet, useLocation } from 'react-router-dom';
-import { useAuth } from '../../hooks';
+import { IAccessToken, Role } from '@jdesjardins/dist-lib';
+import {
+  Navigate,
+  Outlet,
+  useLocation,
+  useOutletContext,
+} from 'react-router-dom';
+import { useAuth } from '../../context';
 
 interface Props {
   allowedRoles?: Role[];
@@ -18,3 +23,7 @@ export const RequireAuth = ({ allowedRoles }: Props) => {
     <Navigate to="/unauthorized" state={{ from: location }} replace />
   );
 };
+
+export function useRequireAuthContext() {
+  return useOutletContext<IAccessToken>();
+}

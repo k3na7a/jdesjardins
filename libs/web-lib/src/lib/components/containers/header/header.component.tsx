@@ -1,20 +1,14 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import './header.component.scss';
 
 import { useLocation, useNavigate } from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar';
 
 import { useTranslation } from 'react-i18next';
-import { IAccessToken, Role } from '@jdesjardins/dist-lib';
+import { IAccessToken } from '@jdesjardins/dist-lib';
 import { UserDropdown } from './base/userDropdown';
 import { LoginButton } from './base/loginButton';
-import { Container, Nav, NavDropdown } from 'react-bootstrap';
-
-interface NavItem {
-  label: string;
-  stub: string;
-  guard?: Role[];
-}
+import { Container, Nav } from 'react-bootstrap';
+import { NavItemList } from './base/navItems.component';
 
 interface Props {
   loading: boolean;
@@ -33,73 +27,6 @@ export const NavbarComponent = ({
   const { t, i18n } = useTranslation('common');
   const navigate = useNavigate();
 
-  const navItems: NavItem[] = [
-    {
-      label: 'Home',
-      stub: 'home',
-    },
-    {
-      label: 'Projects',
-      stub: 'projects',
-      guard: [Role.USER, Role.ADMIN],
-    },
-    {
-      label: 'About',
-      stub: 'about',
-    },
-  ];
-
-  const renderedNavItems = (navItems: NavItem[]) => {
-    const INDEX = navItems.length > 4 ? 3 : 4;
-
-    const topnav = navItems.splice(0, INDEX);
-    const more = navItems.splice(-INDEX);
-
-    return (
-      <>
-        {topnav
-          .filter(
-            (e) =>
-              !e.guard ||
-              (authenticatedUser && e.guard?.includes(authenticatedUser.role))
-          )
-          .map((navitem: NavItem) => {
-            return (
-              <Nav.Link
-                key={navitem.stub}
-                onClick={() => navigate(`/${navitem.stub}`)}
-                active={location === navitem.stub}
-              >
-                {navitem.label}
-              </Nav.Link>
-            );
-          })}
-        {!!more.length && (
-          <NavDropdown
-            key="more_dropdown"
-            title="More..."
-            menuVariant="dark"
-            active={more.some((e: NavItem) => e.stub === location)}
-          >
-            <NavDropdown.Header>More Options</NavDropdown.Header>
-            {more.map((navItem: NavItem) => {
-              return (
-                <NavDropdown.Item
-                  key={navItem.stub}
-                  as="button"
-                  onClick={() => navigate(`/${navItem.stub}`)}
-                  active={location === navItem.stub}
-                >
-                  {navItem.label}
-                </NavDropdown.Item>
-              );
-            })}
-          </NavDropdown>
-        )}
-      </>
-    );
-  };
-
   return (
     <Navbar collapseOnSelect bg="dark" expand="lg" variant="dark">
       <Container fluid>
@@ -110,7 +37,10 @@ export const NavbarComponent = ({
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse>
           <Nav className="me-auto mb-2 mb-md-0">
-            {renderedNavItems(navItems)}
+            <NavItemList
+              authenticatedUser={authenticatedUser}
+              location={location}
+            />
           </Nav>
           <div className="d-flex align-items-center justify-content-end">
             {authenticatedUser ? (
