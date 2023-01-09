@@ -17,7 +17,7 @@ interface ToastItem {
   title: string;
   subtitle?: string;
   message: string;
-  timeout: number;
+  timeout?: number;
   remove: () => void;
 }
 
@@ -25,14 +25,12 @@ interface AddToastInterface {
   title: string;
   subtitle?: string;
   message: string;
-  timeout: number;
+  timeout?: number;
 }
 
 const ToastComponent = ({ toast }: { toast: ToastItem }) => {
   useEffect(() => {
-    setTimeout(toast.remove, toast.timeout);
-
-    //  return () => clearTimeout(timeoutHandle);
+    if (toast.timeout) setTimeout(toast.remove, toast.timeout);
   }, [toast.remove, toast.timeout]);
 
   return (
