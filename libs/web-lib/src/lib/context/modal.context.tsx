@@ -39,7 +39,7 @@ const ToastComponent = ({ toast }: { toast: ToastItem }) => {
     <Toast
       show
       onClose={() => {
-        if (toast.remove) toast.remove();
+        toast.remove();
       }}
     >
       <Toast.Header
