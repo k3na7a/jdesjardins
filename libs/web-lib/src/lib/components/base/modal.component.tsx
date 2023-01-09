@@ -27,10 +27,10 @@ export const ModalComponent = ({
       </Modal.Header>
       <Modal.Body className="bg-dark text-light">{modal}</Modal.Body>
       <Modal.Footer className="bg-dark border-0 rounded-0">
-        <Button variant="danger" onClick={unSetModal}>
+        <Button variant="danger" className="test" onClick={unSetModal}>
           Close
         </Button>
-        <Button variant="primary" onClick={callback}>
+        <Button variant="primary" className="test" onClick={callback}>
           Save Changes
         </Button>
       </Modal.Footer>
