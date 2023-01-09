@@ -28,8 +28,8 @@ export const NavbarComponent = ({
   const navigate = useNavigate();
 
   return (
-    <Navbar collapseOnSelect bg="dark" expand="lg" variant="dark">
-      <Container fluid>
+    <Navbar collapseOnSelect bg="primary" expand="md" variant="dark">
+      <Container fluid="md">
         <Navbar.Brand onClick={() => navigate(`home`)} className="noselect">
           <p>{t('title', i18n)}</p>
           <span>{t('subtitle', i18n)}</span>

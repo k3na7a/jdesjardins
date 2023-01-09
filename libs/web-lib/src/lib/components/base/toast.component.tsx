@@ -18,19 +18,21 @@ export const ToastComponent = ({ toast }: { toast: ToastItem }) => {
     <Toast
       show={show}
       animation={true}
+      className="border border-primary border-opacity-50"
+      bg="dark"
       onClose={() => {
         toast.remove();
       }}
     >
       <Toast.Header
-        className={'bg-dark text-light'}
+        className={'bg-primary text-light'}
         closeVariant="white"
         closeButton
       >
         <strong className="me-auto">{toast.title}</strong>
         {!!toast.subtitle && <small>{toast.subtitle}</small>}
       </Toast.Header>
-      <Toast.Body>{toast.message}</Toast.Body>
+      <Toast.Body className="text-light">{toast.message}</Toast.Body>
     </Toast>
   );
 };

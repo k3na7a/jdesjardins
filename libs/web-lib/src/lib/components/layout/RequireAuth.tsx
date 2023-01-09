@@ -20,7 +20,7 @@ export const RequireAuth = ({ allowedRoles }: Props) => {
       allowedRoles?.includes(authenticatedUser.role)) ? (
     <Outlet context={authenticatedUser} />
   ) : (
-    <Navigate to="/unauthorized" state={{ from: location }} replace />
+    <Navigate to="/home" state={{ from: location }} replace />
   );
 };
 

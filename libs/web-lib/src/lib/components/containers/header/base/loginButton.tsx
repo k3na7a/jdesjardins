@@ -49,7 +49,7 @@ export const LoginButton = ({
     <Dropdown align="end">
       <Dropdown.Toggle
         className="ms-2 p-1 btn-login"
-        variant="dark"
+        variant="primary"
         id="login-btn"
         size="sm"
         disabled={loading}
