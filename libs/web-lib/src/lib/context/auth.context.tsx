@@ -35,7 +35,7 @@ export const AuthContextProvider = ({
       setAuthenticatedUser(res);
       addToast({
         title: 'Success',
-        message: `Login as ${res.role} ${res.username}`,
+        message: `Login Successful`,
         timeout: 5000,
       });
     },

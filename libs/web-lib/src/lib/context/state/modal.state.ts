@@ -5,8 +5,17 @@ export interface ToastItem {
   title: string;
   subtitle?: string;
   message: string;
+  variant?: 'primary' | 'success' | 'danger';
   timeout?: number;
   remove: () => void;
+}
+
+export interface AddToastInterface {
+  title: string;
+  subtitle?: string;
+  message: string;
+  timeout?: number;
+  variant?: 'primary' | 'success' | 'danger';
 }
 
 export interface ModalContextInterface {
@@ -18,13 +27,6 @@ export interface ModalContextInterface {
 export interface ModalState {
   modal: React.ReactNode;
   callback: () => void;
-}
-
-export interface AddToastInterface {
-  title: string;
-  subtitle?: string;
-  message: string;
-  timeout?: number;
 }
 
 export const defaultModalState = {
