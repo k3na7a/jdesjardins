@@ -33,7 +33,7 @@ export const ToastComponent = ({ toast }: { toast: ToastItem }) => {
         className={`bg-${variant} text-${
           themeRef ? 'dark' : 'light'
         } rounded-0`}
-        closeVariant={themeRef ? 'dark' : 'white'}
+        closeVariant={themeRef ? undefined : 'white'}
         closeButton
       >
         <Check size={18} className="me-1" />

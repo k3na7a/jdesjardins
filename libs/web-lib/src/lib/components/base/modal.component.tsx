@@ -18,14 +18,12 @@ export const ModalComponent = ({
       backdrop="static"
       animation={true}
     >
-      <Modal.Header className="bg-dark text-light">
+      <Modal.Header
+        className="bg-dark text-light"
+        closeButton
+        closeVariant="white"
+      >
         <Modal.Title>Modal heading</Modal.Title>
-        <button
-          type="button"
-          className="btn-close btn-close-white"
-          aria-label="Close"
-          onClick={unSetModal}
-        />
       </Modal.Header>
       <Modal.Body className="bg-dark text-light">{modal}</Modal.Body>
       <Modal.Footer className="bg-dark">
