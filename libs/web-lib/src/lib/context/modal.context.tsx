@@ -30,7 +30,11 @@ interface AddToastInterface {
 
 const ToastComponent = ({ toast }: { toast: ToastItem }) => {
   useEffect(() => {
+    const controller = new AbortController();
     if (toast.timeout) setTimeout(toast.remove, toast.timeout);
+    return () => {
+      controller.abort();
+    };
   }, [toast.remove, toast.timeout]);
 
   return (
