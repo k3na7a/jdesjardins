@@ -9,6 +9,7 @@ import React, {
 import { localLogin, localLogout, localRefresh } from '../apis';
 import { useAxios } from '../hooks';
 import { usePrivateAxiosInstance } from '../hooks';
+import { useModal } from './modal.context';
 
 interface AuthContextInterface {
   authenticatedUser: IAccessToken | undefined;
@@ -57,31 +58,49 @@ export const AuthContextProvider = ({ children }: Props) => {
   const [authenticatedUser, setAuthenticatedUser] = useState<IAccessToken>();
   const [loading, setLoading] = useState<boolean>(true);
 
-  const onSuccess = useCallback((res: IAccessToken) => {
-    localStorage.setItem('AccessToken', res.refresh_token);
-    setAuthenticatedUser(res);
-  }, []);
+  const { addToast } = useModal();
+
   const onResolve = useCallback(() => {
     setLoading(false);
   }, []);
+
+  const onLogin = useCallback((res: IAccessToken) => {
+    localStorage.setItem('AccessToken', res.refresh_token);
+    setAuthenticatedUser(res);
+    addToast({
+      title: 'Success',
+      message: `Login as ${res.role} ${res.username}`,
+      timeout: 5000,
+    });
+  }, []);
+  const [login, cancel_login] = useAxios<IAccessToken>({
+    instance: usePrivateAxiosInstance(localLogin),
+    onSuccess: onLogin,
+    onResolve,
+  });
+
+  const onRefresh = useCallback((res: IAccessToken) => {
+    localStorage.setItem('AccessToken', res.refresh_token);
+    setAuthenticatedUser(res);
+  }, []);
+  const [authenticate, cancel_auth] = useAxios<IAccessToken>({
+    instance: usePrivateAxiosInstance(localRefresh),
+    onSuccess: onRefresh,
+    onResolve,
+  });
+
   const onLogout = useCallback(() => {
     localStorage.removeItem('AccessToken');
     setAuthenticatedUser(undefined);
-  }, []);
-
-  const [login, cancel_login] = useAxios<IAccessToken>({
-    instance: usePrivateAxiosInstance(localLogin),
-    onSuccess,
-    onResolve,
-  });
+    addToast({
+      title: 'Success',
+      message: 'Logout Successful',
+      timeout: 5000,
+    });
+  }, [addToast]);
   const [logout, cancel_logout] = useAxios<IAccessToken>({
     instance: usePrivateAxiosInstance(localLogout),
     onSuccess: onLogout,
-    onResolve,
-  });
-  const [authenticate, cancel_auth] = useAxios<IAccessToken>({
-    instance: usePrivateAxiosInstance(localRefresh),
-    onSuccess,
     onResolve,
   });
 
@@ -92,7 +111,6 @@ export const AuthContextProvider = ({ children }: Props) => {
     },
     [login]
   );
-
   const Logout = useCallback(() => {
     setLoading(true);
     logout();
