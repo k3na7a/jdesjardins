@@ -12,21 +12,21 @@ export const ModalComponent = ({
 }) => {
   return (
     <Modal
-      contentClassName="border border-primary rounded-0"
+      contentClassName="border border-primary text-light bg-dark rounded-0"
       centered
       show={true}
       onHide={unSetModal}
       animation={true}
     >
       <Modal.Header
-        className="bg-primary border-0 text-light rounded-0"
+        className="bg-primary border-0 rounded-0"
         closeButton
         closeVariant="white"
       >
         <Modal.Title>Modal heading</Modal.Title>
       </Modal.Header>
-      <Modal.Body className="bg-dark text-light">{modal}</Modal.Body>
-      <Modal.Footer className="bg-dark border-0 rounded-0">
+      <Modal.Body>{modal}</Modal.Body>
+      <Modal.Footer className="border-0 rounded-0">
         <Button variant="danger" className="test" onClick={unSetModal}>
           Close
         </Button>
