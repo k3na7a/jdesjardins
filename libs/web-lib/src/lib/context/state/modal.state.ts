@@ -26,7 +26,7 @@ export interface ModalContextInterface {
 
 export interface ModalState {
   modal: React.ReactNode;
-  callback: () => void;
+  callback?: () => void;
 }
 
 export const defaultModalState = {

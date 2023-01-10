@@ -7,6 +7,7 @@ export const ButtonComponent = ({
   children,
   size,
   className,
+  disabled = false,
   callback,
 }: {
   className?: string;
@@ -29,6 +30,7 @@ export const ButtonComponent = ({
   size?: 'sm' | 'lg';
   callback: () => unknown;
   children: React.ReactNode;
+  disabled?: boolean;
 }) => {
   return (
     <Button
@@ -36,6 +38,7 @@ export const ButtonComponent = ({
       className={`${className} custom-button`}
       size={size}
       onClick={callback}
+      disabled={disabled}
     >
       {children}
     </Button>

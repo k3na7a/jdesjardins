@@ -9,7 +9,7 @@ export const ModalComponent = ({
 }: {
   modal: React.ReactNode;
   unSetModal: () => void;
-  callback: () => unknown;
+  callback?: () => unknown;
 }) => {
   return (
     <Modal
@@ -27,14 +27,16 @@ export const ModalComponent = ({
         <Modal.Title>Modal heading</Modal.Title>
       </Modal.Header>
       <Modal.Body>{modal}</Modal.Body>
-      <Modal.Footer className="border-0 rounded-0">
-        <ButtonComponent variant="danger" callback={unSetModal}>
-          Close
-        </ButtonComponent>
-        <ButtonComponent variant="primary" callback={callback}>
-          Save Changes
-        </ButtonComponent>
-      </Modal.Footer>
+      {!!callback && (
+        <Modal.Footer className="border-0 rounded-0">
+          <ButtonComponent variant="danger" callback={unSetModal}>
+            Close
+          </ButtonComponent>
+          <ButtonComponent variant="primary" callback={callback}>
+            Save Changes
+          </ButtonComponent>
+        </Modal.Footer>
+      )}
     </Modal>
   );
 };

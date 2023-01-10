@@ -1,10 +1,7 @@
-import {
-  LoginFormReducerActionTypes,
-  LoginReducer,
-} from '../../../reducers/login.reducer';
 import { ChangeEvent, useReducer } from 'react';
 import { IUserLogin } from '@jdesjardins/dist-lib';
 import { Button, Dropdown, Form } from 'react-bootstrap';
+import { LoginFormReducerActionTypes, LoginReducer } from '../../../reducers';
 
 interface formItem {
   type: string;
