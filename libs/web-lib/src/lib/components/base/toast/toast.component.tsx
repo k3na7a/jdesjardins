@@ -7,7 +7,7 @@ import {
   ExclamationCircleFill,
   CircleFill,
 } from 'react-bootstrap-icons';
-import { ToastItem } from '../../context/state/modal.state';
+import { ToastItem } from '../../../context/state/modal.state';
 
 export const ToastComponent = ({ toast }: { toast: ToastItem }) => {
   const [show, setShow] = useState<boolean>(false);

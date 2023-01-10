@@ -1,5 +1,6 @@
-import { Button, Modal } from 'react-bootstrap';
-import './modal.scss';
+import { Modal } from 'react-bootstrap';
+import { ButtonComponent } from '../button/button.component';
+import './modal.component.scss';
 
 export const ModalComponent = ({
   modal,
@@ -27,12 +28,12 @@ export const ModalComponent = ({
       </Modal.Header>
       <Modal.Body>{modal}</Modal.Body>
       <Modal.Footer className="border-0 rounded-0">
-        <Button variant="danger" className="test" onClick={unSetModal}>
+        <ButtonComponent variant="danger" callback={unSetModal}>
           Close
-        </Button>
-        <Button variant="primary" className="test" onClick={callback}>
+        </ButtonComponent>
+        <ButtonComponent variant="primary" callback={callback}>
           Save Changes
-        </Button>
+        </ButtonComponent>
       </Modal.Footer>
     </Modal>
   );

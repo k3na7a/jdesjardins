@@ -6,8 +6,8 @@ import {
   useState,
 } from 'react';
 import { ToastContainer } from 'react-bootstrap';
-import { ModalComponent } from '../components/base/modal.component';
-import { ToastComponent } from '../components/base/toast.component';
+import { ModalComponent } from '../components/base/modal/modal.component';
+import { ToastComponent } from '../components/base/toast/toast.component';
 
 import {
   AddToastInterface,

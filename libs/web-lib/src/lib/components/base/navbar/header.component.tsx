@@ -5,10 +5,10 @@ import Navbar from 'react-bootstrap/Navbar';
 
 import { useTranslation } from 'react-i18next';
 import { IAccessToken } from '@jdesjardins/dist-lib';
-import { UserDropdown } from './base/userDropdown';
-import { LoginButton } from './base/loginButton';
+import { UserDropdown } from './userDropdown';
+import { LoginButton } from './loginButton';
 import { Container, Nav } from 'react-bootstrap';
-import { NavItemList } from './base/navItems.component';
+import { NavItemList } from './navItems.component';
 
 interface Props {
   loading: boolean;

@@ -1,4 +1,4 @@
-import { Button } from 'react-bootstrap';
+import { ButtonComponent } from '../../../components/base/button/button.component';
 import { useModal } from '../../../context/modal.context';
 
 export const UpdateUserForm = () => {
@@ -6,8 +6,10 @@ export const UpdateUserForm = () => {
 
   return (
     <>
-      <Button
-        onClick={() =>
+      <ButtonComponent
+        className="me-2"
+        variant="outline-danger"
+        callback={() =>
           setModal({
             modal: <>HEY!</>,
             callback: () => {
@@ -17,10 +19,10 @@ export const UpdateUserForm = () => {
         }
       >
         CLICK ME FOR MODAL
-      </Button>
-      <Button
-        variant="success"
-        onClick={() => {
+      </ButtonComponent>
+      <ButtonComponent
+        variant="outline-success"
+        callback={() => {
           addToast({
             title: 'Success',
             subtitle: 'YAY',
@@ -58,7 +60,7 @@ export const UpdateUserForm = () => {
         }}
       >
         CLICK ME FOR TOASTS
-      </Button>
+      </ButtonComponent>
     </>
   );
 };

@@ -1,9 +1,7 @@
 import { Container } from 'react-bootstrap';
 import { Outlet } from 'react-router-dom';
 import { useAuth } from '../../context';
-import { NavbarComponent } from '../containers';
-
-import './Navigation.scss';
+import { NavbarComponent } from '../base/navbar/header.component';
 
 export function NavigationLayout() {
   const auth = useAuth();
