@@ -4,9 +4,11 @@ import './modal.component.scss';
 
 export const ModalComponent = ({
   modal,
+  title,
   unSetModal,
   callback,
 }: {
+  title: string;
   modal: React.ReactNode;
   unSetModal: () => void;
   callback?: () => unknown;
@@ -24,7 +26,7 @@ export const ModalComponent = ({
         closeButton
         closeVariant="white"
       >
-        <Modal.Title>Modal heading</Modal.Title>
+        <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
       <Modal.Body>{modal}</Modal.Body>
       {!!callback && (

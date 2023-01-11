@@ -3,7 +3,6 @@ import { Navigate, RouteObject } from 'react-router-dom';
 import { NavigationLayout } from '../components/layout/Navigation';
 import { RequireAuth } from '../components/layout/RequireAuth';
 import { HomePageComponent } from '../pages';
-import { ProfilePageComponent } from '../pages/profile/profile.page';
 
 export const routes: RouteObject[] = [
   {
@@ -26,7 +25,7 @@ export const routes: RouteObject[] = [
         children: [
           {
             path: '/profile',
-            element: <ProfilePageComponent />,
+            element: <>Profile</>,
           },
         ],
       },
@@ -38,10 +37,6 @@ export const routes: RouteObject[] = [
             element: <>YOU MADE IT ADMIN!</>,
           },
         ],
-      },
-      {
-        path: 'unauthorized',
-        element: <>Unauthorized!</>,
       },
       {
         path: '/*',

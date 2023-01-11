@@ -10,8 +10,8 @@ import React, {
 import { localLogin, localLogout, localRefresh } from '../apis';
 import { useAxios } from '../hooks';
 import { usePrivateAxiosInstance } from '../hooks';
-import { useModal } from './modal.context';
 import { AuthContextInterface, defaultAuthState } from './state/auth.state';
+import { useToasts } from './toast.context';
 
 export const AuthContext =
   createContext<AuthContextInterface>(defaultAuthState);
@@ -23,7 +23,7 @@ export const AuthContextProvider = ({
 }) => {
   const [authenticatedUser, setAuthenticatedUser] = useState<IAccessToken>();
   const [loading, setLoading] = useState<boolean>(true);
-  const { addToast } = useModal();
+  const { addToast } = useToasts();
 
   const onResolve = useCallback(() => {
     setLoading(false);

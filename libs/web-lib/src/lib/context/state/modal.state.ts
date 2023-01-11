@@ -21,10 +21,14 @@ export interface AddToastInterface {
 export interface ModalContextInterface {
   setModal: Dispatch<SetStateAction<ModalState | undefined>>;
   unSetModal: () => void;
+}
+
+export interface ToastContextInterface {
   addToast: (item: AddToastInterface) => void;
 }
 
 export interface ModalState {
+  title: string;
   modal: React.ReactNode;
   callback?: () => void;
 }
@@ -36,6 +40,12 @@ export const defaultModalState = {
   unSetModal: () => {
     return;
   },
+  addToast: () => {
+    return;
+  },
+};
+
+export const defaultToastState = {
   addToast: () => {
     return;
   },
