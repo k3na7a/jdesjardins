@@ -14,14 +14,12 @@ interface Props {
   loading: boolean;
   authenticatedUser: IAccessToken | undefined;
   logout: () => void;
-  login: (data: { username: string; password: string }) => void;
 }
 
 export const NavbarComponent = ({
   loading,
   authenticatedUser,
   logout,
-  login,
 }: Props) => {
   const location = useLocation().pathname.split('/')[1];
   const { t, i18n } = useTranslation('common');
@@ -50,11 +48,7 @@ export const NavbarComponent = ({
                 role={authenticatedUser.role}
               />
             ) : (
-              <LoginButton
-                loading={loading}
-                click={login}
-                text={t('button.login', i18n)}
-              />
+              <LoginButton loading={loading} text={t('button.login', i18n)} />
             )}
           </div>
         </Navbar.Collapse>
